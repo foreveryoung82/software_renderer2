@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\clip.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\intersect.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\line2.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\main.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\partition.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\rect.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\triangle.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vec2.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\clip.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\intersect.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\intersectresult.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\line2.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\partition.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\rect.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\triangle.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vec2.h">
+      <Filter>include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
