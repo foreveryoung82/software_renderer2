@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\rasterizer.cpp" />
     <ClCompile Include="source\clip.cpp" />
     <ClCompile Include="source\intersect.cpp" />
     <ClCompile Include="source\line2.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\partition.cpp" />
     <ClCompile Include="source\rect.cpp" />
+    <ClCompile Include="source\trapezoid.cpp" />
     <ClCompile Include="source\triangle.cpp" />
     <ClCompile Include="source\vec2.cpp" />
   </ItemGroup>
@@ -26,7 +28,9 @@
     <ClInclude Include="include\intersectresult.h" />
     <ClInclude Include="include\line2.h" />
     <ClInclude Include="include\partition.h" />
+    <ClInclude Include="include\rasterizer.h" />
     <ClInclude Include="include\rect.h" />
+    <ClInclude Include="include\trapezoid.h" />
     <ClInclude Include="include\triangle.h" />
     <ClInclude Include="include\vec2.h" />
   </ItemGroup>
