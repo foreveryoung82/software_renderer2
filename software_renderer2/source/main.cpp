@@ -8,9 +8,9 @@
 void main() {
   // don't forget when triangle is totally in/out clip rect
 
-  Triangle tri=Triangle::make(Vec2::make(0,0),
-    Vec2::make(1,2),
-    Vec2::make(-1,2));
+  Triangle tri=Triangle::make(Vec2::make(0,-2),
+    Vec2::make(2,2),
+    Vec2::make(-2,0.5));
   //Trapezoid trapezoids[2];
   //int n=divide_into_trapezoids(tri, trapezoids);
   //std::cout<<n<<std::endl;
