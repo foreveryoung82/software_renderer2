@@ -16,6 +16,7 @@ class Rasterizer {
   void present() const;
  
  private:
+   void drawTriangle(const Triangle& tri);
   int width_;
   int height_;
   std::vector<int> buffer_;

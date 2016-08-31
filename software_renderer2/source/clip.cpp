@@ -66,3 +66,97 @@ std::vector<Vec2> clip(std::vector<IntersectResult> const& segments,
   }
   return result;
 }
+
+std::vector<Vec2> viewport_clip_top(const std::vector<Vec2>& input) {
+  std::vector<Vec2> output;
+  const int input_num=static_cast<int>(input.size());
+  for (int edgeIdx=0;edgeIdx<input_num;++edgeIdx) {
+    const Vec2& s=input[edgeIdx];
+    const Vec2& t=input[(edgeIdx+1)%input_num];
+    
+    if ((1<s.y) && (1<t.y))
+      continue;
+    if ((1>s.y) && (1>t.y)) {
+      output.push_back(t);
+      continue;
+    }
+    float cx=s.x+(1-s.y)/(t.y-s.y)*(t.x-s.x);
+    output.push_back(Vec2::make(cx,1));
+    if ((1<s.y) && (1>t.y))
+      output.push_back(t);
+  }
+  return output;
+}
+
+std::vector<Vec2> viewport_clip_bottom(const std::vector<Vec2>& input) {
+  std::vector<Vec2> output;
+  const int input_num=static_cast<int>(input.size());
+  for (int edgeIdx=0;edgeIdx<input_num;++edgeIdx) {
+    const Vec2& s=input[edgeIdx];
+    const Vec2& t=input[(edgeIdx+1)%input_num];
+
+    if ((-1>s.y) && (-1>t.y))
+      continue;
+    if ((-1<s.y) && (-1<t.y)) {
+      output.push_back(t);
+      continue;
+    } 
+    float cx=s.x+(-1-s.y)/(t.y-s.y)*(t.x-s.x);
+    output.push_back(Vec2::make(cx,-1));
+    if ((-1>s.y) && (-1<t.y))
+      output.push_back(t);
+  }
+  return output;
+}
+
+std::vector<Vec2> viewport_clip_right(const std::vector<Vec2>& input) {
+  std::vector<Vec2> output;
+  const int input_num=static_cast<int>(input.size());
+  for (int edgeIdx=0;edgeIdx<input_num;++edgeIdx) {
+    const Vec2& s=input[edgeIdx];
+    const Vec2& t=input[(edgeIdx+1)%input_num];
+
+    if ((1<s.x) && (1<t.x))
+      continue;
+    if ((1>s.x) && (1>t.x)) {
+      output.push_back(t);
+      continue;
+    }
+    float cy=s.y+(1-s.x)/(t.x-s.x)*(t.y-s.y);
+    output.push_back(Vec2::make(1,cy));
+    if ((1<s.x) && (1>t.x))
+      output.push_back(t);
+  }
+  return output;
+}
+
+std::vector<Vec2> viewport_clip_left(const std::vector<Vec2>& input) {
+  std::vector<Vec2> output;
+  const int input_num=static_cast<int>(input.size());
+  for (int edgeIdx=0;edgeIdx<input_num;++edgeIdx) {
+    const Vec2& s=input[edgeIdx];
+    const Vec2& t=input[(edgeIdx+1)%input_num];
+
+    if ((-1>s.x) && (-1>t.x))
+      continue;
+    if ((-1<s.x) && (-1<t.x)) {
+      output.push_back(t);
+      continue;
+    }
+    float cy=s.y+(-1-s.x)/(t.x-s.x)*(t.y-s.y);
+    output.push_back(Vec2::make(-1,cy));
+    if ((-1>s.x) && (-1<t.x))
+      output.push_back(t);
+  }
+  return output;
+}
+
+std::vector<Vec2> viewport_clip( const Triangle& triangle ) {
+  // sutherland dogeman clip algorithm
+  std::vector<Vec2> input(triangle.m, triangle.m+3);
+  std::vector<Vec2> output=viewport_clip_top(input);
+  output=viewport_clip_bottom(output);
+  output=viewport_clip_right(output);
+  output=viewport_clip_left(output);
+  return output;
+}

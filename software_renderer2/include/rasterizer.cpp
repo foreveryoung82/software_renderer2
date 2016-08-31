@@ -1,6 +1,13 @@
 #include "rasterizer.h"
+#include <cassert>
 #include <iostream>
+#include <vector>
+#include "rect.h"
 #include "trapezoid.h"
+#include "intersectresult.h"
+#include "intersect.h"
+#include "clip.h"
+#include "triangle.h"
 
 Rasterizer::Rasterizer(int width, int height)
  :width_(width),
@@ -20,17 +27,23 @@ int Rasterizer::height() const {
 }
 
 void Rasterizer::setPixelAt( int x, int y, int color ) {
+  assert(x<width_ && x>=0);
+  assert(y<height_ && y>=0);
+
   buffer_[y*width_+x]=color;
 }
 
 int Rasterizer::getPixelAt( int x, int y ) const {
+  assert(x<width_ && x>=0);
+  assert(y<height_ && y>=0);
+
   return buffer_[y*width_+x];
 }
 
-void Rasterizer::draw( const Triangle& tri ) {
+void Rasterizer::drawTriangle(const Triangle& tri) {
   Trapezoid traps[2];
   int traps_num=divide_into_trapezoids(tri, traps);
-  
+
   for (int i=0;i<traps_num;++i) {
     const Trapezoid& t=traps[i];
     float lwidth=t.l.t.x-t.l.s.x;
@@ -44,6 +57,22 @@ void Rasterizer::draw( const Triangle& tri ) {
       for (int x=lx;x<=rx;++x)
         setPixelAt(x, y, 0xFF);
     }
+  }
+}
+
+void Rasterizer::draw( const Triangle& tri ) {
+  Rect rect=Rect::make(static_cast<float>(height_), 0, 0, static_cast<float>(width_));
+  std::vector<IntersectResult> results;
+  if (!intersect(rect, tri, results))
+    return;
+
+  std::vector<Vec2> points=clip(results, tri, rect);
+  const int triangle_num=points.size()/3;
+  for (int i=0;i<triangle_num;++i) {
+    Triangle new_triangle=Triangle::make(points[i*3],
+                                         points[i*3+1],
+                                         points[i*3+2]);
+    drawTriangle(new_triangle);
   }
 }
 
