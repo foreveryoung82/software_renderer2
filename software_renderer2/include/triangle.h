@@ -19,4 +19,5 @@ class Triangle {
   };
   Vec2& operator[](std::uint8_t idx) {return m[idx];}
   const Vec2& operator[](std::uint8_t idx) const {return m[idx];}
+  //Triangle scale(float scale_x, float scale_y) const;
 };

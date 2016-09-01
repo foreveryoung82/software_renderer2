@@ -19,6 +19,7 @@ class Vec2 {
   };
 
   //Vec2& operator=(Vec2 const& rhs);
+  bool operator==(Vec2 const& rhs) const;
   float dot(Vec2 const& rhs) const;
   Vec2 operator+(Vec2 const& rhs) const;
   Vec2 operator+=(Vec2 const& rhs);

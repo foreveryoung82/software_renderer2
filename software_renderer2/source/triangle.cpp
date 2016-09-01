@@ -8,3 +8,4 @@ Triangle Triangle::make(Vec2 const& p0, Vec2 const& p1, Vec2 const& p2) {
   ret.p2=p2;
   return ret;
 }
+

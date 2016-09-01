@@ -166,5 +166,9 @@ std::vector<Vec2> viewport_clip( const Triangle& triangle ) {
   output=viewport_clip_bottom(output);
   output=viewport_clip_right(output);
   output=viewport_clip_left(output);
+
+  // remove repeated vertices
+  output.erase(std::unique(output.begin(),output.end()),
+               output.end());
   return output;
 }

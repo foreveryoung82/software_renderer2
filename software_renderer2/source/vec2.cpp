@@ -12,6 +12,10 @@ Vec2 Vec2::make(float x,float y) {
   return ret;  
 }
 
+bool Vec2::operator==(Vec2 const& rhs) const {
+  return ((this->x==rhs.x) && (this->y==rhs.y));
+}
+
 float Vec2::dot(Vec2 const& rhs) const {
   return (x*rhs.x+y*rhs.y);
 }
