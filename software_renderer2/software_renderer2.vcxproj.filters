@@ -41,6 +41,9 @@
     <ClCompile Include="include\rasterizer.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\device.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\clip.h">
@@ -71,6 +74,15 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\rasterizer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\device.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\deviceparameters.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\deviceplatform.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

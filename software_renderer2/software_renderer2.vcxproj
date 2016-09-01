@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="include\rasterizer.cpp" />
     <ClCompile Include="source\clip.cpp" />
+    <ClCompile Include="source\device.cpp" />
     <ClCompile Include="source\intersect.cpp" />
     <ClCompile Include="source\line2.cpp" />
     <ClCompile Include="source\main.cpp" />
@@ -24,6 +25,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\clip.h" />
+    <ClInclude Include="include\device.h" />
+    <ClInclude Include="include\deviceparameters.h" />
+    <ClInclude Include="include\deviceplatform.h" />
     <ClInclude Include="include\intersect.h" />
     <ClInclude Include="include\intersectresult.h" />
     <ClInclude Include="include\line2.h" />
@@ -80,7 +84,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
