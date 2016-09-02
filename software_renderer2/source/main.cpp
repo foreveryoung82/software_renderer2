@@ -45,12 +45,22 @@
 //  Device device(param);
 //}
 #include "application.h"
+#include "framebuffer.h"
 void main() {
   //DeviceParameters param;
   //param.framebufferWidth=640;
   //param.framebufferHeight=480;
   //Device device(param);
+  int x=0;
+  int y=0;
   Application app;
+  app.setOnFrameBeginEvent([&x,&y](Framebuffer& fb){
+    if (x>=640||y>=480)
+      return;
+    fb.setPixel(x,y,0xFFFF00FF);
+    x++;
+    y++;
+  });
   app.setup(640,480);
   app.run();
   app.teardown();

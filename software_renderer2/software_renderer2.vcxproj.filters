@@ -47,6 +47,9 @@
     <ClCompile Include="source\application.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\framebuffer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\clip.h">
@@ -92,6 +95,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\applicationimpl.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\framebuffer.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

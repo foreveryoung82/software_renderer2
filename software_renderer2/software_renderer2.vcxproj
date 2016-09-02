@@ -15,6 +15,7 @@
     <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\clip.cpp" />
     <ClCompile Include="source\device.cpp" />
+    <ClCompile Include="source\framebuffer.cpp" />
     <ClCompile Include="source\intersect.cpp" />
     <ClCompile Include="source\line2.cpp" />
     <ClCompile Include="source\main.cpp" />
@@ -31,6 +32,7 @@
     <ClInclude Include="include\device.h" />
     <ClInclude Include="include\deviceparameters.h" />
     <ClInclude Include="include\deviceplatform.h" />
+    <ClInclude Include="include\framebuffer.h" />
     <ClInclude Include="include\intersect.h" />
     <ClInclude Include="include\intersectresult.h" />
     <ClInclude Include="include\line2.h" />

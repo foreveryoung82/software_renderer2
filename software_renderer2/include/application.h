@@ -5,10 +5,10 @@
 #include <functional>
 
 struct ApplicationImpl;
-class FrameBuffer;
+class Framebuffer;
 class Application {
  public:
-  typedef std::function<void(FrameBuffer& framebuffer)> onFrameBeginEvent_t;
+  typedef std::function<void(Framebuffer& framebuffer)> onFrameBeginEvent_t;
   Application();
   virtual ~Application();
   virtual void setup(int width, int height);
@@ -21,5 +21,6 @@ private:
   int width_;
   int height_;
   ApplicationImpl*    impl_;
+  Framebuffer*        framebuffer_;
   onFrameBeginEvent_t onFrameBeginEvent_;
 };

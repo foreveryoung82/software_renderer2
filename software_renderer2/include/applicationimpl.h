@@ -10,5 +10,5 @@ struct ApplicationImpl {
   WNDCLASS  windowClass;
   TCHAR*    windowClassName;
   HDC       memoryDC;
-  void*     framebuffer;
+  void*     bytes;
 };

@@ -2,6 +2,9 @@
 #include <cassert>
 #include <memory.h>
 #include "applicationimpl.h"
+#include "framebuffer.h"
+
+#include <iostream>
 
 static Application* s_application_instance=nullptr;
 
@@ -13,7 +16,10 @@ LRESULT CALLBACK WndProc(HWND hwnd,
     case WM_CREATE:
       return 0;
     case WM_PAINT:
+      PAINTSTRUCT ps;
+      BeginPaint(hwnd,&ps); // to avoid repeatedly receiving WM_PAINT message
       s_application_instance->fireOnFrameBeginEvent();
+      EndPaint(hwnd,&ps);
       return 0;
     case WM_DESTROY:
       PostQuitMessage(0);
@@ -83,12 +89,13 @@ HBITMAP create_dib(HDC memoryDC, void** bytes, int width, int height) {
   BITMAPINFO bitmap_info;
   memset(&bitmap_info,0,sizeof(BITMAPINFO));
   BITMAPINFOHEADER* header=&bitmap_info.bmiHeader;
-  header->biSize=sizeof(BITMAPINFO);
+  header->biSize=sizeof(BITMAPINFOHEADER);
   header->biWidth=width;
   header->biHeight=height;
   header->biPlanes=1;
   header->biBitCount=32;
   header->biCompression=BI_RGB;
+  header->biSizeImage=width*height*4;
   HBITMAP hbmp=CreateDIBSection(memoryDC,
                                 &bitmap_info,
                                 DIB_RGB_COLORS,
@@ -106,6 +113,7 @@ Application::Application()
  : width_(0)
  , height_(0)
  , impl_(nullptr)
+ , framebuffer_(nullptr)
  , onFrameBeginEvent_() {
   assert(!s_application_instance);
   s_application_instance=this;
@@ -125,20 +133,23 @@ void Application::setup(int width, int height) {
   impl_->windowClassName=TEXT("software render windows class");
   impl_->mainWindow=NULL;
   impl_->memoryDC=NULL;
-  impl_->framebuffer=nullptr;
+  impl_->bytes=nullptr;
   memset(&impl_->windowClass,0,sizeof(WNDCLASS));
   
   init_window_class(&impl_->windowClass,impl_->windowClassName);
   register_window_class(&impl_->windowClass);
   impl_->mainWindow=create_window(impl_->windowClassName,width,height);
   impl_->memoryDC=create_memory_dc(impl_->mainWindow);
-  HBITMAP hbmp=create_dib(impl_->memoryDC, &impl_->framebuffer, width, height);
+  HBITMAP hbmp=create_dib(impl_->memoryDC, &impl_->bytes, width, height);
   select_dib_into_memory_dc(impl_->memoryDC, hbmp);
+
+  framebuffer_=new Framebuffer(impl_->bytes,width,height,width*4);
 }
 
 void Application::teardown() {
   assert(impl_);
 
+  delete framebuffer_;
   delete impl_;
   impl_=nullptr;
 }
@@ -148,9 +159,11 @@ void Application::run() {
   UpdateWindow(impl_->mainWindow);
 
   MSG msg;
-  while (GetMessage(&msg,NULL,0,0)) {
+  while (GetMessage(&msg,impl_->mainWindow,0,0)) {
     TranslateMessage(&msg);
     DispatchMessage(&msg);
+    
+    //std::cout<<"Msg"<<std::endl;
   }
 }
 
@@ -160,6 +173,8 @@ void Application::setOnFrameBeginEvent( onFrameBeginEvent_t onFrameBeginEvent ) 
 
 void Application::fireOnFrameBeginEvent() {
   HDC hdc=GetDC(impl_->mainWindow);
+  if (onFrameBeginEvent_)
+    onFrameBeginEvent_(*framebuffer_);
 	BitBlt(hdc, 0, 0, width_, height_, impl_->memoryDC, 0, 0, SRCCOPY);
   ReleaseDC(impl_->mainWindow,hdc);
 }
