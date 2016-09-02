@@ -4,7 +4,6 @@
 #pragma once
 #include <vector>
 #include "vec2.h"
-#include "intersectresult.h"
 class Triangle;
 class Rect;
 

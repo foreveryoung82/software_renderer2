@@ -1,12 +1,7 @@
 #include "rasterizer.h"
 #include <cassert>
-#include <iostream>
-#include <vector>
 #include "rect.h"
 #include "trapezoid.h"
-#include "intersectresult.h"
-#include "intersect.h"
-#include "clip.h"
 #include "triangle.h"
 #include "framebuffer.h"
 

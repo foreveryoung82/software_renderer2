@@ -31,10 +31,7 @@
     <ClInclude Include="include\deviceparameters.h" />
     <ClInclude Include="include\deviceplatform.h" />
     <ClInclude Include="include\framebuffer.h" />
-    <ClInclude Include="include\intersect.h" />
-    <ClInclude Include="include\intersectresult.h" />
     <ClInclude Include="include\line2.h" />
-    <ClInclude Include="include\partition.h" />
     <ClInclude Include="include\rasterizer.h" />
     <ClInclude Include="include\rect.h" />
     <ClInclude Include="include\trapezoid.h" />

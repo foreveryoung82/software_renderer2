@@ -49,16 +49,7 @@
     <ClInclude Include="include\clip.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\intersect.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\intersectresult.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\line2.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\partition.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\rect.h">
