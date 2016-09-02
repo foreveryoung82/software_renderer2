@@ -33,14 +33,25 @@
 //    rasterizer.draw(triangles[i]);
 //  rasterizer.present();
 //}
-#include <windows.h>
-#include "device.h"
-#include "deviceparameters.h"
-extern HINSTANCE happ=0;
-int WINAPI WinMain(HINSTANCE hinstance,HINSTANCE,PSTR,int) {
-  happ=hinstance;
-  DeviceParameters param;
-  param.framebufferWidth=640;
-  param.framebufferHeight=480;
-  Device device(param);
+//#include <windows.h>
+//#include "device.h"
+//#include "deviceparameters.h"
+//extern HINSTANCE happ=0;
+//int WINAPI WinMain(HINSTANCE hinstance,HINSTANCE,PSTR,int) {
+//  happ=hinstance;
+//  DeviceParameters param;
+//  param.framebufferWidth=640;
+//  param.framebufferHeight=480;
+//  Device device(param);
+//}
+#include "application.h"
+void main() {
+  //DeviceParameters param;
+  //param.framebufferWidth=640;
+  //param.framebufferHeight=480;
+  //Device device(param);
+  Application app;
+  app.setup(640,480);
+  app.run();
+  app.teardown();
 }

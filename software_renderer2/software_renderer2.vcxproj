@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\rasterizer.cpp" />
+    <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\clip.cpp" />
     <ClCompile Include="source\device.cpp" />
     <ClCompile Include="source\intersect.cpp" />
@@ -24,6 +25,8 @@
     <ClCompile Include="source\vec2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\application.h" />
+    <ClInclude Include="include\applicationimpl.h" />
     <ClInclude Include="include\clip.h" />
     <ClInclude Include="include\device.h" />
     <ClInclude Include="include\deviceparameters.h" />
@@ -84,7 +87,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>

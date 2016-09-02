@@ -44,6 +44,9 @@
     <ClCompile Include="source\device.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\application.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\clip.h">
@@ -83,6 +86,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\deviceplatform.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\application.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\applicationimpl.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
