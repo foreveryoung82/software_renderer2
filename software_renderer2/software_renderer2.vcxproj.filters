@@ -14,16 +14,10 @@
     <ClCompile Include="source\clip.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\intersect.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\line2.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\main.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\partition.cpp">
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\rect.cpp">
