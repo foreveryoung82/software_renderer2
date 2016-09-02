@@ -4,22 +4,24 @@
 #include <vector>
 
 class Triangle;
+class Framebuffer;
 class Rasterizer {
  public:
-  Rasterizer(int width, int height);
+  Rasterizer(Framebuffer& framebuffer);
   ~Rasterizer();
   int width() const;
   int height() const;
   void setPixelAt(int x, int y, int color);
-  int getPixelAt(int x, int y) const;
+  //int getPixelAt(int x, int y) const;
   void draw(const Triangle& tri);
-  void present() const;
+  //void present() const;
  
  private:
    void drawTriangle(const Triangle& tri);
   int width_;
   int height_;
-  std::vector<int> buffer_;
+  //std::vector<int> buffer_;
+  Framebuffer* framebuffer_;
 
   Rasterizer(const Rasterizer& rhs);
   Rasterizer& operator=(const Rasterizer& rhs);

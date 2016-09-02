@@ -2,19 +2,20 @@
 //@author:yangjie82@gmail.com
 //@brief:render device
 #pragma once
-#include "deviceparameters.h"
 
 class Triangle;
-struct DevicePlatform;
+class Framebuffer;
+class Rasterizer;
 class Device {
  public:
-  Device(const DeviceParameters& param);
+  Device();
   virtual ~Device();
+  virtual void setFramebuffer(Framebuffer& framebuffer);
   virtual void draw(const Triangle& shape);
   virtual void clear();
   virtual void present();
 
  private:
-  DeviceParameters param_;
-  DevicePlatform*  platform_;
+  Framebuffer* framebuffer_;
+  Rasterizer* rasterizer_;
 };

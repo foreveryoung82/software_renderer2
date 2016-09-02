@@ -8,11 +8,13 @@
 #include "intersect.h"
 #include "clip.h"
 #include "triangle.h"
+#include "framebuffer.h"
 
-Rasterizer::Rasterizer(int width, int height)
- :width_(width),
-  height_(height),
-  buffer_(width*height) {
+Rasterizer::Rasterizer(Framebuffer& framebuffer)
+ :width_(framebuffer.width()),
+  height_(framebuffer.height()),
+  //buffer_(width*height),
+  framebuffer_(&framebuffer) {
 }
 
 Rasterizer::~Rasterizer() {
@@ -30,14 +32,7 @@ void Rasterizer::setPixelAt( int x, int y, int color ) {
   assert(x<width_ && x>=0);
   assert(y<height_ && y>=0);
 
-  buffer_[y*width_+x]=color;
-}
-
-int Rasterizer::getPixelAt( int x, int y ) const {
-  assert(x<width_ && x>=0);
-  assert(y<height_ && y>=0);
-
-  return buffer_[y*width_+x];
+  framebuffer_->setPixel(x,y,color);
 }
 
 float get_x_by_y(const Vec2& s, const Vec2& t, float y) {
@@ -56,8 +51,8 @@ void Rasterizer::drawTriangle(const Triangle& tri) {
     int bottom=static_cast<int>(t.b+0.5);
     for (int y=top;y>=bottom;--y) {
       float k=(y-t.b)/(t.t-t.b);
-      int lx=int(0.5+get_x_by_y(t.l.s, t.l.t,y));
-      int rx=int(0.5+get_x_by_y(t.r.s, t.r.t,y));
+      int lx=static_cast<int>(0.5f+get_x_by_y(t.l.s, t.l.t,static_cast<float>(y)));
+      int rx=static_cast<int>(0.5f+get_x_by_y(t.r.s, t.r.t,static_cast<float>(y)));
       for (int x=lx;x<=rx;++x)
         if (x>=0 && x<width_)
           setPixelAt(x, y, 0xFF);
@@ -66,39 +61,10 @@ void Rasterizer::drawTriangle(const Triangle& tri) {
 }
 
 void Rasterizer::draw( const Triangle& tri ) {
-  //Rect rect=Rect::make(static_cast<float>(height_), 0, 0, static_cast<float>(width_));
-  //std::vector<IntersectResult> results;
-  //if (!intersect(rect, tri, results))
-  //  return;
-
-  //std::vector<Vec2> points=clip(results, tri, rect);
-  //const int triangle_num=points.size()/3;
-  //for (int i=0;i<triangle_num;++i) {
-  //  Triangle new_triangle=Triangle::make(points[i*3],
-  //                                       points[i*3+1],
-  //                                       points[i*3+2]);
-  //  drawTriangle(new_triangle);
-  //}
   Triangle ret;
   for (int i=0;i<3;++i) {
-    ret.m[i].x=(tri.m[i].x+1)*0.5*(width_-1);
-    ret.m[i].y=(tri.m[i].y+1)*0.5*(height_-1);
+    ret.m[i].x=(tri.m[i].x+1)*0.5f*(width_-1);
+    ret.m[i].y=(tri.m[i].y+1)*0.5f*(height_-1);
   }
   drawTriangle(ret);
 }
-
-void Rasterizer::present() const {
-  using std::cout;
-  using std::endl;
-
-  for (int y=height_-1;y>=0;--y) {
-    for (int x=0;x<width_;++x) {
-      if (0==buffer_[x+width_*y]) 
-        cout<<"  ";
-      else
-        cout<<"* ";
-    }
-    cout<<endl;
-  }
-}
-
