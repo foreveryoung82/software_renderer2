@@ -28,8 +28,6 @@
     <ClInclude Include="include\applicationimpl.h" />
     <ClInclude Include="include\clip.h" />
     <ClInclude Include="include\device.h" />
-    <ClInclude Include="include\deviceparameters.h" />
-    <ClInclude Include="include\deviceplatform.h" />
     <ClInclude Include="include\framebuffer.h" />
     <ClInclude Include="include\line2.h" />
     <ClInclude Include="include\rasterizer.h" />

@@ -70,12 +70,6 @@
     <ClInclude Include="include\device.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\deviceparameters.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\deviceplatform.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\application.h">
       <Filter>include</Filter>
     </ClInclude>
