@@ -1,0 +1,186 @@
+#include "matrix3x3.h"
+#include <cmath>
+#include <algorithm>
+
+Matrix3x3 Matrix3x3::make(Vec3 const& u, Vec3 const& v, Vec3 const& w) {
+  Matrix3x3 matrix;
+  matrix.m[0][0]=u[0];
+  matrix.m[0][1]=u[1];
+  matrix.m[0][2]=u[2];
+  matrix.m[1][0]=v[0];
+  matrix.m[1][1]=v[1];
+  matrix.m[1][2]=v[2];
+  matrix.m[2][0]=w[0];
+  matrix.m[2][1]=w[1];
+  matrix.m[2][2]=w[2];
+  return matrix;
+}
+
+Matrix3x3 Matrix3x3::makeIdentity() {
+  Matrix3x3 matrix;
+  matrix.m[0][0]=1;
+  matrix.m[0][1]=0;
+  matrix.m[0][2]=0;
+  matrix.m[1][0]=0;
+  matrix.m[1][1]=1;
+  matrix.m[1][2]=0;
+  matrix.m[2][0]=0;
+  matrix.m[2][1]=0;
+  matrix.m[2][2]=1;
+  return matrix;
+}
+
+Matrix3x3 Matrix3x3::makeAffine(Vec2 const& u, Vec2 const& v, Vec2 const& w) {
+  Matrix3x3 matrix;
+  matrix.m[0][0]=u[0];
+  matrix.m[0][1]=u[1];
+  matrix.m[0][2]=0;
+  matrix.m[1][0]=v[0];
+  matrix.m[1][1]=v[1];
+  matrix.m[1][2]=0;
+  matrix.m[2][0]=w[0];
+  matrix.m[2][1]=w[1];
+  matrix.m[2][2]=1;
+  return matrix;
+}
+
+Matrix3x3 Matrix3x3::makeTranslation(Vec2 const& t) {
+  Matrix3x3 matrix=makeIdentity();
+  matrix.m[2][0]=t.x;
+  matrix.m[2][1]=t.y;
+  return matrix;
+}
+
+Matrix3x3 Matrix3x3::makeScale(Vec2 const& s) {
+  Matrix3x3 matrix=makeIdentity();
+  matrix.m[0][0]=s.x;
+  matrix.m[1][1]=s.y;
+  return matrix;  
+}
+
+Matrix3x3 Matrix3x3::makeRotation(float radian) {
+  Matrix3x3 matrix=makeIdentity();
+  float c=std::cosf(radian);
+  float s=std::sinf(radian);
+  matrix.m[0][0]=c;
+  matrix.m[1][0]=-s;
+  matrix.m[0][1]=s;
+  matrix.m[1][1]=c;
+  return matrix;   
+}
+
+Matrix3x3 Matrix3x3::makeXShear(float factor) {
+  Matrix3x3 matrix=makeIdentity();
+  matrix.m[1][0]=factor;
+  return matrix;     
+}
+
+Matrix3x3 Matrix3x3::makeYShear(float factor) {
+  Matrix3x3 matrix=makeIdentity();
+  matrix.m[0][1]=factor;
+  return matrix;    
+}
+
+bool Matrix3x3::operator==(Matrix3x3 const& rhs) const {
+  const bool ret=std::equal(begin(),end(),rhs.begin());
+  return ret;
+}
+
+Matrix3x3 Matrix3x3::operator+(Matrix3x3 const& rhs) const {
+  Matrix3x3 ret;
+  std::transform(begin(),end(),rhs.begin(),ret.begin(),
+    [](float a,float b)->float{return a+b;});
+  return ret;
+}
+
+Matrix3x3& Matrix3x3::operator+=(Matrix3x3 const& rhs) {
+  std::transform(begin(),end(),rhs.begin(),begin(),
+    [](float a,float b)->float{return a+b;});
+  return *this;
+}
+
+Matrix3x3 Matrix3x3::operator-(Matrix3x3 const& rhs) const {
+  Matrix3x3 ret;
+  std::transform(begin(),end(),rhs.begin(),ret.begin(),
+    [](float a,float b)->float{return a-b;});
+  return ret;
+}
+
+Matrix3x3& Matrix3x3::operator-=(Matrix3x3 const& rhs) {
+  std::transform(begin(),end(),rhs.begin(),begin(),
+    [](float a,float b)->float{return a-b;});
+  return *this;
+}
+
+Matrix3x3 Matrix3x3::operator-() const {
+  Matrix3x3 ret;
+  std::transform(begin(),end(),ret.begin(),[](float a)->float{return -a;});
+  return ret;
+}
+
+Matrix3x3 Matrix3x3::operator*(float factor) const {
+  Matrix3x3 ret;
+  std::transform(begin(),end(),ret.begin(),
+    [factor](float v)->float{return v*factor;});
+  return ret;
+}
+
+Matrix3x3& Matrix3x3::operator*=(float factor) {
+  std::transform(begin(),end(),begin(),
+    [factor](float v)->float{return v*factor;});
+  return *this;  
+}
+
+Matrix3x3 Matrix3x3::operator*(Matrix3x3 const& rhs) const {
+  Matrix3x3 ret;
+  const int num=3;
+  for (int c=0;c<num;++c) {
+    for (int r=0;r<num;++r) {
+      ret.m[c][r]=m[0][r]*rhs.m[c][0]+m[1][r]*rhs.m[c][1]+m[2][r]*rhs.m[c][2];
+    }
+  }
+  return ret;
+}
+
+Matrix3x3& Matrix3x3::operator*=(Matrix3x3 const& rhs) {
+  Matrix3x3 t=*this*rhs;
+  *this=t;
+  return *this;
+}
+
+Vec3 Matrix3x3::operator*(Vec3 const& rhs) const {
+  Vec3 ret;
+  const int num=3;
+  for (int r=0;r<num;++r) {
+    ret.m[r]=m[0][r]*rhs.m[0]+m[1][r]*rhs.m[1]+m[2][r]*rhs.m[2];
+  }
+  return ret;  
+}
+
+Vec2 Matrix3x3::transformVector(Vec2 const& v) const {
+  Vec3 v3=Vec3::make(v.x,v.y,0);
+  Vec3 ret=*this*v3;
+  return Vec2::make(ret);
+}
+
+Vec2 Matrix3x3::transformPoint(Vec2 const& p) const {
+  Vec3 v3=Vec3::make(p.x,p.y,1);
+  Vec3 ret=*this*v3;
+  return Vec2::make(ret);
+}
+
+//Matrix3x3 Matrix3x3::inverse() const {
+//  Matrix3x3 ret;
+//  
+//}
+
+Matrix3x3 Matrix3x3::transpose() const {
+  Matrix3x3 ret;
+  const int num=3;
+  for (int c=0;c<num;++c) {
+    for (int r=0;r<num;++r) {
+      ret.m[c][r]=m[r][c];
+    }
+  }
+  return ret;
+}

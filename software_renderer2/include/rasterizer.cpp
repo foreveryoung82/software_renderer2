@@ -40,12 +40,12 @@ void Rasterizer::drawTriangle(const Triangle& tri) {
 
   for (int i=0;i<traps_num;++i) {
     const Trapezoid& t=traps[i];
-    float lwidth=t.l.s.x-t.l.t.x;
-    float rwidth=t.r.s.x-t.r.t.x;
+    //float lwidth=t.l.s.x-t.l.t.x;
+    //float rwidth=t.r.s.x-t.r.t.x;
     int top=static_cast<int>(t.t+0.5);
     int bottom=static_cast<int>(t.b+0.5);
     for (int y=top;y>=bottom;--y) {
-      float k=(y-t.b)/(t.t-t.b);
+      //float k=(y-t.b)/(t.t-t.b);
       int lx=static_cast<int>(0.5f+get_x_by_y(t.l.s, t.l.t,static_cast<float>(y)));
       int rx=static_cast<int>(0.5f+get_x_by_y(t.r.s, t.r.t,static_cast<float>(y)));
       for (int x=lx;x<=rx;++x)

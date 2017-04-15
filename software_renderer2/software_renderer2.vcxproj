@@ -18,10 +18,12 @@
     <ClCompile Include="source\framebuffer.cpp" />
     <ClCompile Include="source\line2.cpp" />
     <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\matrix3x3.cpp" />
     <ClCompile Include="source\rect.cpp" />
     <ClCompile Include="source\trapezoid.cpp" />
     <ClCompile Include="source\triangle.cpp" />
     <ClCompile Include="source\vec2.cpp" />
+    <ClCompile Include="source\vec3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\application.h" />
@@ -30,11 +32,13 @@
     <ClInclude Include="include\device.h" />
     <ClInclude Include="include\framebuffer.h" />
     <ClInclude Include="include\line2.h" />
+    <ClInclude Include="include\matrix3x3.h" />
     <ClInclude Include="include\rasterizer.h" />
     <ClInclude Include="include\rect.h" />
     <ClInclude Include="include\trapezoid.h" />
     <ClInclude Include="include\triangle.h" />
     <ClInclude Include="include\vec2.h" />
+    <ClInclude Include="include\vec3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{58E09475-C1D2-43D9-B92E-D295D72AEBB1}</ProjectGuid>
@@ -80,6 +84,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalOptions>-D_SCL_SECURE_NO_WARNINGS %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

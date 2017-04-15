@@ -44,6 +44,12 @@
     <ClCompile Include="source\framebuffer.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\matrix3x3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vec3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\clip.h">
@@ -77,6 +83,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\framebuffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\matrix3x3.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vec3.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

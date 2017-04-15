@@ -98,7 +98,7 @@ std::vector<Vec2> viewport_clip_left(const std::vector<Vec2>& input) {
 }
 
 std::vector<Vec2> viewport_clip( const Triangle& triangle ) {
-  // sutherland dogeman clip algorithm
+  // Sutherland¨CHodgman clip algorithm
   std::vector<Vec2> input(triangle.m, triangle.m+3);
   std::vector<Vec2> output=viewport_clip_top(input);
   output=viewport_clip_bottom(output);
@@ -110,3 +110,4 @@ std::vector<Vec2> viewport_clip( const Triangle& triangle ) {
                output.end());
   return output;
 }
+
