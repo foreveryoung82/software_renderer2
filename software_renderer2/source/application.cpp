@@ -15,6 +15,9 @@ LRESULT CALLBACK WndProc(HWND hwnd,
   switch(message) {
     case WM_CREATE:
       return 0;
+    case WM_KEYDOWN:
+      InvalidateRect(hwnd,0,0);
+      return 0;
     case WM_PAINT:
       PAINTSTRUCT ps;
       BeginPaint(hwnd,&ps); // to avoid repeatedly receiving WM_PAINT message

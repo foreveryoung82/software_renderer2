@@ -30,7 +30,7 @@ void Rasterizer::setPixelAt( int x, int y, int color ) {
   framebuffer_->setPixel(x,y,color);
 }
 
-float get_x_by_y(const Vec2& s, const Vec2& t, float y) {
+f32 get_x_by_y(const Vec2& s, const Vec2& t, f32 y) {
   return (y-t.y)*(s.x-t.x)/(s.y-t.y)+t.x;
 }
 
@@ -40,14 +40,14 @@ void Rasterizer::drawTriangle(const Triangle& tri) {
 
   for (int i=0;i<traps_num;++i) {
     const Trapezoid& t=traps[i];
-    //float lwidth=t.l.s.x-t.l.t.x;
-    //float rwidth=t.r.s.x-t.r.t.x;
+    //f32 lwidth=t.l.s.x-t.l.t.x;
+    //f32 rwidth=t.r.s.x-t.r.t.x;
     int top=static_cast<int>(t.t+0.5);
     int bottom=static_cast<int>(t.b+0.5);
     for (int y=top;y>=bottom;--y) {
-      //float k=(y-t.b)/(t.t-t.b);
-      int lx=static_cast<int>(0.5f+get_x_by_y(t.l.s, t.l.t,static_cast<float>(y)));
-      int rx=static_cast<int>(0.5f+get_x_by_y(t.r.s, t.r.t,static_cast<float>(y)));
+      //f32 k=(y-t.b)/(t.t-t.b);
+      int lx=static_cast<int>(0.5f+get_x_by_y(t.l.s, t.l.t,static_cast<f32>(y)));
+      int rx=static_cast<int>(0.5f+get_x_by_y(t.r.s, t.r.t,static_cast<f32>(y)));
       for (int x=lx;x<=rx;++x)
         if (x>=0 && x<width_)
           setPixelAt(x, y, 0xFF);

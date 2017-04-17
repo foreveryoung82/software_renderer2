@@ -6,7 +6,7 @@ const Vec3 Vec3::kUnitX=Vec3::make(1,0,0);
 const Vec3 Vec3::kUnitY=Vec3::make(0,1,0);
 const Vec3 Vec3::kUnitZ=Vec3::make(0,0,1);
 
-Vec3 Vec3::make(float x,float y,float z) {
+Vec3 Vec3::make(f32 x,f32 y,f32 z) {
   Vec3 ret;
   ret.x=x;
   ret.y=y;
@@ -18,7 +18,7 @@ bool Vec3::operator==(Vec3 const& rhs) const {
   return ((this->x==rhs.x) && (this->y==rhs.y) && (this->z==rhs.z));
 }
 
-float Vec3::dot(Vec3 const& rhs) const {
+f32 Vec3::dot(Vec3 const& rhs) const {
   return (x*rhs.x+y*rhs.y+z*rhs.z);
 }
 
@@ -48,29 +48,29 @@ Vec3 Vec3::operator-() const {
   return Vec3::make(-x, -y, -z);
 }
 
-Vec3 Vec3::operator*(float factor) const {
+Vec3 Vec3::operator*(f32 factor) const {
   return Vec3::make(factor*x, factor*y, factor*z);
 }
 
-Vec3& Vec3::operator*=(float factor) {
+Vec3& Vec3::operator*=(f32 factor) {
   x*=factor;
   y*=factor;
   z*=factor;
   return *this;
 }
 
-//float Vec3::length() const {
+//f32 Vec3::length() const {
 //  return std::sqrt(dot(*this));
 //}
 //
-//float Vec3::lengthSquare() const {
+//f32 Vec3::lengthSquare() const {
 //  return dot(*this);
 //}
 
-Vec3 operator*(float f, Vec3 const& lhs) {
+Vec3 operator*(f32 f, Vec3 const& lhs) {
   return lhs*f;
 }
 
-Vec3 operator*=(float f, Vec3& lhs) {
+Vec3 operator*=(f32 f, Vec3& lhs) {
   return lhs*=f;
 }

@@ -11,8 +11,8 @@ class Trapezoid {
  public:
   Line2 l; // left edge
   Line2 r; // right edge
-  float t; // top y
-  float b; // bottom y
+  f32 t; // top y
+  f32 b; // bottom y
 };
 
 int divide_into_trapezoids(const Triangle& triangle, Trapezoid* trapezoids);

@@ -20,7 +20,7 @@ std::vector<Vec2> viewport_clip_top(const std::vector<Vec2>& input) {
       output.push_back(t);
       continue;
     }
-    float cx=s.x+(1-s.y)/(t.y-s.y)*(t.x-s.x);
+    f32 cx=s.x+(1-s.y)/(t.y-s.y)*(t.x-s.x);
     output.push_back(Vec2::make(cx,1));
     if (!s_in && t_in)
       output.push_back(t);
@@ -43,7 +43,7 @@ std::vector<Vec2> viewport_clip_bottom(const std::vector<Vec2>& input) {
       output.push_back(t);
       continue;
     }
-    float cx=s.x+(-1-s.y)/(t.y-s.y)*(t.x-s.x);
+    f32 cx=s.x+(-1-s.y)/(t.y-s.y)*(t.x-s.x);
     output.push_back(Vec2::make(cx,-1));
     if (!s_in && t_in)
       output.push_back(t);
@@ -66,7 +66,7 @@ std::vector<Vec2> viewport_clip_right(const std::vector<Vec2>& input) {
       output.push_back(t);
       continue;
     }
-    float cy=s.y+(1-s.x)/(t.x-s.x)*(t.y-s.y);
+    f32 cy=s.y+(1-s.x)/(t.x-s.x)*(t.y-s.y);
     output.push_back(Vec2::make(1,cy));
     if (!s_in && t_in)
       output.push_back(t);
@@ -89,7 +89,7 @@ std::vector<Vec2> viewport_clip_left(const std::vector<Vec2>& input) {
       output.push_back(t);
       continue;
     }
-    float cy=s.y+(-1-s.x)/(t.x-s.x)*(t.y-s.y);
+    f32 cy=s.y+(-1-s.x)/(t.x-s.x)*(t.y-s.y);
     output.push_back(Vec2::make(-1,cy));
     if (!s_in && t_in)
       output.push_back(t);

@@ -1,20 +1,20 @@
 #pragma once
-#include <cstdint>
+#include "base.h"
 #include "vec2.h"
 
 class Rect {
  public:
-  static Rect make(float top, float left, float bottom, float right);
+  static Rect make(f32 top, f32 left, f32 bottom, f32 right);
   union {
     struct {
-      float top;
-      float left;
-      float bottom;
-      float right;
+      f32 top;
+      f32 left;
+      f32 bottom;
+      f32 right;
     };
-    float m[4];
+    f32 m[4];
   };
-  float& operator[](std::uint8_t idx) {return m[idx];}
-  const float& operator[](std::uint8_t idx) const {return m[idx];}
-  Vec2 corner(std::uint8_t idx) const;
+  f32& operator[](u8 idx) {return m[idx];}
+  const f32& operator[](u8 idx) const {return m[idx];}
+  Vec2 corner(u8 idx) const;
 };

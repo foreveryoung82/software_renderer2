@@ -2,7 +2,7 @@
 //@author:jieyang@moonton.com
 //@brief:struct for vector 2d
 #pragma once
-#include <cstdint>
+#include "base.h"
 
 class Vec3 {
 public:
@@ -10,31 +10,31 @@ public:
   static const Vec3 kUnitX;
   static const Vec3 kUnitY;
   static const Vec3 kUnitZ;
-  static Vec3 make(float x,float y,float z);
+  static Vec3 make(f32 x,f32 y,f32 z);
   union {
     struct {
-      float x;
-      float y;
-      float z;
+      f32 x;
+      f32 y;
+      f32 z;
     };
-    float m[3];
+    f32 m[3];
   };
 
   //Vec3& operator=(Vec3 const& rhs);
   bool operator==(Vec3 const& rhs) const;
-  float dot(Vec3 const& rhs) const;
+  f32 dot(Vec3 const& rhs) const;
   Vec3 operator+(Vec3 const& rhs) const;
   Vec3& operator+=(Vec3 const& rhs);
   Vec3 operator-(Vec3 const& rhs) const;
   Vec3& operator-=(Vec3 const& rhs);
   Vec3 operator-() const;
-  Vec3 operator*(float factor) const;
-  Vec3& operator*=(float factor);
-  float& operator[](std::uint8_t idx) {return m[idx];}
-  const float& operator[](std::uint8_t idx) const {return m[idx];};
-  //float length() const;
-  //float lengthSquare() const;
+  Vec3 operator*(f32 factor) const;
+  Vec3& operator*=(f32 factor);
+  f32& operator[](u8 idx) {return m[idx];}
+  const f32& operator[](u8 idx) const {return m[idx];};
+  //f32 length() const;
+  //f32 lengthSquare() const;
 };
 
-Vec3 operator*(float f, Vec3 const& lhs);
-Vec3 operator*=(float f, Vec3& lhs);
+Vec3 operator*(f32 f, Vec3 const& lhs);
+Vec3 operator*=(f32 f, Vec3& lhs);

@@ -10,6 +10,7 @@ class Framebuffer {
   int width() const {return width_;}
   int height() const {return height_;}
   void setPixel(int x,int y,unsigned int color);
+  void clear(unsigned int color);
 
  private:
   unsigned int* bytes_;

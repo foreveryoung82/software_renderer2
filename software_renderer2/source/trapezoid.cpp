@@ -40,7 +40,7 @@ int divide_into_trapezoids(const Triangle& triangle, Trapezoid* trapezoids) {
     return 1;
   }
 
-  float x=(v[1].y-v[0].y)/(v[2].y-v[0].y)*(v[2].x-v[0].x)+v[0].x;
+  f32 x=(v[1].y-v[0].y)/(v[2].y-v[0].y)*(v[2].x-v[0].x)+v[0].x;
   if (x<v[1].x) { // scan line touch [v0,v2] first
     trapezoids[0].l=Line2::make(v[0],v[2]);
     trapezoids[0].r=Line2::make(v[0],v[1]);
@@ -55,8 +55,8 @@ int divide_into_trapezoids(const Triangle& triangle, Trapezoid* trapezoids) {
     trapezoids[0].r=Line2::make(v[0],v[2]);
     trapezoids[0].t=v[0].y;
     trapezoids[0].b=v[1].y;
-    trapezoids[1].l=Line2::make(v[0],v[1]);
-    trapezoids[1].r=Line2::make(v[1],v[2]);
+    trapezoids[1].l=Line2::make(v[1],v[2]);
+    trapezoids[1].r=Line2::make(v[0],v[2]);
     trapezoids[1].t=v[1].y;
     trapezoids[1].b=v[2].y;
   }

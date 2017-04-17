@@ -37,6 +37,7 @@ void Device::draw( const Triangle& tri ) {
 
 void Device::clear() {
   assert(framebuffer_);
+  framebuffer_->clear(0);
 }
 
 void Device::present() {

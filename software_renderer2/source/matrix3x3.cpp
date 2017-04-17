@@ -58,10 +58,10 @@ Matrix3x3 Matrix3x3::makeScale(Vec2 const& s) {
   return matrix;  
 }
 
-Matrix3x3 Matrix3x3::makeRotation(float radian) {
+Matrix3x3 Matrix3x3::makeRotation(f32 radian) {
   Matrix3x3 matrix=makeIdentity();
-  float c=std::cosf(radian);
-  float s=std::sinf(radian);
+  f32 c=std::cosf(radian);
+  f32 s=std::sinf(radian);
   matrix.m[0][0]=c;
   matrix.m[1][0]=-s;
   matrix.m[0][1]=s;
@@ -69,16 +69,33 @@ Matrix3x3 Matrix3x3::makeRotation(float radian) {
   return matrix;   
 }
 
-Matrix3x3 Matrix3x3::makeXShear(float factor) {
+Matrix3x3 Matrix3x3::makeXShear(f32 factor) {
   Matrix3x3 matrix=makeIdentity();
   matrix.m[1][0]=factor;
   return matrix;     
 }
 
-Matrix3x3 Matrix3x3::makeYShear(float factor) {
+Matrix3x3 Matrix3x3::makeYShear(f32 factor) {
   Matrix3x3 matrix=makeIdentity();
   matrix.m[0][1]=factor;
   return matrix;    
+}
+
+const f32* Matrix3x3::begin() const {
+  return &m[0][0];
+}
+
+f32* Matrix3x3::begin() {
+  return const_cast<f32*>(const_cast<const Matrix3x3*>(this)->begin());
+}
+
+const f32* Matrix3x3::end() const {
+  const int num=3;
+  return (begin()+num*num);
+}
+
+f32* Matrix3x3::end() {
+  return const_cast<f32*>(const_cast<const Matrix3x3*>(this)->end());
 }
 
 bool Matrix3x3::operator==(Matrix3x3 const& rhs) const {
@@ -89,45 +106,45 @@ bool Matrix3x3::operator==(Matrix3x3 const& rhs) const {
 Matrix3x3 Matrix3x3::operator+(Matrix3x3 const& rhs) const {
   Matrix3x3 ret;
   std::transform(begin(),end(),rhs.begin(),ret.begin(),
-    [](float a,float b)->float{return a+b;});
+    [](u8 a,u8 b)->u8{return a+b;});
   return ret;
 }
 
 Matrix3x3& Matrix3x3::operator+=(Matrix3x3 const& rhs) {
   std::transform(begin(),end(),rhs.begin(),begin(),
-    [](float a,float b)->float{return a+b;});
+    [](u8 a,u8 b)->u8{return a+b;});
   return *this;
 }
 
 Matrix3x3 Matrix3x3::operator-(Matrix3x3 const& rhs) const {
   Matrix3x3 ret;
   std::transform(begin(),end(),rhs.begin(),ret.begin(),
-    [](float a,float b)->float{return a-b;});
+    [](u8 a,u8 b)->u8{return a-b;});
   return ret;
 }
 
 Matrix3x3& Matrix3x3::operator-=(Matrix3x3 const& rhs) {
   std::transform(begin(),end(),rhs.begin(),begin(),
-    [](float a,float b)->float{return a-b;});
+    [](u8 a,u8 b)->u8{return a-b;});
   return *this;
 }
 
 Matrix3x3 Matrix3x3::operator-() const {
   Matrix3x3 ret;
-  std::transform(begin(),end(),ret.begin(),[](float a)->float{return -a;});
+  std::transform(begin(),end(),ret.begin(),[](u8 a)->u8{return -a;});
   return ret;
 }
 
-Matrix3x3 Matrix3x3::operator*(float factor) const {
+Matrix3x3 Matrix3x3::operator*(f32 factor) const {
   Matrix3x3 ret;
   std::transform(begin(),end(),ret.begin(),
-    [factor](float v)->float{return v*factor;});
+    [factor](f32 v)->f32{return v*factor;});
   return ret;
 }
 
-Matrix3x3& Matrix3x3::operator*=(float factor) {
+Matrix3x3& Matrix3x3::operator*=(f32 factor) {
   std::transform(begin(),end(),begin(),
-    [factor](float v)->float{return v*factor;});
+    [factor](f32 v)->f32{return v*factor;});
   return *this;  
 }
 
@@ -169,10 +186,17 @@ Vec2 Matrix3x3::transformPoint(Vec2 const& p) const {
   return Vec2::make(ret);
 }
 
-//Matrix3x3 Matrix3x3::inverse() const {
-//  Matrix3x3 ret;
-//  
-//}
+Matrix3x3 Matrix3x3::inverse() const {
+  Matrix3x3 ret;
+  const int num=3;
+  const f32 inverse_determinant=1.f/determinant();
+  for (int i=0;i<3;++i) {
+    for (int j=0;j<3;++j) {
+      ret.m[i][j]=inverse_determinant*algebraicCofactor(j,i);
+    }
+  }
+  return ret;
+}
 
 Matrix3x3 Matrix3x3::transpose() const {
   Matrix3x3 ret;
@@ -183,4 +207,33 @@ Matrix3x3 Matrix3x3::transpose() const {
     }
   }
   return ret;
+}
+
+f32 Matrix3x3::determinant() const {
+  // Laplace expansion by 1th row
+  f32 ret=m[0][0]*cofactor(0,0)+
+              -m[0][1]*cofactor(0,1)+
+              m[0][2]*cofactor(0,2);
+   return ret;
+}
+
+f32 Matrix3x3::cofactor(u8 i, u8 j) const {
+  const int num=3;
+  int i0=(i+1)%3;
+  int i1=(i+2)%3;
+  if (i0>i1)
+    std::swap(i0, i1);
+  int j0=(j+1)%3;
+  int j1=(j+2)%3;
+  if (j0>j1)
+    std::swap(j0, j1);
+  const f32 ret=(m[i0][j0]*m[i1][j1]-m[i0][j1]*m[i1][j0]);
+  return ret;
+}
+
+f32 Matrix3x3::algebraicCofactor(u8 i, u8 j) const {
+  f32 cf=cofactor(i,j);
+  if (0!=(i+j)%2)
+    cf*=-1.f;
+  return cf;
 }

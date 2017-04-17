@@ -91,5 +91,8 @@
     <ClInclude Include="include\vec3.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\base.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

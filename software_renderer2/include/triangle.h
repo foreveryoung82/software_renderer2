@@ -2,7 +2,7 @@
 //@author:yangjie82@gmail.com
 //@brief:triangle class
 #pragma once
-#include <cstdint>
+#include "base.h"
 #include "vec2.h"
 
 //逆时针方向顶点描述的三角形
@@ -17,7 +17,7 @@ class Triangle {
     };
     Vec2 m[3];
   };
-  Vec2& operator[](std::uint8_t idx) {return m[idx];}
-  const Vec2& operator[](std::uint8_t idx) const {return m[idx];}
-  //Triangle scale(float scale_x, float scale_y) const;
+  Vec2& operator[](u8 idx) {return m[idx];}
+  const Vec2& operator[](u8 idx) const {return m[idx];}
+  //Triangle scale(f32 scale_x, f32 scale_y) const;
 };
