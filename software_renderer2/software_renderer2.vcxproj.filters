@@ -32,9 +32,6 @@
     <ClCompile Include="source\trapezoid.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="include\rasterizer.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\device.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -48,6 +45,15 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="source\vec3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\camera.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\vec4.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\rasterizer.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -92,6 +98,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\base.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\camera.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vec4.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
