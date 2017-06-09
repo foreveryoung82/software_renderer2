@@ -17,6 +17,23 @@ Vec2 Vec2::make(const Vec3& v) {
   return make(v.x,v.y);
 }
 
+const f32* Vec2::begin() const {
+  return &m[0];
+}
+
+f32* Vec2::begin() {
+  return const_cast<f32*>(const_cast<const Vec2*>(this)->begin());  
+}
+
+const f32* Vec2::end() const {
+  const int num=2;
+  return &m[0]+num;
+}
+
+f32* Vec2::end() {
+  return const_cast<f32*>(const_cast<const Vec2*>(this)->end());
+}
+
 bool Vec2::operator==(Vec2 const& rhs) const {
   return ((this->x==rhs.x) && (this->y==rhs.y));
 }

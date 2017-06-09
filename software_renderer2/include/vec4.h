@@ -22,6 +22,10 @@ public:
     f32 m[4];
   };
 
+  const f32* begin() const;
+  f32* begin();
+  const f32* end() const;
+  f32* end();
   bool operator==(Vec4 const& rhs) const;
   Vec4 operator+(Vec4 const& rhs) const;
   Vec4& operator+=(Vec4 const& rhs);

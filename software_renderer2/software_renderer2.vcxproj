@@ -19,6 +19,7 @@
     <ClCompile Include="source\line2.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\matrix3x3.cpp" />
+    <ClCompile Include="source\matrix4x4.cpp" />
     <ClCompile Include="source\rasterizer.cpp" />
     <ClCompile Include="source\rect.cpp" />
     <ClCompile Include="source\trapezoid.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="include\framebuffer.h" />
     <ClInclude Include="include\line2.h" />
     <ClInclude Include="include\matrix3x3.h" />
+    <ClInclude Include="include\matrix4x4.h" />
     <ClInclude Include="include\rasterizer.h" />
     <ClInclude Include="include\rect.h" />
     <ClInclude Include="include\trapezoid.h" />

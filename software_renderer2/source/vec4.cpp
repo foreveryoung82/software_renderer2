@@ -16,6 +16,23 @@ Vec4 Vec4::make(f32 x,f32 y,f32 z,f32 w) {
   return ret;  
 }
 
+const f32* Vec4::begin() const {
+  return &m[0];
+}
+
+f32* Vec4::begin() {
+  return const_cast<f32*>(const_cast<const Vec4*>(this)->begin());  
+}
+
+const f32* Vec4::end() const {
+  const int num=4;
+  return &m[0]+num;
+}
+
+f32* Vec4::end() {
+  return const_cast<f32*>(const_cast<const Vec4*>(this)->end());
+}
+
 bool Vec4::operator==(Vec4 const& rhs) const {
   return ((this->x==rhs.x) &&
           (this->y==rhs.y) &&

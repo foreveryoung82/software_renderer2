@@ -21,6 +21,10 @@ class Vec2 {
   };
 
   //Vec2& operator=(Vec2 const& rhs);
+  const f32* begin() const;
+  f32* begin();
+  const f32* end() const;
+  f32* end();
   bool operator==(Vec2 const& rhs) const;
   f32 dot(Vec2 const& rhs) const;
   Vec2 operator+(Vec2 const& rhs) const;

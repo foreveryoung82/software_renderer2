@@ -1,5 +1,6 @@
 #include "vec3.h"
 #include <cmath>
+#include "vec4.h"
 
 const Vec3 Vec3::kZero=Vec3::make(0,0,0);
 const Vec3 Vec3::kUnitX=Vec3::make(1,0,0);
@@ -12,6 +13,31 @@ Vec3 Vec3::make(f32 x,f32 y,f32 z) {
   ret.y=y;
   ret.z=z;
   return ret;  
+}
+
+Vec3 Vec3::make(Vec4 const& v4) {
+  Vec3 ret;
+  ret.x=v4.x;
+  ret.y=v4.y;
+  ret.z=v4.z;
+  return ret;
+}
+
+const f32* Vec3::begin() const {
+  return &m[0];
+}
+
+f32* Vec3::begin() {
+  return const_cast<f32*>(const_cast<const Vec3*>(this)->begin());  
+}
+
+const f32* Vec3::end() const {
+  const int num=3;
+  return &m[0]+num;
+}
+
+f32* Vec3::end() {
+  return const_cast<f32*>(const_cast<const Vec3*>(this)->end());
 }
 
 bool Vec3::operator==(Vec3 const& rhs) const {

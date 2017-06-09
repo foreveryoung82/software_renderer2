@@ -227,7 +227,7 @@ f32 Matrix3x3::cofactor(u8 i, u8 j) const {
   int j1=(j+2)%3;
   if (j0>j1)
     std::swap(j0, j1);
-  const f32 ret=(m[i0][j0]*m[i1][j1]-m[i0][j1]*m[i1][j0]);
+  const f32 ret=(m[j0][i0]*m[j1][i1]-m[j1][i0]*m[j0][i1]);
   return ret;
 }
 

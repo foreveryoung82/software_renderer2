@@ -4,6 +4,7 @@
 #pragma once
 #include "base.h"
 
+class Vec4;
 class Vec3 {
 public:
   static const Vec3 kZero;
@@ -11,6 +12,7 @@ public:
   static const Vec3 kUnitY;
   static const Vec3 kUnitZ;
   static Vec3 make(f32 x,f32 y,f32 z);
+  static Vec3 make(Vec4 const& v4);
   union {
     struct {
       f32 x;
@@ -21,6 +23,10 @@ public:
   };
 
   //Vec3& operator=(Vec3 const& rhs);
+  const f32* begin() const;
+  f32* begin();
+  const f32* end() const;
+  f32* end();
   bool operator==(Vec3 const& rhs) const;
   f32 dot(Vec3 const& rhs) const;
   Vec3 operator+(Vec3 const& rhs) const;

@@ -3,12 +3,19 @@
 //@brief:camera
 #pragma once
 #include "base.h"
+#include "vec3.h"
 #include "vec4.h"
 
 // camera class for perspective projection
 class Camera {
  public:
-  explicit Camera(f32 fov, f32 aspect, f32 near, f32 far);
+  explicit Camera(Vec3 eye,
+                  Vec3 up,
+                  Vec3 view,
+                  f32 fov,
+                  f32 aspect,
+                  f32 near,
+                  f32 far);
   //f32 fov() const;
   //void setFov(f32 fov);
   //f32 aspect() const;
