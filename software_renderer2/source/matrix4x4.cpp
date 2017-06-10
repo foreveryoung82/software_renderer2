@@ -234,7 +234,7 @@ Matrix4x4 Matrix4x4::transpose() const {
 }
 
 f32 Matrix4x4::determinant() const {
-  // Laplace expansion by 1th row
+  // Laplace expansion by 1th column
   f32 ret=m[0][0]*cofactor(0,0)+
           -m[0][1]*cofactor(0,1)+
           m[0][2]*cofactor(0,2)+
@@ -246,11 +246,11 @@ f32 Matrix4x4::cofactor(u8 i, u8 j) const {
   Matrix3x3 m3x3;
   int cw=0;
   for(int c=0;c<4;++c) {
-    if (c==j)
+    if (c==i)
       continue;
     int rw=0;
     for(int r=0;r<4;++r) {
-      if (r==i)
+      if (r==j)
         continue;
       m3x3.m[cw][rw]=m[c][r];
       ++rw;

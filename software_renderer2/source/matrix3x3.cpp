@@ -210,7 +210,7 @@ Matrix3x3 Matrix3x3::transpose() const {
 }
 
 f32 Matrix3x3::determinant() const {
-  // Laplace expansion by 1th row
+  // Laplace expansion by 1th column
   f32 ret=m[0][0]*cofactor(0,0)+
               -m[0][1]*cofactor(0,1)+
               m[0][2]*cofactor(0,2);
@@ -227,7 +227,7 @@ f32 Matrix3x3::cofactor(u8 i, u8 j) const {
   int j1=(j+2)%3;
   if (j0>j1)
     std::swap(j0, j1);
-  const f32 ret=(m[j0][i0]*m[j1][i1]-m[j1][i0]*m[j0][i1]);
+  const f32 ret=(m[i0][j0]*m[i1][j1]-m[i0][j1]*m[i1][j0]);
   return ret;
 }
 
