@@ -216,7 +216,7 @@ Matrix4x4 Matrix4x4::inverse() const {
   const f32 inverse_determinant=1.f/determinant();
   for (int i=0;i<num;++i) {
     for (int j=0;j<num;++j) {
-      ret.m[i][j]=inverse_determinant*algebraicCofactor(j,i);
+      ret.m[i][j]=inverse_determinant*algebraicCofactor(i,j);
     }
   }
   return ret;
@@ -236,23 +236,23 @@ Matrix4x4 Matrix4x4::transpose() const {
 f32 Matrix4x4::determinant() const {
   // Laplace expansion by 1th column
   f32 ret=m[0][0]*cofactor(0,0)+
-          -m[0][1]*cofactor(0,1)+
-          m[0][2]*cofactor(0,2)+
-          -m[0][3]*cofactor(0,3);
+          -m[0][1]*cofactor(1,0)+
+          m[0][2]*cofactor(2,0)+
+          -m[0][3]*cofactor(3,0);
   return ret;
 }
 
-f32 Matrix4x4::cofactor(u8 i, u8 j) const {
+f32 Matrix4x4::cofactor(u8 r,u8 c) const {
   Matrix3x3 m3x3;
   int cw=0;
-  for(int c=0;c<4;++c) {
-    if (c==i)
+  for(int cr=0;cr<4;++cr) {
+    if (cr==c)
       continue;
     int rw=0;
-    for(int r=0;r<4;++r) {
-      if (r==j)
+    for(int rr=0;rr<4;++rr) {
+      if (rr==r)
         continue;
-      m3x3.m[cw][rw]=m[c][r];
+      m3x3.m[cw][rw]=m[cr][rr];
       ++rw;
     }
     ++cw;
@@ -260,9 +260,9 @@ f32 Matrix4x4::cofactor(u8 i, u8 j) const {
   return m3x3.determinant();
 }
 
-f32 Matrix4x4::algebraicCofactor(u8 i, u8 j) const {
-  f32 cf=cofactor(i,j);
-  if (0!=(i+j)%2)
+f32 Matrix4x4::algebraicCofactor(u8 r, u8 c) const {
+  f32 cf=cofactor(r,c);
+  if (0!=(r+c)%2)
     cf*=-1.f;
   return cf;
 }

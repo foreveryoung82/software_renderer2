@@ -192,7 +192,7 @@ Matrix3x3 Matrix3x3::inverse() const {
   const f32 inverse_determinant=1.f/determinant();
   for (int i=0;i<3;++i) {
     for (int j=0;j<3;++j) {
-      ret.m[i][j]=inverse_determinant*algebraicCofactor(j,i);
+      ret.m[i][j]=inverse_determinant*algebraicCofactor(i,j);
     }
   }
   return ret;
@@ -212,28 +212,28 @@ Matrix3x3 Matrix3x3::transpose() const {
 f32 Matrix3x3::determinant() const {
   // Laplace expansion by 1th column
   f32 ret=m[0][0]*cofactor(0,0)+
-              -m[0][1]*cofactor(0,1)+
-              m[0][2]*cofactor(0,2);
+              -m[0][1]*cofactor(1,0)+
+              m[0][2]*cofactor(2,0);
    return ret;
 }
 
-f32 Matrix3x3::cofactor(u8 i, u8 j) const {
+f32 Matrix3x3::cofactor(u8 r,u8 c) const {
   const int num=3;
-  int i0=(i+1)%3;
-  int i1=(i+2)%3;
+  int i0=(c+1)%3;
+  int i1=(c+2)%3;
   if (i0>i1)
     std::swap(i0, i1);
-  int j0=(j+1)%3;
-  int j1=(j+2)%3;
+  int j0=(r+1)%3;
+  int j1=(r+2)%3;
   if (j0>j1)
     std::swap(j0, j1);
   const f32 ret=(m[i0][j0]*m[i1][j1]-m[i0][j1]*m[i1][j0]);
   return ret;
 }
 
-f32 Matrix3x3::algebraicCofactor(u8 i, u8 j) const {
-  f32 cf=cofactor(i,j);
-  if (0!=(i+j)%2)
+f32 Matrix3x3::algebraicCofactor(u8 r, u8 c) const {
+  f32 cf=cofactor(r,c);
+  if (0!=(r+c)%2)
     cf*=-1.f;
   return cf;
 }

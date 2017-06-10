@@ -45,8 +45,8 @@ public:
   Matrix4x4 inverse() const;
   Matrix4x4 transpose() const;
   f32 determinant() const;
-  f32 cofactor(u8 i, u8 j) const;
-  f32 algebraicCofactor(u8 i, u8 j) const;
+  f32 cofactor(u8 r,u8 c) const;
+  f32 algebraicCofactor(u8 r,u8 c) const;
 
   f32 m[4][4];
 

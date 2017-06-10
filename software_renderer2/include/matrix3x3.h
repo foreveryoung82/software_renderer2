@@ -38,8 +38,8 @@ public:
   Matrix3x3 inverse() const;
   Matrix3x3 transpose() const;
   f32 determinant() const;
-  f32 cofactor(u8 i, u8 j) const;
-  f32 algebraicCofactor(u8 i, u8 j) const;
+  f32 cofactor(u8 r, u8 c) const;
+  f32 algebraicCofactor(u8 r, u8 c) const;
 
   f32 m[3][3];
 
