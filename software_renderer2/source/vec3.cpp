@@ -49,7 +49,7 @@ f32 Vec3::dot(Vec3 const& rhs) const {
 }
 
 Vec3 Vec3::cross(Vec3 const& rhs) const {
-  return Vec3::make(y*rhs.z-z*rhs.y,z*rhs.x-x*rhs.z,y*rhs.z-z*rhs.y);
+  return Vec3::make(y*rhs.z-z*rhs.y,z*rhs.x-x*rhs.z,x*rhs.y-y*rhs.x);
 }
 
 Vec3 Vec3::operator+(Vec3 const& rhs) const {
