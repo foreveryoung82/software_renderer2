@@ -76,13 +76,17 @@ Vec2& Vec2::operator*=(f32 factor) {
   return *this;
 }
 
-//f32 Vec2::length() const {
-//  return std::sqrt(dot(*this));
-//}
-//
-//f32 Vec2::lengthSquare() const {
-//  return dot(*this);
-//}
+f32 Vec2::length() const {
+  return std::sqrt(dot(*this));
+}
+
+f32 Vec2::lengthSquare() const {
+  return dot(*this);
+}
+
+Vec2 Vec2::normalized() const {
+  return (1.f/length()) * *this;
+}
 
 Vec2 operator*(f32 f, Vec2 const& lhs) {
   return lhs*f;

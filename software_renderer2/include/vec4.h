@@ -27,6 +27,7 @@ public:
   const f32* end() const;
   f32* end();
   bool operator==(Vec4 const& rhs) const;
+  f32 dot(Vec4 const& rhs) const;
   Vec4 operator+(Vec4 const& rhs) const;
   Vec4& operator+=(Vec4 const& rhs);
   Vec4 operator-(Vec4 const& rhs) const;
@@ -36,8 +37,9 @@ public:
   Vec4& operator*=(f32 factor);
   f32& operator[](u8 idx) {return m[idx];}
   const f32& operator[](u8 idx) const {return m[idx];};
-  //f32 length() const;
-  //f32 lengthSquare() const;
+  f32 length() const;
+  f32 lengthSquare() const;
+  Vec4 normalized() const;
 };
 
 Vec4 operator*(f32 f, Vec4 const& lhs);

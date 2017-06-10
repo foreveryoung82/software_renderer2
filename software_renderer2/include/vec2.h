@@ -36,8 +36,9 @@ class Vec2 {
   Vec2& operator*=(f32 factor);
   f32& operator[](u8 idx) {return m[idx];}
   const f32& operator[](u8 idx) const {return m[idx];};
-  //f32 length() const;
-  //f32 lengthSquare() const;
+  f32 length() const;
+  f32 lengthSquare() const;
+  Vec2 normalized() const;
 };
 
 Vec2 operator*(f32 f, Vec2 const& lhs);

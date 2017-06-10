@@ -48,6 +48,10 @@ f32 Vec3::dot(Vec3 const& rhs) const {
   return (x*rhs.x+y*rhs.y+z*rhs.z);
 }
 
+Vec3 Vec3::cross(Vec3 const& rhs) const {
+  return Vec3::make(y*rhs.z-z*rhs.y,z*rhs.x-x*rhs.z,y*rhs.z-z*rhs.y);
+}
+
 Vec3 Vec3::operator+(Vec3 const& rhs) const {
   return Vec3::make(x+rhs.x, y+rhs.y, z+rhs.z);
 }
@@ -85,13 +89,17 @@ Vec3& Vec3::operator*=(f32 factor) {
   return *this;
 }
 
-//f32 Vec3::length() const {
-//  return std::sqrt(dot(*this));
-//}
-//
-//f32 Vec3::lengthSquare() const {
-//  return dot(*this);
-//}
+f32 Vec3::length() const {
+  return std::sqrt(dot(*this));
+}
+
+f32 Vec3::lengthSquare() const {
+  return dot(*this);
+}
+
+Vec3 Vec3::normalized() const {
+  return (1.f/length()) * *this;
+}
 
 Vec3 operator*(f32 f, Vec3 const& lhs) {
   return lhs*f;
