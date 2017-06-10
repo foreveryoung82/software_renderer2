@@ -26,23 +26,29 @@ void Device::draw( const Triangle3D& tri ) {
   assert(framebuffer_);
 
   Matrix4x4 mvp=camera_->projectionMatrix()*camera_->viewMatrix();
-  Triangle tri2d=Triangle::make(Vec2::make(mvp.transformPoint(tri.p0)),
-                                Vec2::make(mvp.transformPoint(tri.p1)),
-                                Vec2::make(mvp.transformPoint(tri.p2)));
+  Vec4 v0=mvp*Vec4::make(tri.p0, 1.f);
+  Vec4 v1=mvp*Vec4::make(tri.p1, 1.f);
+  Vec4 v2=mvp*Vec4::make(tri.p2, 1.f);
+  std::vector<Triangle3D> tri3dList=homogenous_clip(v0,v1,v2);
+  for(auto tri3D:tri3dList) {
+    Triangle tri2d=Triangle::make(Vec2::make(tri3D.p0),
+                                  Vec2::make(tri3D.p1),
+                                  Vec2::make(tri3D.p2));
 
-  std::vector<Vec2> clipped=viewport_clip(tri2d);
-  const int clipped_num=clipped.size();
-  const int vert_num=clipped.size();
-  if (0==vert_num)
-    return;
-  assert((1!=vert_num) || (2!=vert_num));
-  const int triangle_num=(vert_num-2);
-  std::vector<Triangle> triangles;
-  for (int i=0;i<triangle_num;++i) {
-    triangles.push_back(Triangle::make(clipped[0], clipped[i+1], clipped[i+2]));
+    std::vector<Vec2> clipped=viewport_clip(tri2d);
+    const int clipped_num=clipped.size();
+    const int vert_num=clipped.size();
+    if (0==vert_num)
+      continue;
+    assert((1!=vert_num) || (2!=vert_num));
+    const int triangle_num=(vert_num-2);
+    std::vector<Triangle> triangles;
+    for (int i=0;i<triangle_num;++i) {
+      triangles.push_back(Triangle::make(clipped[0], clipped[i+1], clipped[i+2]));
+    }
+    for (int i=0;i<triangle_num;++i)
+      rasterizer_->draw(triangles[i]);
   }
-  for (int i=0;i<triangle_num;++i)
-    rasterizer_->draw(triangles[i]);
 }
 
 void Device::clear() {

@@ -1,5 +1,6 @@
 #include "vec4.h"
 #include <cmath>
+#include "vec3.h"
 
 const Vec4 Vec4::kZero=Vec4::make(0,0,0,0);
 const Vec4 Vec4::kUnitX=Vec4::make(1,0,0,0);
@@ -14,6 +15,15 @@ Vec4 Vec4::make(f32 x,f32 y,f32 z,f32 w) {
   ret.z=z;
   ret.w=w;
   return ret;  
+}
+
+Vec4 Vec4::make(Vec3 const& v, f32 w) {
+  Vec4 ret;
+  ret.x=v.x;
+  ret.y=v.y;
+  ret.z=v.z;
+  ret.w=w;
+  return ret;    
 }
 
 const f32* Vec4::begin() const {

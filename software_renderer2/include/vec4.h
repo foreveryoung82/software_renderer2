@@ -4,6 +4,7 @@
 #pragma once
 #include "base.h"
 
+class Vec3;
 class Vec4 {
 public:
   static const Vec4 kZero;
@@ -12,6 +13,7 @@ public:
   static const Vec4 kUnitZ;
   static const Vec4 kUnitW;
   static Vec4 make(f32 x,f32 y,f32 z, f32 w);
+  static Vec4 make(Vec3 const& v, f32 w);
   union {
     struct {
       f32 x;

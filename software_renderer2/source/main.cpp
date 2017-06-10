@@ -23,17 +23,17 @@ void Dump(Vec4 const& v) {
 void Dump(Matrix4x4 const& m) {
   for(int r=0;r<4;++r) {
     std::cout<<std::setw(12)<<m.m[0][r]
-      <<std::setw(12)<<m.m[1][r]
-      <<std::setw(12)<<m.m[2][r]
-      <<std::setw(12)<<m.m[3][r]
-      <<std::endl;
+    <<std::setw(12)<<m.m[1][r]
+    <<std::setw(12)<<m.m[2][r]
+    <<std::setw(12)<<m.m[3][r]
+    <<std::endl;
   }
 }
 
 void main() {
   Device device;
   Application app;
-  
+
   Camera::ViewParameters vp;
   vp.Eye    = Vec3::make(0,0,1.f);
   vp.Target = Vec3::make(0,0,-1);
@@ -46,8 +46,8 @@ void main() {
   Camera camera=Camera(vp,pp);
 
   Triangle3D tri=Triangle3D::make(Vec3::make(1.5f,1.5f,-2.f),
-                                  Vec3::make(-1.5f,1.5f,-2.f),
-                                  Vec3::make(1.5f,-1.5f,-2.f));
+    Vec3::make(-1.5f,1.5f,-2.f),
+    Vec3::make(1.5f,-1.5f,-2.f));
 
   app.setOnFrameBeginEvent([&device,&camera,&tri](Framebuffer& fb){
     Matrix4x4 rotation=Matrix4x4::makeRotation(3.1415926f/180.f,Vec3::kUnitY);
@@ -63,3 +63,23 @@ void main() {
   app.run();
   app.teardown();
 }
+
+//#include <vector>
+//#include <iostream>
+//#include <iomanip>
+//#include "clip.h"
+//#include "vec4.h"
+//void Dump(Vec4 const& v) {
+//  std::cout<<std::setw(8)<<v.x
+//    <<std::setw(8)<<v.y
+//    <<std::setw(8)<<v.z
+//    <<std::setw(8)<<v.w
+//    <<std::endl;
+//}
+//void main() {
+//  std::vector<Vec4> clipResult=homogenous_clip(Vec4::make(-10.f,-10.f,-10.f,1.f),
+//                                               Vec4::make(10.f,10.f,10.f,1.f));
+//  for(auto v:clipResult) {
+//    Dump(v);
+//  }
+//}

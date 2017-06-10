@@ -4,6 +4,7 @@
 #include <iterator>
 #include "rect.h"
 #include "triangle.h"
+#include "triangle3d.h"
 
 std::vector<Vec2> viewport_clip_top(const std::vector<Vec2>& input) {
   std::vector<Vec2> output;
@@ -111,3 +112,82 @@ std::vector<Vec2> viewport_clip( const Triangle& triangle ) {
   return output;
 }
 
+std::vector<Vec4> homogenous_clip(Vec4 const& a,Vec4 const& c) {
+  std::vector<Vec4> ret;
+
+  f32 bcA[6];
+  f32 bcC[6];
+  for(int i=0;i<3;++i) {
+    bcA[i*2]  = a[3]+a[i];
+    bcA[i*2+1]= a[3]-a[i];
+    bcC[i*2]  = c[3]+c[i];
+    bcC[i*2+1]= c[3]-c[i];
+  }
+  u8 outcomeA=0;
+  u8 outcomeC=0;
+  for(int i=0;i<6;++i) {
+    const u8 flag=0x1<<i;
+    if(0>=bcA[i])
+      outcomeA|=flag;
+    if(0>=bcC[i])
+      outcomeC|=flag;
+  }
+
+  if((outcomeA & outcomeC) != 0) // at least one plane keeps both points out
+    return ret;
+  if((outcomeA | outcomeC) == 0) { // both points are in box
+    ret.push_back(a);
+    ret.push_back(c);
+    return ret;
+  }
+
+  f32 tIn  = 0.f;
+  f32 tOut = 1.f;
+  for(int i=0;i<6;++i) {
+    f32 t=bcA[i]/(bcA[i]-bcC[i]);
+    if(0 > bcA[i])
+      tIn=std::max(t,tIn);
+    else if (0 > bcC[i])
+      tOut=std::min(t,tOut);
+    if(tIn>tOut)
+      return ret;
+  }
+
+  Vec4 newA=Vec4::make(a.x+(c.x-a.x)*tIn,
+                       a.y+(c.y-a.y)*tIn,
+                       a.z+(c.z-a.z)*tIn,
+                       a.w+(c.w-a.w)*tIn);
+  Vec4 newC=Vec4::make(a.x+(c.x-a.x)*tOut,
+                       a.y+(c.y-a.y)*tOut,
+                       a.z+(c.z-a.z)*tOut,
+                       a.w+(c.w-a.w)*tOut);
+  ret.push_back(newA);
+  ret.push_back(newC);
+  return ret;
+}
+
+std::vector<Triangle3D> homogenous_clip(Vec4 const& v0,
+                                        Vec4 const& v1,
+                                        Vec4 const& v2) {
+  const Vec4* tri[3]={&v0,&v1,&v2}; 
+  std::vector<Vec4> vertexes;
+  for(int i=0;i<3;++i) {
+    Vec4 const& a=*tri[i];
+    Vec4 const& c=*tri[(i+1)%3];
+    std::vector<Vec4> newVerts=homogenous_clip(a,c);
+    for(auto vert:newVerts) {
+      Vec4 temp=vert*(1.f/vert.w);
+      vertexes.push_back(temp);
+    }
+    //std::copy(newVerts.begin(),newVerts.end(),back_inserter(vertexes));  
+  }
+
+  std::vector<Triangle3D> triangles;
+  const int num=vertexes.size();
+  for(int i=0;i<num-2;++i) {
+    triangles.push_back(Triangle3D::make(Vec3::make(vertexes[0]),
+                                         Vec3::make(vertexes[i+1]),
+                                         Vec3::make(vertexes[(i+2)%num])));
+  }
+  return triangles;
+}
