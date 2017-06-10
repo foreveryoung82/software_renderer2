@@ -59,6 +59,9 @@
     <ClCompile Include="source\matrix4x4.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\triangle3d.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\clip.h">
@@ -110,6 +113,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\matrix4x4.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\triangle3d.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

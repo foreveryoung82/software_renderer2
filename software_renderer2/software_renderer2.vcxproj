@@ -24,6 +24,7 @@
     <ClCompile Include="source\rect.cpp" />
     <ClCompile Include="source\trapezoid.cpp" />
     <ClCompile Include="source\triangle.cpp" />
+    <ClCompile Include="source\triangle3d.cpp" />
     <ClCompile Include="source\vec2.cpp" />
     <ClCompile Include="source\vec3.cpp" />
     <ClCompile Include="source\vec4.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="include\rect.h" />
     <ClInclude Include="include\trapezoid.h" />
     <ClInclude Include="include\triangle.h" />
+    <ClInclude Include="include\triangle3d.h" />
     <ClInclude Include="include\vec2.h" />
     <ClInclude Include="include\vec3.h" />
     <ClInclude Include="include\vec4.h" />

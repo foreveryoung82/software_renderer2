@@ -207,6 +207,7 @@ Vec3 Matrix4x4::transformVector(Vec3 const& v) const {
 Vec3 Matrix4x4::transformPoint(Vec3 const& p) const {
   Vec4 v3=Vec4::make(p.x,p.y,p.z,1);
   Vec4 ret=*this*v3;
+  ret*=1.f/ret.w;
   return Vec3::make(ret);
 }
 

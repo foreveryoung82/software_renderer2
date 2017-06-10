@@ -183,6 +183,7 @@ Vec2 Matrix3x3::transformVector(Vec2 const& v) const {
 Vec2 Matrix3x3::transformPoint(Vec2 const& p) const {
   Vec3 v3=Vec3::make(p.x,p.y,1);
   Vec3 ret=*this*v3;
+  ret*=1.f/ret.z;
   return Vec2::make(ret);
 }
 

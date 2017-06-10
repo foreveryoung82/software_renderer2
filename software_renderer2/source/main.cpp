@@ -1,61 +1,65 @@
-//#include "application.h"
-//#include "framebuffer.h"
-//#include "device.h"
-//#include "triangle.h"
-//#include "matrix3x3.h"
-//
-//void main() {
-//  Device device;
-//  Application app;
-//  Triangle tri=Triangle::make(Vec2::make(0.3f,1.3f),
-//    Vec2::make(-1.f,-1.5f),
-//    Vec2::make(0.6f,-0.8f));
-//
-//  app.setOnFrameBeginEvent([&device,&tri](Framebuffer& fb){
-//    device.setFramebuffer(fb);
-//
-//    Matrix3x3 rotationQuarterPi=Matrix3x3::makeRotation(3.1415926f/180.f);
-//    tri.p0=rotationQuarterPi.transformPoint(tri.p0);
-//    tri.p1=rotationQuarterPi.transformPoint(tri.p1);
-//    tri.p2=rotationQuarterPi.transformPoint(tri.p2);
-//    device.clear();
-//    device.draw(tri);
-//  });
-//  app.setup(640,480);
-//  app.run();
-//  app.teardown();
-//}
-
 #include <iostream>
 #include <iomanip>
-#include "matrix4x4.h"
+#include "application.h"
+#include "framebuffer.h"
+#include "device.h"
+#include "triangle.h"
+#include "camera.h"
 #include "matrix3x3.h"
+#include "matrix4x4.h"
+#include "vec4.h"
 #include "vec3.h"
+#include "vec2.h"
+#include "triangle3d.h"
 
-using namespace std;
+void Dump(Vec4 const& v) {
+  std::cout<<std::setw(8)<<v.x
+    <<std::setw(8)<<v.y
+    <<std::setw(8)<<v.z
+    <<std::setw(8)<<v.w
+    <<std::endl;
+}
+
 void Dump(Matrix4x4 const& m) {
-  for(int c=0;c<4;++c) {
-    for(int r=0;r<4;++r) {
-      cout<<setw(12)<<setiosflags(ios::left)<<m.m[c][r];
-    }
-    cout<<endl;
+  for(int r=0;r<4;++r) {
+    std::cout<<std::setw(12)<<m.m[0][r]
+      <<std::setw(12)<<m.m[1][r]
+      <<std::setw(12)<<m.m[2][r]
+      <<std::setw(12)<<m.m[3][r]
+      <<std::endl;
   }
 }
-void Dump(Matrix3x3 const& m) {
-  for(int c=0;c<3;++c) {
-    for(int r=0;r<3;++r) {
-      cout<<setw(12)<<setiosflags(ios::left)<<m.m[c][r];
-    }
-    cout<<endl;
-  }
-}
-void main() {
-  Matrix4x4 m=Matrix4x4::makeRotation(1.f,Vec3::kUnitX);
-  m=Matrix4x4::makeTranslation(Vec3::make(4,5,6))*m;
-  Matrix4x4 ret=m*m.inverse();
 
-  //Matrix3x3 m=Matrix3x3::makeRotation(1.f);
-  //Matrix3x3 ret=m*m.inverse();
-  Dump(ret);
-  cout<<ret.determinant()<<endl;
+void main() {
+  Device device;
+  Application app;
+  
+  Camera::ViewParameters vp;
+  vp.Eye    = Vec3::make(0,0,1.f);
+  vp.Target = Vec3::make(0,0,-1);
+  vp.Up     = Vec3::kUnitY;
+  Camera::ProjectionParameters pp;
+  pp.Aspect = 1.f;
+  pp.Far    = 100.f;
+  pp.Fov    = 3.1415926f/2.f;
+  pp.Near   = 1.f;
+  Camera camera=Camera(vp,pp);
+
+  Triangle3D tri=Triangle3D::make(Vec3::make(1.5f,1.5f,-2.f),
+                                  Vec3::make(-1.5f,1.5f,-2.f),
+                                  Vec3::make(1.5f,-1.5f,-2.f));
+
+  app.setOnFrameBeginEvent([&device,&camera,&tri](Framebuffer& fb){
+    Matrix4x4 rotation=Matrix4x4::makeRotation(3.1415926f/180.f,Vec3::kUnitY);
+    camera.setEye(rotation.transformPoint(camera.eye()));
+
+    device.setCamera(camera);
+    device.setFramebuffer(fb);
+
+    device.clear();
+    device.draw(tri);
+  });
+  app.setup(640,480);
+  app.run();
+  app.teardown();
 }

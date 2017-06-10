@@ -6,10 +6,13 @@
 #include "vec2.h"
 #include "trapezoid.h"
 #include "triangle.h"
+#include "triangle3d.h"
 #include "framebuffer.h"
+#include "camera.h"
 
 Device::Device()
- : framebuffer_(nullptr)
+ : camera_(nullptr)
+ , framebuffer_(nullptr)
  , rasterizer_(nullptr) {
 }
 
@@ -18,9 +21,16 @@ Device::~Device() {
     delete rasterizer_;
 }
 
-void Device::draw( const Triangle& tri ) {
+void Device::draw( const Triangle3D& tri ) {
+  assert(camera_);  
   assert(framebuffer_);
-  std::vector<Vec2> clipped=viewport_clip(tri);
+
+  Matrix4x4 mvp=camera_->projectionMatrix()*camera_->viewMatrix();
+  Triangle tri2d=Triangle::make(Vec2::make(mvp.transformPoint(tri.p0)),
+                                Vec2::make(mvp.transformPoint(tri.p1)),
+                                Vec2::make(mvp.transformPoint(tri.p2)));
+
+  std::vector<Vec2> clipped=viewport_clip(tri2d);
   const int clipped_num=clipped.size();
   const int vert_num=clipped.size();
   if (0==vert_num)
@@ -42,6 +52,10 @@ void Device::clear() {
 
 void Device::present() {
   assert(framebuffer_);
+}
+
+void Device::setCamera(Camera& camera) {
+  camera_=&camera;
 }
 
 void Device::setFramebuffer( Framebuffer& framebuffer ) {
