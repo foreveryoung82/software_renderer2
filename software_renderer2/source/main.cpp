@@ -35,12 +35,12 @@ void main() {
   Application app;
 
   Camera::ViewParameters vp;
-  vp.Eye    = Vec3::make(0,0,3.f);
+  vp.Eye    = Vec3::make(0,0,0.f);
   vp.Target = Vec3::make(0,0,-1);
   vp.Up     = Vec3::kUnitY;
   Camera::ProjectionParameters pp;
   pp.Aspect = 1.f;
-  pp.Far    = 6.f;
+  pp.Far    = 100.f;
   pp.Fov    = 3.1415926f/2.f;
   pp.Near   = 1.f;
   Camera camera=Camera(vp,pp);
@@ -87,7 +87,7 @@ void main() {
 //}
 //void main() {
 //  std::vector<Vec4> clipResult=homogenous_clip(Vec4::make(-10.f,-10.f,-10.f,1.f),
-//                                               Vec4::make(10.f,10.f,10.f,1.f));
+//    Vec4::make(10.f,10.f,10.f,1.f));
 //  for(auto v:clipResult) {
 //    Dump(v);
 //  }

@@ -112,7 +112,7 @@ std::vector<Vec2> viewport_clip( const Triangle& triangle ) {
   return output;
 }
 
-std::vector<Vec4> homogenous_clip(Vec4 const& a,Vec4 const& c) {
+std::vector<Vec4> homogeneous_clip(Vec4 const& a,Vec4 const& c) {
   std::vector<Vec4> ret;
 
   f32 bcA[6];
@@ -192,7 +192,7 @@ std::vector<Vec4> homogenous_clip(Vec4 const& a,Vec4 const& c) {
 //  return triangles;
 //}
 
-std::vector<Vec4> homogenous_clip(Vec4 const& v0,
+std::vector<Vec4> homogeneous_clip(Vec4 const& v0,
                                   Vec4 const& v1,
                                   Vec4 const& v2) {
   const Vec4* tri[3]={&v0,&v1,&v2}; 
@@ -200,8 +200,30 @@ std::vector<Vec4> homogenous_clip(Vec4 const& v0,
   for(int i=0;i<3;++i) {
     Vec4 const& a=*tri[i];
     Vec4 const& c=*tri[(i+1)%3];
-    std::vector<Vec4> verts=homogenous_clip(a,c);
+    std::vector<Vec4> verts=homogeneous_clip(a,c);
     std::copy(verts.begin(),verts.end(),back_inserter(ret));
+  }
+  return ret;
+}
+
+std::vector<Vec4> homogeneous_clip_infinitesimal_w(Vec4 const& v0,
+                                                   Vec4 const& v1,
+                                                   Vec4 const& v2) {
+  std::vector<Vec4> ret;
+  const f32   w = 0.00001f;
+  const Vec4* verts[3] = {&v0,&v1,&v2};
+  const bool  isIn[3]  = {v0.w>w,v1.w>w,v2.w>w};
+  for(int i=0;i<3;++i) {
+    int prev=(i+2)%3;
+    const Vec4& currVert=*verts[i];
+    const Vec4& prevVert=*verts[prev];
+    if(isIn[prev] != isIn[i]) {
+      const f32 t=(currVert.w-w)/(currVert.w-prevVert.w);
+      const Vec4 hit=currVert+t*(prevVert-currVert);
+      ret.push_back(hit);
+    }
+    if(isIn[i])
+      ret.push_back(currVert);
   }
   return ret;
 }
