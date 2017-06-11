@@ -166,28 +166,42 @@ std::vector<Vec4> homogenous_clip(Vec4 const& a,Vec4 const& c) {
   return ret;
 }
 
-std::vector<Triangle3D> homogenous_clip(Vec4 const& v0,
-                                        Vec4 const& v1,
-                                        Vec4 const& v2) {
+//std::vector<Triangle3D> homogenous_clip(Vec4 const& v0,
+//                                        Vec4 const& v1,
+//                                        Vec4 const& v2) {
+//  const Vec4* tri[3]={&v0,&v1,&v2}; 
+//  std::vector<Vec4> vertexes;
+//  for(int i=0;i<3;++i) {
+//    Vec4 const& a=*tri[i];
+//    Vec4 const& c=*tri[(i+1)%3];
+//    std::vector<Vec4> newVerts=homogenous_clip(a,c);
+//    for(auto vert:newVerts) {
+//      Vec4 temp=vert*(1.f/vert.w);
+//      vertexes.push_back(temp);
+//    }
+//    //std::copy(newVerts.begin(),newVerts.end(),back_inserter(vertexes));  
+//  }
+//
+//  std::vector<Triangle3D> triangles;
+//  const int num=vertexes.size();
+//  for(int i=0;i<num-2;++i) {
+//    triangles.push_back(Triangle3D::make(Vec3::make(vertexes[0]),
+//                                         Vec3::make(vertexes[i+1]),
+//                                         Vec3::make(vertexes[(i+2)%num])));
+//  }
+//  return triangles;
+//}
+
+std::vector<Vec4> homogenous_clip(Vec4 const& v0,
+                                  Vec4 const& v1,
+                                  Vec4 const& v2) {
   const Vec4* tri[3]={&v0,&v1,&v2}; 
-  std::vector<Vec4> vertexes;
+  std::vector<Vec4> ret;
   for(int i=0;i<3;++i) {
     Vec4 const& a=*tri[i];
     Vec4 const& c=*tri[(i+1)%3];
-    std::vector<Vec4> newVerts=homogenous_clip(a,c);
-    for(auto vert:newVerts) {
-      Vec4 temp=vert*(1.f/vert.w);
-      vertexes.push_back(temp);
-    }
-    //std::copy(newVerts.begin(),newVerts.end(),back_inserter(vertexes));  
+    std::vector<Vec4> verts=homogenous_clip(a,c);
+    std::copy(verts.begin(),verts.end(),back_inserter(ret));
   }
-
-  std::vector<Triangle3D> triangles;
-  const int num=vertexes.size();
-  for(int i=0;i<num-2;++i) {
-    triangles.push_back(Triangle3D::make(Vec3::make(vertexes[0]),
-                                         Vec3::make(vertexes[i+1]),
-                                         Vec3::make(vertexes[(i+2)%num])));
-  }
-  return triangles;
+  return ret;
 }

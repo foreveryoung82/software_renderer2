@@ -1,6 +1,7 @@
 #include "vec2.h"
 #include <cmath>
 #include "vec3.h"
+#include "vec4.h"
 
 const Vec2 Vec2::kZero=Vec2::make(0,0);
 const Vec2 Vec2::kUnitX=Vec2::make(1,0);
@@ -14,6 +15,10 @@ Vec2 Vec2::make(f32 x,f32 y) {
 }
 
 Vec2 Vec2::make(const Vec3& v) {
+  return make(v.x,v.y);
+}
+
+Vec2 Vec2::make(const Vec4& v) {
   return make(v.x,v.y);
 }
 

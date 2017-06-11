@@ -1,5 +1,6 @@
 #include "device.h"
 #include <vector>
+#include <algorithm>
 #include <cassert>
 #include "clip.h"
 #include "rasterizer.h"
@@ -25,29 +26,27 @@ void Device::draw( const Triangle3D& tri ) {
   assert(camera_);  
   assert(framebuffer_);
 
-  Matrix4x4 mvp=camera_->projectionMatrix()*camera_->viewMatrix();
+  Matrix4x4 mvp=camera_->projectionMatrix()*
+                  camera_->viewMatrix()*
+                  camera_->extraMatrix();
   Vec4 v0=mvp*Vec4::make(tri.p0, 1.f);
   Vec4 v1=mvp*Vec4::make(tri.p1, 1.f);
   Vec4 v2=mvp*Vec4::make(tri.p2, 1.f);
-  std::vector<Triangle3D> tri3dList=homogenous_clip(v0,v1,v2);
-  for(auto tri3D:tri3dList) {
-    Triangle tri2d=Triangle::make(Vec2::make(tri3D.p0),
-                                  Vec2::make(tri3D.p1),
-                                  Vec2::make(tri3D.p2));
-
-    std::vector<Vec2> clipped=viewport_clip(tri2d);
-    const int clipped_num=clipped.size();
-    const int vert_num=clipped.size();
-    if (0==vert_num)
-      continue;
-    assert((1!=vert_num) || (2!=vert_num));
-    const int triangle_num=(vert_num-2);
-    std::vector<Triangle> triangles;
-    for (int i=0;i<triangle_num;++i) {
-      triangles.push_back(Triangle::make(clipped[0], clipped[i+1], clipped[i+2]));
-    }
-    for (int i=0;i<triangle_num;++i)
-      rasterizer_->draw(triangles[i]);
+  std::vector<Vec4> polygonVerts=homogenous_clip(v0,v1,v2);
+  std::transform(polygonVerts.begin(), // perspective division
+                 polygonVerts.end(),
+                 polygonVerts.begin(),
+                 [](Vec4& vert){
+                    return vert*(1.f/vert.w);
+                 });
+  const int polygonVertsNum=polygonVerts.size();
+  const int triangleNum=polygonVertsNum-2;
+  for(int i=0;i<triangleNum;++i) { // divide convex polygon into triangles
+    Triangle tri2d=Triangle::make(
+      Vec2::make(polygonVerts[0]),
+      Vec2::make(polygonVerts[i]),
+      Vec2::make(polygonVerts[(i+1)%polygonVertsNum]));
+    rasterizer_->draw(tri2d);
   }
 }
 

@@ -5,6 +5,7 @@
 #include "base.h"
 
 class Vec3;
+class Vec4;
 class Vec2 {
  public:
   static const Vec2 kZero;
@@ -12,6 +13,7 @@ class Vec2 {
   static const Vec2 kUnitY;
   static Vec2 make(f32 x,f32 y);
   static Vec2 make(const Vec3& v);
+  static Vec2 make(const Vec4& v);
   union {
     struct {
       f32 x;

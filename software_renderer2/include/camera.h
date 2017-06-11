@@ -36,12 +36,15 @@ class Camera {
   void setNear(f32 near);
   f32 far() const;
   void setFar(f32 Far);
+  Matrix4x4 extraMatrix() const;
+  void setExtraMatrix(Matrix4x4 const& extra);
   Matrix4x4 viewMatrix() const;
   Matrix4x4 projectionMatrix() const;
 
  private:
   ViewParameters        view_;
   ProjectionParameters  projection_;
+  Matrix4x4             extraMatrix_;
   Matrix4x4             viewMatrix_;
   Matrix4x4             projectionMatrix_;
 

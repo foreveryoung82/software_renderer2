@@ -35,23 +35,32 @@ void main() {
   Application app;
 
   Camera::ViewParameters vp;
-  vp.Eye    = Vec3::make(0,0,1.f);
+  vp.Eye    = Vec3::make(0,0,3.f);
   vp.Target = Vec3::make(0,0,-1);
   vp.Up     = Vec3::kUnitY;
   Camera::ProjectionParameters pp;
   pp.Aspect = 1.f;
-  pp.Far    = 100.f;
+  pp.Far    = 6.f;
   pp.Fov    = 3.1415926f/2.f;
   pp.Near   = 1.f;
   Camera camera=Camera(vp,pp);
 
-  Triangle3D tri=Triangle3D::make(Vec3::make(1.5f,1.5f,-2.f),
+  Triangle3D tri=Triangle3D::make(Vec3::make(5.5f,1.5f,-2.f),
     Vec3::make(-1.5f,1.5f,-2.f),
     Vec3::make(1.5f,-1.5f,-2.f));
 
-  app.setOnFrameBeginEvent([&device,&camera,&tri](Framebuffer& fb){
-    Matrix4x4 rotation=Matrix4x4::makeRotation(3.1415926f/180.f,Vec3::kUnitY);
-    camera.setEye(rotation.transformPoint(camera.eye()));
+  f32 rotationStep=3.1415926f/180.f;
+  f32 frames=0;
+
+  app.setOnFrameBeginEvent([&device,&camera,&tri,&frames,rotationStep](Framebuffer& fb){
+  
+    Matrix4x4 rotation=Matrix4x4::makeRotation(frames*rotationStep,Vec3::kUnitY);
+    frames+=1.f;
+    rotation=Matrix4x4::makeTranslation(Vec3::make(0,0,-2))*
+               rotation*
+               Matrix4x4::makeTranslation(Vec3::make(0,0,2));
+    //camera.setEye(rotation.transformPoint(camera.eye()));
+    camera.setExtraMatrix(rotation);    
 
     device.setCamera(camera);
     device.setFramebuffer(fb);

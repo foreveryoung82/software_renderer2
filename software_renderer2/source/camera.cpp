@@ -4,6 +4,7 @@
 Camera::Camera(ViewParameters const& view,ProjectionParameters perspect)
  : view_(view)
  , projection_(perspect) {
+  extraMatrix_      =Matrix4x4::makeIdentity();
   viewMatrix_       =computeViewMatrix_(view_);
   projectionMatrix_ =computeProjectionMatrix_(projection_);
 }
@@ -120,6 +121,14 @@ f32 Camera::far() const {
 void Camera::setFar(f32 far) {
   projection_.Far=far;
   projectionMatrix_=computeProjectionMatrix_(projection_);
+}
+
+Matrix4x4 Camera::extraMatrix() const {
+  return extraMatrix_;
+}
+
+void Camera::setExtraMatrix(Matrix4x4 const& extra) {
+  extraMatrix_=extra;
 }
 
 Matrix4x4 Camera::viewMatrix() const {
