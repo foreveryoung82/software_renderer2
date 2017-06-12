@@ -227,3 +227,39 @@ std::vector<Vec4> homogeneous_clip_infinitesimal_w(Vec4 const& v0,
   }
   return ret;
 }
+
+f32 compute_boundary_condition(Vec4 const& v,int axis,int sign) {
+  return (v[3]-sign*v[axis]);
+}
+
+std::vector<Vec4> homogeneous_clip_view_frustum(Vec4 const& v0,
+                                                Vec4 const& v1,
+                                                Vec4 const& v2) {
+  std::vector<Vec4> input;
+  input.push_back(v0);
+  input.push_back(v1);
+  input.push_back(v2);
+  std::vector<Vec4> output;
+
+  for(int axis=0;axis<3;++axis) {
+    for(int sign=-1;sign<=1;sign+=2) {
+      const int vertsNum=input.size();
+      for(int i=0;i<vertsNum;++i) {
+        const Vec4 prev=input[(i+vertsNum-1)%vertsNum];
+        const Vec4 curr=input[i];
+        const f32 prevBC=compute_boundary_condition(prev,axis,sign);
+        const f32 currBC=compute_boundary_condition(curr,axis,sign);
+        if (0 > prevBC*currBC) {
+          f32 tHit=currBC/(currBC-prevBC);
+          output.push_back(curr+tHit*(prev-curr));
+        }
+        if (0 < currBC)
+          output.push_back(curr);
+      }
+      output.swap(input);
+      output.clear();
+    }
+  }
+
+  return input;
+}

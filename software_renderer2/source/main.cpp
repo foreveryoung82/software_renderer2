@@ -20,6 +20,13 @@ void Dump(Vec4 const& v) {
     <<std::endl;
 }
 
+void Dump(Vec3 const& v) {
+  std::cout<<std::setw(8)<<v.x
+    <<std::setw(8)<<v.y
+    <<std::setw(8)<<v.z
+    <<std::endl;
+}
+
 void Dump(Matrix4x4 const& m) {
   for(int r=0;r<4;++r) {
     std::cout<<std::setw(12)<<m.m[0][r]
@@ -35,30 +42,33 @@ void main() {
   Application app;
 
   Camera::ViewParameters vp;
-  vp.Eye    = Vec3::make(0,0,0.f);
+  vp.Eye    = Vec3::make(0,0,3.f);
   vp.Target = Vec3::make(0,0,-1);
   vp.Up     = Vec3::kUnitY;
   Camera::ProjectionParameters pp;
   pp.Aspect = 1.f;
-  pp.Far    = 100.f;
+  pp.Far    = 3.5f;
   pp.Fov    = 3.1415926f/2.f;
   pp.Near   = 1.f;
   Camera camera=Camera(vp,pp);
 
-  Triangle3D tri=Triangle3D::make(Vec3::make(5.5f,1.5f,-2.f),
-    Vec3::make(-1.5f,1.5f,-2.f),
-    Vec3::make(1.5f,-1.5f,-2.f));
+  Triangle3D tri=Triangle3D::make(Vec3::make(1.f,1.f,0),
+    Vec3::make(-1.f,1.f,0),
+    Vec3::make(0.f,-1.f,0));
 
   f32 rotationStep=3.1415926f/180.f;
   f32 frames=0;
 
-  app.setOnFrameBeginEvent([&device,&camera,&tri,&frames,rotationStep](Framebuffer& fb){
-  
+  app.setOnFrameBeginEvent([&device,&camera,&tri,&frames,rotationStep]
+                            (Framebuffer& fb){
     Matrix4x4 rotation=Matrix4x4::makeRotation(frames*rotationStep,Vec3::kUnitY);
     frames+=1.f;
-    rotation=Matrix4x4::makeTranslation(Vec3::make(0,0,-2))*
+    rotation=Matrix4x4::makeTranslation(Vec3::make(0.f,-1.5f,0))*
                rotation*
-               Matrix4x4::makeTranslation(Vec3::make(0,0,2));
+               Matrix4x4::makeTranslation(Vec3::make(0.f,1.5f,0));
+    Dump(rotation.transformPoint(tri.p0));
+    Dump(rotation.transformPoint(tri.p1));
+    Dump(rotation.transformPoint(tri.p2));
     //camera.setEye(rotation.transformPoint(camera.eye()));
     camera.setExtraMatrix(rotation);    
 

@@ -19,3 +19,6 @@ std::vector<Vec4> homogeneous_clip(Vec4 const& v0,
 std::vector<Vec4> homogeneous_clip_infinitesimal_w(Vec4 const& v0,
                                                    Vec4 const& v1,
                                                    Vec4 const& v2);
+std::vector<Vec4> homogeneous_clip_view_frustum(Vec4 const& v0,
+                                                Vec4 const& v1,
+                                                Vec4 const& v2);
