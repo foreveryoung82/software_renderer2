@@ -2,7 +2,8 @@
 #include <vector>
 #include <algorithm>
 #include <cassert>
-#include "clip.h"
+//#include "clip.h"
+#include "homogeneousclipper.h"
 #include "rasterizer.h"
 #include "vec2.h"
 #include "trapezoid.h"
@@ -16,11 +17,13 @@ namespace {
   std::vector<Vec4> homogenous_clip(Vec4 const& v0,
                                     Vec4 const& v1,
                                     Vec4 const& v2) {
-    std::vector<Vec4> stage1=homogeneous_clip_infinitesimal_w(v0,v1,v2);
+    std::vector<Vec4> stage1=HomogeneousClipper::clipWithInfinitesimalW(v0,v1,v2);
     const int vertsNumStage1=stage1.size();
     std::vector<Vec4> stage2;
     for(int i=0;i<vertsNumStage1-2;++i) {
-      stage2=homogeneous_clip_view_frustum(stage1[0],stage1[i+1],stage1[i+2]);
+      stage2=HomogeneousClipper::clipWithcanonicalViewVolume(stage1[0],
+                                                             stage1[i+1],
+                                                             stage1[i+2]);
     }
 
     std::transform(stage2.begin(), // perspective division

@@ -5,3 +5,7 @@
 /software_renderer2.v11.suo
 /Release
 /software_renderer2/Release
+/software_renderer2/dependent/freeimage/FreeImage.lib
+/software_renderer2/dependent/freeimage/FreeImaged.lib
+/test/FreeImage.dll
+/test/FreeImaged.dll

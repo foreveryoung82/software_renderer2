@@ -11,9 +11,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\clip.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
     <ClCompile Include="source\line2.cpp">
       <Filter>source</Filter>
     </ClCompile>
@@ -68,11 +65,14 @@
     <ClCompile Include="source\sampler.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\viewportclipper.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\homogeneousclipper.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\clip.h">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="include\line2.h">
       <Filter>include</Filter>
     </ClInclude>
@@ -131,6 +131,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\sampler.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\viewportclipper.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\homogeneousclipper.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

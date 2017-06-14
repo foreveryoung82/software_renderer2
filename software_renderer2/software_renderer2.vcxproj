@@ -13,9 +13,9 @@
   <ItemGroup>
     <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\camera.cpp" />
-    <ClCompile Include="source\clip.cpp" />
     <ClCompile Include="source\device.cpp" />
     <ClCompile Include="source\framebuffer.cpp" />
+    <ClCompile Include="source\homogeneousclipper.cpp" />
     <ClCompile Include="source\line2.cpp" />
     <ClCompile Include="source\main.cpp" />
     <ClCompile Include="source\matrix3x3.cpp" />
@@ -30,16 +30,17 @@
     <ClCompile Include="source\vec2.cpp" />
     <ClCompile Include="source\vec3.cpp" />
     <ClCompile Include="source\vec4.cpp" />
+    <ClCompile Include="source\viewportclipper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\application.h" />
     <ClInclude Include="include\applicationimpl.h" />
     <ClInclude Include="include\base.h" />
     <ClInclude Include="include\camera.h" />
-    <ClInclude Include="include\clip.h" />
     <ClInclude Include="include\color.h" />
     <ClInclude Include="include\device.h" />
     <ClInclude Include="include\framebuffer.h" />
+    <ClInclude Include="include\homogeneousclipper.h" />
     <ClInclude Include="include\line2.h" />
     <ClInclude Include="include\matrix3x3.h" />
     <ClInclude Include="include\matrix4x4.h" />
@@ -53,6 +54,7 @@
     <ClInclude Include="include\vec2.h" />
     <ClInclude Include="include\vec3.h" />
     <ClInclude Include="include\vec4.h" />
+    <ClInclude Include="include\viewportclipper.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{58E09475-C1D2-43D9-B92E-D295D72AEBB1}</ProjectGuid>
