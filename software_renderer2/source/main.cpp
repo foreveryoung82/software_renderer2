@@ -11,6 +11,7 @@
 #include "vec3.h"
 #include "vec2.h"
 #include "triangle3d.h"
+#include "texture.h"
 
 void Dump(Vec4 const& v) {
   std::cout<<std::setw(8)<<v.x
@@ -59,7 +60,10 @@ void main() {
   f32 rotationStep=3.1415926f/180.f;
   f32 frames=0;
 
-  app.setOnFrameBeginEvent([&device,&camera,&tri,&frames,rotationStep]
+
+  Texture tex("data/test.png");
+
+  app.setOnFrameBeginEvent([&device,&camera,&tri,&frames,&tex,rotationStep]
                             (Framebuffer& fb){
     Matrix4x4 rotation=Matrix4x4::makeRotation(frames*rotationStep,Vec3::kUnitY);
     frames+=1.f;
@@ -76,6 +80,7 @@ void main() {
     device.setFramebuffer(fb);
 
     device.clear();
+    device.blit(tex);
     device.draw(tri);
   });
   app.setup(640,480);

@@ -62,6 +62,9 @@
     <ClCompile Include="source\triangle3d.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\texture.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\clip.h">
@@ -116,6 +119,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\triangle3d.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\texture.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\color.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

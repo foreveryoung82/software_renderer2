@@ -7,6 +7,7 @@ class Triangle3D;
 class Framebuffer;
 class Camera;
 class Rasterizer;
+class Texture;
 class Device {
  public:
   Device();
@@ -14,6 +15,7 @@ class Device {
   virtual void setCamera(Camera& camera);
   virtual void setFramebuffer(Framebuffer& framebuffer);
   virtual void draw(const Triangle3D& shape);
+  virtual void blit(const Texture& tex);
   virtual void clear();
   virtual void present();
 

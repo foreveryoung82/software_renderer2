@@ -6,5 +6,6 @@
 
 typedef float         f32;
 typedef std::uint8_t  u8;
+typedef std::uint32_t u32;
 
 

@@ -10,6 +10,7 @@
 #include "triangle3d.h"
 #include "framebuffer.h"
 #include "camera.h"
+#include "texture.h"
 
 namespace {
   std::vector<Vec4> homogenous_clip(Vec4 const& v0,
@@ -64,6 +65,18 @@ void Device::draw( const Triangle3D& tri ) {
       Vec2::make(polygonVerts[i+1]),
       Vec2::make(polygonVerts[i+2]));
     rasterizer_->draw(tri2d);
+  }
+}
+
+void Device::blit(const Texture& tex) {
+  for(int y=0;y<tex.height();++y) {
+    if(y>=framebuffer_->height())
+      break;
+    for(int x=0;x<tex.width();++x) {
+      if(x>=framebuffer_->width())
+        continue;
+      framebuffer_->setPixel(x,y,tex.colorAt(x,y).Value());
+    }
   }
 }
 

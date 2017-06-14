@@ -22,6 +22,7 @@
     <ClCompile Include="source\matrix4x4.cpp" />
     <ClCompile Include="source\rasterizer.cpp" />
     <ClCompile Include="source\rect.cpp" />
+    <ClCompile Include="source\texture.cpp" />
     <ClCompile Include="source\trapezoid.cpp" />
     <ClCompile Include="source\triangle.cpp" />
     <ClCompile Include="source\triangle3d.cpp" />
@@ -35,6 +36,7 @@
     <ClInclude Include="include\base.h" />
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\clip.h" />
+    <ClInclude Include="include\color.h" />
     <ClInclude Include="include\device.h" />
     <ClInclude Include="include\framebuffer.h" />
     <ClInclude Include="include\line2.h" />
@@ -42,6 +44,7 @@
     <ClInclude Include="include\matrix4x4.h" />
     <ClInclude Include="include\rasterizer.h" />
     <ClInclude Include="include\rect.h" />
+    <ClInclude Include="include\texture.h" />
     <ClInclude Include="include\trapezoid.h" />
     <ClInclude Include="include\triangle.h" />
     <ClInclude Include="include\triangle3d.h" />
@@ -80,11 +83,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)\dependent;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\dependent\freeimage;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)\dependent;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\dependent\freeimage;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -99,6 +104,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>FreeImaged.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -117,6 +123,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
