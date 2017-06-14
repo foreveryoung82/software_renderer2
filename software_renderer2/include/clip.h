@@ -3,6 +3,7 @@
 //@brief:clip triangle by rectangle
 #pragma once
 #include <vector>
+#include <valarray>
 #include "vec2.h"
 #include "vec4.h"
 class Triangle;
@@ -22,3 +23,21 @@ std::vector<Vec4> homogeneous_clip_infinitesimal_w(Vec4 const& v0,
 std::vector<Vec4> homogeneous_clip_view_frustum(Vec4 const& v0,
                                                 Vec4 const& v1,
                                                 Vec4 const& v2);
+
+int homogeneous_clip_infinitesimal_w(
+  int idx0,
+  int idx1,
+  int idx2,
+  const std::vector<Vec4>&                inXYZW,
+  const std::vector<std::valarray<f32>*>& inUV,
+  std::vector<Vec4>&                      outXYZW,
+  std::vector<std::valarray<f32>*>&       outUV);
+
+int homogeneous_clip_view_frustum(
+  int idx0,
+  int idx1,
+  int idx2,
+  const std::vector<Vec4>&                inXYZW,
+  const std::vector<std::valarray<f32>*>& inUV,
+  std::vector<Vec4>&                      outXYZW,
+  std::vector<std::valarray<f32>*>&       outUV);

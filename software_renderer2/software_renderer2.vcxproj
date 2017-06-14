@@ -22,6 +22,7 @@
     <ClCompile Include="source\matrix4x4.cpp" />
     <ClCompile Include="source\rasterizer.cpp" />
     <ClCompile Include="source\rect.cpp" />
+    <ClCompile Include="source\sampler.cpp" />
     <ClCompile Include="source\texture.cpp" />
     <ClCompile Include="source\trapezoid.cpp" />
     <ClCompile Include="source\triangle.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="include\matrix4x4.h" />
     <ClInclude Include="include\rasterizer.h" />
     <ClInclude Include="include\rect.h" />
+    <ClInclude Include="include\sampler.h" />
     <ClInclude Include="include\texture.h" />
     <ClInclude Include="include\trapezoid.h" />
     <ClInclude Include="include\triangle.h" />

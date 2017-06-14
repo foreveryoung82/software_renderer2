@@ -65,6 +65,9 @@
     <ClCompile Include="source\texture.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\sampler.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\clip.h">
@@ -125,6 +128,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\color.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\sampler.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
