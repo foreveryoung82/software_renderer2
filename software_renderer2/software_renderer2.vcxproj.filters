@@ -71,6 +71,9 @@
     <ClCompile Include="source\homogeneousclipper.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\primitivestream.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\line2.h">
@@ -137,6 +140,15 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\homogeneousclipper.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\primitivestream.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\primitivetype.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interpolation.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

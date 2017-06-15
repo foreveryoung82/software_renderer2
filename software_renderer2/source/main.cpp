@@ -39,6 +39,8 @@ void Dump(Matrix4x4 const& m) {
 }
 
 void main() {
+  int x=1;
+  std::move(x);
   Device device;
   Application app;
 

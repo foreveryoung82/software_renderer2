@@ -17,7 +17,9 @@ namespace {
   std::vector<Vec4> homogenous_clip(Vec4 const& v0,
                                     Vec4 const& v1,
                                     Vec4 const& v2) {
-    std::vector<Vec4> stage1=HomogeneousClipper::clipWithInfinitesimalW(v0,v1,v2);
+    std::vector<Vec4> stage1=HomogeneousClipper::clipWithInfinitesimalW(v0,
+                                                                        v1, 
+                                                                        v2);
     const int vertsNumStage1=stage1.size();
     std::vector<Vec4> stage2;
     for(int i=0;i<vertsNumStage1-2;++i) {

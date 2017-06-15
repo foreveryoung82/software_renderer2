@@ -6,6 +6,7 @@
 #include <valarray>
 #include "vec4.h"
 class Triangle3D;
+class PrimitiveStream;
 
 class HomogeneousClipper {
  public:
@@ -32,4 +33,14 @@ class HomogeneousClipper {
      const std::vector<std::valarray<f32>*>& inUV,
      std::vector<Vec4>&                      outXYZW,
      std::vector<std::valarray<f32>*>&       outUV);
+
+   static int clipWithInfinitesimalW(u32                    primitiveIndex,
+                                     const PrimitiveStream& inStream,
+                                     PrimitiveStream&       outStream);
+   static int clipWithInfinitesimalW(const PrimitiveStream& inStream,
+                                     PrimitiveStream&       outStream);
+
+   static int clipWithcanonicalViewVolume(u32                    primitiveIndex,
+                                          const PrimitiveStream& inStream,
+                                          PrimitiveStream&       outStream);
 };
