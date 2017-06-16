@@ -74,6 +74,9 @@
     <ClCompile Include="source\primitivestream.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\interpolation.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\line2.h">

@@ -61,9 +61,12 @@ void main() {
     Vec3::make(0.f,-1.f,0));
 
   PrimitiveStream ps(PrimitiveType::TriangleList,3);
-  ps.addVertex(Vec4::make(1.f,1.f,0,1),std::valarray<f32>(3));
-  ps.addVertex(Vec4::make(-1.f,1.f,0,1),std::valarray<f32>(3));
-  ps.addVertex(Vec4::make(0.f,-1.f,0,1),std::valarray<f32>(3));
+  f32 red[3]={1,0,0};
+  f32 green[3]={0,1,0};
+  f32 blue[3]={0,0,1};
+  ps.addVertex(Vec4::make(1.f,1.f,0,1),std::valarray<f32>(red,3));
+  ps.addVertex(Vec4::make(-1.f,1.f,0,1),std::valarray<f32>(green,3));
+  ps.addVertex(Vec4::make(0.f,-1.f,0,1),std::valarray<f32>(blue,3));
   ps.addPrimitive(0,1,2);
 
   f32 rotationStep=3.1415926f/180.f;

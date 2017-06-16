@@ -3,6 +3,7 @@
 #include <functional>
 #include <memory>
 #include "framebuffer.h"
+#include "interpolation.h"
 #include "primitivestream.h"
 #include "rect.h"
 #include "trapezoid.h"
@@ -73,18 +74,33 @@ void Rasterizer::drawTriangle(const Triangle& tri) {
 void Rasterizer::drawTriangle(u32   primitiveIndex,
                               const PrimitiveStream& stream) {
   auto v=[&stream](u32 idx){return stream.xyzwAt(idx);};
+  auto a=[&stream](u32 idx){return stream.uvAt(idx);};
   IndexedTrapezoid traps[2];
   int traps_num=divide_into_trapezoids(primitiveIndex,stream,traps);
+  PrimitiveStream::UV_t uv_l(stream.uvDimension());
+  PrimitiveStream::UV_t uv_r(stream.uvDimension());
+  PrimitiveStream::UV_t uv(stream.uvDimension());
   for (int i=0;i<traps_num;++i) {
     const IndexedTrapezoid& t=traps[i];
-    const float top=t.t;
-    const float bottom=t.b;
-    for (int y=static_cast<int>(top);y>=bottom;--y) {
-      int lx=static_cast<int>(0.5f+get_x_by_y(v(t.l[0]), v(t.l[1]),static_cast<f32>(y)));
-      int rx=static_cast<int>(0.5f+get_x_by_y(v(t.r[0]), v(t.r[1]),static_cast<f32>(y)));
-      for (int x=lx;x<=rx;++x)
-        if (x>=0 && x<width_)
-          setPixelAt(x, y, 0xff);
+    const int top    = static_cast<int>(t.t);
+    const float bottom = t.b;
+    for (int y=top;y>=bottom;--y) {
+      f32 fl=(y-v(t.l[0]).y)/(v(t.l[1]).y-v(t.l[0]).y);
+      f32 fr=(y-v(t.r[0]).y)/(v(t.r[1]).y-v(t.r[0]).y);
+      int lx=static_cast<int>(0.5f+lerp(v(t.l[0]).x,v(t.l[1]).x,fl));
+      int rx=static_cast<int>(0.5f+lerp(v(t.r[0]).x,v(t.r[1]).x,fr));
+      uv_l=lerp(a(t.l[0]),a(t.l[1]),fl);
+      uv_r=lerp(a(t.r[0]),a(t.r[1]),fr);
+      for (int x=lx;x<=rx;++x) {
+        if (x<0 || x>width_)
+          continue;
+        f32 f=static_cast<f32>(x-lx)/(rx-lx);
+        uv=lerp(uv_l,uv_r,f);
+        setPixelAt(x, y, 0xff<<24|
+                         static_cast<u32>(uv[0]*256)<<16|
+                         static_cast<u32>(uv[1]*256)<<8 |
+                         static_cast<u32>(uv[2]*256));
+      }
     }
   }
 }

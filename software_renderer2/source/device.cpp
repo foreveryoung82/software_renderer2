@@ -55,8 +55,10 @@ void perspective_division(PrimitiveStream& stream) {
                     xyzw.y*inverseW,
                     xyzw.z*inverseW,
                     inverseW);
-    std::valarray<f32>& uv=stream.uvAt(i);
-    uv*=inverseW;
+    // todo(jieyang@gmail.com:ENABLE FOLLOWING LINES TO FOR PERSPECTIVE CORRECT
+    // ATTRIBUTES INTERPOLATION!
+    //std::valarray<f32>& uv=stream.uvAt(i);
+    //uv*=inverseW;
   }
 }
 
