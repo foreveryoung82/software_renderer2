@@ -77,25 +77,31 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
   auto a=[&stream](u32 idx){return stream.uvAt(idx);};
   IndexedTrapezoid traps[2];
   int traps_num=divide_into_trapezoids(primitiveIndex,stream,traps);
-  PrimitiveStream::UV_t uv_l(stream.uvDimension());
-  PrimitiveStream::UV_t uv_r(stream.uvDimension());
+  PrimitiveStream::UV_t uv_l_div_w(stream.uvDimension());
+  PrimitiveStream::UV_t uv_r_div_w(stream.uvDimension());
   PrimitiveStream::UV_t uv(stream.uvDimension());
   for (int i=0;i<traps_num;++i) {
     const IndexedTrapezoid& t=traps[i];
     const int top    = static_cast<int>(t.t);
     const float bottom = t.b;
     for (int y=top;y>=bottom;--y) {
-      f32 fl=(y-v(t.l[0]).y)/(v(t.l[1]).y-v(t.l[0]).y);
-      f32 fr=(y-v(t.r[0]).y)/(v(t.r[1]).y-v(t.r[0]).y);
+      const Vec4& vl0=v(t.l[0]);
+      const Vec4& vl1=v(t.l[1]);
+      const Vec4& vr0=v(t.r[0]);
+      const Vec4& vr1=v(t.r[1]);
+      f32 fl=(y-vl0.y)/(vl1.y-vl0.y);
+      f32 fr=(y-vr0.y)/(vr1.y-vr0.y);
+      f32 lw=(1.f/lerp(vl0.w,vl1.w,fl));
+      f32 rw=(1.f/lerp(vr0.w,vr1.w,fr));
       int lx=static_cast<int>(0.5f+lerp(v(t.l[0]).x,v(t.l[1]).x,fl));
       int rx=static_cast<int>(0.5f+lerp(v(t.r[0]).x,v(t.r[1]).x,fr));
-      uv_l=lerp(a(t.l[0]),a(t.l[1]),fl);
-      uv_r=lerp(a(t.r[0]),a(t.r[1]),fr);
+      uv_l_div_w=lerp(a(t.l[0]),a(t.l[1]),fl);
+      uv_r_div_w=lerp(a(t.r[0]),a(t.r[1]),fr);
       for (int x=lx;x<=rx;++x) {
         if (x<0 || x>width_)
           continue;
         f32 f=static_cast<f32>(x-lx)/(rx-lx);
-        uv=lerp(uv_l,uv_r,f);
+        uv=lerp(uv_l_div_w,uv_r_div_w,f)*(1.f/lerp(1.f/lw,1.f/rw,f));
         setPixelAt(x, y, 0xff<<24|
                          static_cast<u32>(uv[0]*256)<<16|
                          static_cast<u32>(uv[1]*256)<<8 |
