@@ -83,3 +83,12 @@ u32 PrimitiveStream::addVertex(const Vec4& xyzw,const UV_t& uv) {
 
   return vertexNum()-1;
 }
+
+PrimitiveStream* PrimitiveStream::clone() const {
+  PrimitiveStream* cloned=new PrimitiveStream(type_,uvDimension_);
+  cloned->xyzwStream_  = xyzwStream_;
+  cloned->uvStream_    = uvStream_;
+  cloned->indexStream_ = indexStream_;
+
+  return cloned;
+}

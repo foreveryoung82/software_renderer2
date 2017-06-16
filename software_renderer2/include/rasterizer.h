@@ -2,9 +2,11 @@
 //@author:yangjie82@gmail.com
 //@brief:simple rasterizer
 #include <vector>
-
-class Triangle;
+#include "base.h"
 class Framebuffer;
+class PrimitiveStream;
+class Triangle;
+
 class Rasterizer {
  public:
   Rasterizer(Framebuffer& framebuffer);
@@ -14,10 +16,12 @@ class Rasterizer {
   void setPixelAt(int x, int y, int color);
   //int getPixelAt(int x, int y) const;
   void draw(const Triangle& tri);
+  void draw(const PrimitiveStream& stream);
   //void present() const;
  
  private:
-   void drawTriangle(const Triangle& tri);
+  void drawTriangle(const Triangle& tri);
+  void drawTriangle(u32 primitiveIndex,const PrimitiveStream& stream);
   int width_;
   int height_;
   //std::vector<int> buffer_;

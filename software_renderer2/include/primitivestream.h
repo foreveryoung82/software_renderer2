@@ -33,6 +33,7 @@ class PrimitiveStream {
   const UV_t& uvAt(u32 idx) const;
   u32 addPrimitive(INDEX_t idx0,INDEX_t idx1,INDEX_t idx2);
   u32 addVertex(const Vec4& xyzw,const UV_t& uv);
+  PrimitiveStream* clone() const;
 
  private:
   PrimitiveType type_;

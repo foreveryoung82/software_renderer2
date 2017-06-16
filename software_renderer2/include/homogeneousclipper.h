@@ -43,4 +43,6 @@ class HomogeneousClipper {
    static int clipWithcanonicalViewVolume(u32                    primitiveIndex,
                                           const PrimitiveStream& inStream,
                                           PrimitiveStream&       outStream);
+   static int clipWithcanonicalViewVolume(const PrimitiveStream& inStream,
+                                          PrimitiveStream&       outStream);
 };

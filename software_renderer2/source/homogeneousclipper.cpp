@@ -236,16 +236,19 @@ int HomogeneousClipper::clipWithInfinitesimalW(
   assert(PrimitiveType::TriangleList==inStream.primitiveType());
 
   const f32 w=0.00001f;
-  const u32 idxStart=primitiveIndex*3;
+  const u32 idxStartIndex=primitiveIndex*3;
+  const u32 idx0=inStream.indexAt(idxStartIndex);
+  const u32 idx1=inStream.indexAt(idxStartIndex+1);
+  const u32 idx2=inStream.indexAt(idxStartIndex+2);
   const Vec4* xyzw[3]={
-    &inStream.xyzwAt(idxStart),
-    &inStream.xyzwAt(idxStart+1),
-    &inStream.xyzwAt(idxStart+2),
+    &inStream.xyzwAt(idx0),
+    &inStream.xyzwAt(idx1),
+    &inStream.xyzwAt(idx2),
   };
   const std::valarray<f32>* uv[3]={
-    &inStream.uvAt(idxStart),
-    &inStream.uvAt(idxStart+1),
-    &inStream.uvAt(idxStart+2),
+    &inStream.uvAt(idx0),
+    &inStream.uvAt(idx1),
+    &inStream.uvAt(idx2),
   };
   const bool isIn[3]={
     xyzw[0]->w > w,
@@ -266,6 +269,8 @@ int HomogeneousClipper::clipWithInfinitesimalW(
     }
   }
   const int primitiveNum=outStream.vertexNum()-vertNumBeforeClip-2;
+  if (0>=primitiveNum)
+    return 0;
   const int indexBase=vertNumBeforeClip;
   for(int i=0;i<primitiveNum;++i) {
     outStream.addPrimitive(indexBase, indexBase+i+1, indexBase+i+2);
@@ -290,15 +295,18 @@ int HomogeneousClipper::clipWithcanonicalViewVolume(
   PrimitiveStream&       outStream) {
   assert(PrimitiveType::TriangleList==inStream.primitiveType());
 
-  u32 startIndex=primitiveIndex*3;
+  const u32 idxStartIndex=primitiveIndex*3;
+  const u32 idx0=inStream.indexAt(idxStartIndex);
+  const u32 idx1=inStream.indexAt(idxStartIndex+1);
+  const u32 idx2=inStream.indexAt(idxStartIndex+2);
   PrimitiveStream::XYZWVec_t inXYZW;
-  inXYZW.push_back(inStream.xyzwAt(startIndex));
-  inXYZW.push_back(inStream.xyzwAt(startIndex+1));
-  inXYZW.push_back(inStream.xyzwAt(startIndex+2));
+  inXYZW.push_back(inStream.xyzwAt(idx0));
+  inXYZW.push_back(inStream.xyzwAt(idx1));
+  inXYZW.push_back(inStream.xyzwAt(idx2));
   PrimitiveStream::UVVec_t   inUV;
-  inUV.push_back(inStream.uvAt(startIndex));
-  inUV.push_back(inStream.uvAt(startIndex+1));
-  inUV.push_back(inStream.uvAt(startIndex+2));
+  inUV.push_back(inStream.uvAt(idx0));
+  inUV.push_back(inStream.uvAt(idx1));
+  inUV.push_back(inStream.uvAt(idx2));
   
   PrimitiveStream::XYZWVec_t outXYZW;
   PrimitiveStream::UVVec_t   outUV;
@@ -324,4 +332,15 @@ int HomogeneousClipper::clipWithcanonicalViewVolume(
     outStream.addPrimitive(baseIndex,baseIndex+i+1,baseIndex+i+2);
   }
   return newPrimitiveNum;
+}
+
+int HomogeneousClipper::clipWithcanonicalViewVolume(
+  const PrimitiveStream& inStream,
+  PrimitiveStream&       outStream) {
+  const int primitiveNumBeforeClip=inStream.primitiveNum();
+  int newPrimitiveNum=0;
+  for(int i=0;i<primitiveNumBeforeClip;++i) {
+    newPrimitiveNum+=clipWithcanonicalViewVolume(i,inStream,outStream);
+  }
+  return newPrimitiveNum;  
 }
