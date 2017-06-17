@@ -15,3 +15,10 @@ std::valarray<f32> lerp(
   std::valarray<f32> const& a,
   std::valarray<f32> const& b,
   f32 t);
+
+// r=a+(b-a)*t, no tempory variable
+std::valarray<f32>& lerp(
+  std::valarray<f32> const& a,
+  std::valarray<f32> const& b,
+  f32 t,
+  std::valarray<f32>& r);

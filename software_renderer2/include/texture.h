@@ -14,7 +14,7 @@ class Texture {
   int line() const;
   int pitch() const;
   int bytesPerPixel() const;
-  Color colorAt(int x,int y) const;
+  inline Color colorAt(int x,int y) const;
   //const u8* scanLine(int y) const;
   //const u8* data() const;
 

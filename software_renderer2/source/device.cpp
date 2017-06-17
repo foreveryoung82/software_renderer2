@@ -5,6 +5,7 @@
 //#include "clip.h"
 #include "camera.h"
 #include "framebuffer.h"
+#include "framebuffer.inl"
 #include "homogeneousclipper.h"
 #include "primitivestream.h"
 #include "rasterizer.h"

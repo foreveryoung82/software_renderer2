@@ -1,4 +1,5 @@
 #include "rasterizer.h"
+#include "rasterizer.inl"
 #include <cassert>
 #include <functional>
 #include <memory>
@@ -39,12 +40,12 @@ int Rasterizer::height() const {
   return height_;
 }
 
-void Rasterizer::setPixelAt( int x, int y, int color ) {
-  assert(x<width_ && x>=0);
-  assert(y<height_ && y>=0);
-
-  framebuffer_->setPixel(x,y,color);
-}
+//void Rasterizer::setPixelAt( int x, int y, u32 color ) {
+//  assert(x<width_ && x>=0);
+//  assert(y<height_ && y>=0);
+//
+//  framebuffer_->setPixel(x,y,color);
+//}
 
 f32 get_x_by_y(const Vec2& s, const Vec2& t, f32 y) {
   return (y-t.y)*(s.x-t.x)/(s.y-t.y)+t.x;
@@ -63,30 +64,43 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
   int traps_num=divide_into_trapezoids(primitiveIndex,stream,traps);
   PrimitiveStream::UV_t uv_l_div_w(stream.uvDimension());
   PrimitiveStream::UV_t uv_r_div_w(stream.uvDimension());
+  PrimitiveStream::UV_t uv_div_w_step(stream.uvDimension());
+  PrimitiveStream::UV_t uv_div_w(stream.uvDimension());
   PrimitiveStream::UV_t uv(stream.uvDimension());
   for (int i=0;i<traps_num;++i) {
     const IndexedTrapezoid& t=traps[i];
-    const int top    = static_cast<int>(t.t);
+    const int top      = static_cast<int>(t.t);
     const float bottom = t.b;
+    const Vec4& vl0=v(t.l[0]);
+    const Vec4& vl1=v(t.l[1]);
+    const Vec4& vr0=v(t.r[0]);
+    const Vec4& vr1=v(t.r[1]);
     for (int y=top;y>=bottom;--y) {
-      const Vec4& vl0=v(t.l[0]);
-      const Vec4& vl1=v(t.l[1]);
-      const Vec4& vr0=v(t.r[0]);
-      const Vec4& vr1=v(t.r[1]);
       f32 fl=(y-vl0.y)/(vl1.y-vl0.y);
       f32 fr=(y-vr0.y)/(vr1.y-vr0.y);
       f32 lw_inverse=lerp(vl0.w,vl1.w,fl);
       f32 rw_inverse=lerp(vr0.w,vr1.w,fr);
       int lx=static_cast<int>(0.5f+lerp(vl0.x,vl1.x,fl));
       int rx=static_cast<int>(0.5f+lerp(vr0.x,vr1.x,fr));
-      uv_l_div_w=lerp(a(t.l[0]),a(t.l[1]),fl);
-      uv_r_div_w=lerp(a(t.r[0]),a(t.r[1]),fr);
+      lerp(a(t.l[0]),a(t.l[1]),fl,uv_l_div_w);
+      lerp(a(t.r[0]),a(t.r[1]),fr,uv_r_div_w);
+      // finite difference of uv_div_w
+      uv_div_w=uv_l_div_w;
+      uv_div_w_step=uv_r_div_w;
+      uv_div_w_step-=uv_l_div_w;
+      const f32 steps=static_cast<float>(rx-lx);
+      uv_div_w_step*=1.f/steps;
+      // finite difference of w_inverse
+      f32 w_inverse=lw_inverse;
+      f32 w_inverse_step=(rw_inverse-lw_inverse)*(1.f/steps);
+      // fill scan line
       for (int x=lx;x<=rx;++x) {
-        if (x<0 || x>width_)
-          continue;
-        f32 f=static_cast<f32>(x-lx)/(rx-lx);
-        uv=lerp(uv_l_div_w,uv_r_div_w,f)*(1.f/lerp(lw_inverse,rw_inverse,f));
-        setPixelAt(x, y, sampler(uv[0],uv[1]).Value());
+        assert(0<=x && x<width_);
+        const u32 c=sampler(uv_div_w[0]/w_inverse,
+                            uv_div_w[1]/w_inverse).Value();
+        setPixelAt(x,y,c);
+        uv_div_w  += uv_div_w_step;
+        w_inverse += w_inverse_step;
       }
     }
   }

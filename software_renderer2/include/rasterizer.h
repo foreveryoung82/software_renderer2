@@ -1,6 +1,7 @@
 //@date:2016.8.30
 //@author:yangjie82@gmail.com
 //@brief:simple rasterizer
+#pragma once
 #include <vector>
 #include "base.h"
 class Framebuffer;
@@ -14,7 +15,7 @@ class Rasterizer {
   ~Rasterizer();
   int width() const;
   int height() const;
-  void setPixelAt(int x, int y, int color);
+  inline void setPixelAt(int x, int y, u32 color);
   void draw(const PrimitiveStream& stream,const Sampler& sampler);
  
  private:

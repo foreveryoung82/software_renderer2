@@ -2,11 +2,10 @@
 #include <cmath>
 #include <algorithm>
 #include "texture.h"
+#include "texture.inl"
 
 namespace {
-  f32 saturate(f32 v) {
-    return std::min(std::max(0.f, v), 1.f);
-  }
+  inline f32 saturate(f32 v) {return std::min(std::max(0.f, v), 1.f);}
 }
 
 Sampler::Sampler(const Texture& tex)

@@ -1,4 +1,5 @@
 #include "texture.h"
+#include "texture.inl"
 #include <sstream>
 #include <stdexcept>
 #pragma warning(push)
@@ -69,8 +70,4 @@ int Texture::pitch() const {
 
 int Texture::bytesPerPixel() const {
   return bytesPerPixel_;
-}
-
-Color Texture::colorAt(int x,int y) const {
-  return pixels_[y*pitch_+x];
 }

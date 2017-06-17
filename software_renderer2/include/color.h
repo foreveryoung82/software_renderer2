@@ -5,9 +5,10 @@
 #include "base.h"
 
 struct Color {
-  u8 Red;
-  u8 Green;
   u8 Blue;
+  u8 Green;
+  u8 Red;
   u8 Alpha;
-  u32 Value() const {return (((u32)Red)<<16)|(((u32)Green)<<8)|(((u32)Blue));}
+  //u32 Value() const {return (((u32)Red)<<16)|(((u32)Green)<<8)|(((u32)Blue));}
+  u32 Value() const {return *reinterpret_cast<const u32*>(this);}
 };

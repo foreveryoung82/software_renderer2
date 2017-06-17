@@ -61,6 +61,11 @@
     <ClInclude Include="include\vec4.h" />
     <ClInclude Include="include\viewportclipper.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="include\framebuffer.inl" />
+    <None Include="include\rasterizer.inl" />
+    <None Include="include\texture.inl" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{58E09475-C1D2-43D9-B92E-D295D72AEBB1}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

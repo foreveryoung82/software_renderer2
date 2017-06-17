@@ -2,6 +2,7 @@
 //@author:yangjie82@gmail.com
 //@brief:framebuffer
 #pragma once
+#include "base.h"
 
 class Framebuffer {
  public:
@@ -9,12 +10,12 @@ class Framebuffer {
   virtual ~Framebuffer();
   int width() const {return width_;}
   int height() const {return height_;}
-  void setPixel(int x,int y,unsigned int color);
+  inline void setPixel(int x,int y,u32 color);
   void clear(unsigned int color);
 
  private:
-  unsigned int* bytes_;
-  int width_;
-  int height_;
-  int stride_;
+  u32* pixels_;
+  int  width_;
+  int  height_;
+  int  stride_;
 };

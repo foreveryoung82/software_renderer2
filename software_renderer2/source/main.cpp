@@ -2,6 +2,7 @@
 #include <iomanip>
 #include "application.h"
 #include "camera.h"
+#include "color.h"
 #include "device.h"
 #include "framebuffer.h"
 #include "matrix3x3.h"
@@ -15,18 +16,23 @@
 #include "vec2.h"
 
 void main() {
+  //std::cout<<sizeof(Color)<<std::endl;
+  //Color c={1,2,3,0};
+  //std::cout<<std::setbase(16)<<*reinterpret_cast<u32*>(&c)<<std::endl;
+  //std::cout<<std::setbase(16)<<c.Value()<<std::endl;
+  
   int x=1;
   std::move(x);
   Device device;
   Application app;
 
   Camera::ViewParameters vp;
-  vp.Eye    = Vec3::make(0,0,2.f);
+  vp.Eye    = Vec3::make(0.f,1.f,1.f);
   vp.Target = Vec3::make(0,0,-1);
   vp.Up     = Vec3::kUnitY;
   Camera::ProjectionParameters pp;
   pp.Aspect = 1.f;
-  pp.Far    = 2.5f;
+  pp.Far    = 2.f;
   pp.Fov    = 3.1415926f/2.f;
   pp.Near   = 1.f;
   Camera camera=Camera(vp,pp);
@@ -59,9 +65,9 @@ void main() {
                             (Framebuffer& fb){
     Matrix4x4 rotation=Matrix4x4::makeRotation(frames*rotationStep,Vec3::kUnitY);
     frames+=1.f;
-    rotation=Matrix4x4::makeTranslation(Vec3::make(0.f,-1.5f,0))*
-               rotation*
-               Matrix4x4::makeTranslation(Vec3::make(0.f,1.5f,0));
+    //rotation=Matrix4x4::makeTranslation(Vec3::make(0.f,-1.5f,0))*
+    //           rotation*
+    //           Matrix4x4::makeTranslation(Vec3::make(0.f,1.5f,0));
     camera.setExtraMatrix(rotation);    
 
     device.setCamera(camera);
