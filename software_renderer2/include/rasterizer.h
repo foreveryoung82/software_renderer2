@@ -6,6 +6,7 @@
 class Framebuffer;
 class PrimitiveStream;
 class Triangle;
+class Sampler;
 
 class Rasterizer {
  public:
@@ -16,12 +17,14 @@ class Rasterizer {
   void setPixelAt(int x, int y, int color);
   //int getPixelAt(int x, int y) const;
   void draw(const Triangle& tri);
-  void draw(const PrimitiveStream& stream);
+  void draw(const PrimitiveStream& stream,const Sampler& sampler);
   //void present() const;
  
  private:
   void drawTriangle(const Triangle& tri);
-  void drawTriangle(u32 primitiveIndex,const PrimitiveStream& stream);
+  void drawTriangle(u32                    primitiveIndex,
+                    const PrimitiveStream& stream,
+                    const Sampler&         sampler);
   int width_;
   int height_;
   //std::vector<int> buffer_;

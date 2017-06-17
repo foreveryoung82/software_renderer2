@@ -6,6 +6,7 @@
 #include "interpolation.h"
 #include "primitivestream.h"
 #include "rect.h"
+#include "sampler.h"
 #include "trapezoid.h"
 #include "triangle.h"
 
@@ -72,7 +73,8 @@ void Rasterizer::drawTriangle(const Triangle& tri) {
 }
 
 void Rasterizer::drawTriangle(u32   primitiveIndex,
-                              const PrimitiveStream& stream) {
+                              const PrimitiveStream& stream,
+                              const Sampler&         sampler) {
   auto v=[&stream](u32 idx){return stream.xyzwAt(idx);};
   auto a=[&stream](u32 idx){return stream.uvAt(idx);};
   IndexedTrapezoid traps[2];
@@ -91,8 +93,8 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
       const Vec4& vr1=v(t.r[1]);
       f32 fl=(y-vl0.y)/(vl1.y-vl0.y);
       f32 fr=(y-vr0.y)/(vr1.y-vr0.y);
-      f32 lw=(1.f/lerp(vl0.w,vl1.w,fl));
-      f32 rw=(1.f/lerp(vr0.w,vr1.w,fr));
+      f32 lw_inverse=lerp(vl0.w,vl1.w,fl);
+      f32 rw_inverse=lerp(vr0.w,vr1.w,fr);
       int lx=static_cast<int>(0.5f+lerp(v(t.l[0]).x,v(t.l[1]).x,fl));
       int rx=static_cast<int>(0.5f+lerp(v(t.r[0]).x,v(t.r[1]).x,fr));
       uv_l_div_w=lerp(a(t.l[0]),a(t.l[1]),fl);
@@ -101,11 +103,8 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
         if (x<0 || x>width_)
           continue;
         f32 f=static_cast<f32>(x-lx)/(rx-lx);
-        uv=lerp(uv_l_div_w,uv_r_div_w,f)*(1.f/lerp(1.f/lw,1.f/rw,f));
-        setPixelAt(x, y, 0xff<<24|
-                         static_cast<u32>(uv[0]*256)<<16|
-                         static_cast<u32>(uv[1]*256)<<8 |
-                         static_cast<u32>(uv[2]*256));
+        uv=lerp(uv_l_div_w,uv_r_div_w,f)*(1.f/lerp(lw_inverse,rw_inverse,f));
+        setPixelAt(x, y, sampler(uv[0],uv[1]).Value());
       }
     }
   }
@@ -120,11 +119,11 @@ void Rasterizer::draw( const Triangle& tri ) {
   drawTriangle(ret);
 }
 
-void Rasterizer::draw(const PrimitiveStream& stream) {
+void Rasterizer::draw(const PrimitiveStream& stream,const Sampler& sampler) {
   std::unique_ptr<PrimitiveStream> mapped(stream.clone());
   viewport_mapping(*mapped,width_,height_);
   int num=mapped->primitiveNum();
   for(int i=0;i<num;++i) {
-    drawTriangle(i,*mapped);
+    drawTriangle(i,*mapped,sampler);
   }
 }

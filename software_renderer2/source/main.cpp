@@ -56,18 +56,28 @@ void main() {
   pp.Near   = 1.f;
   Camera camera=Camera(vp,pp);
 
-  Triangle3D tri=Triangle3D::make(Vec3::make(1.f,1.f,0),
-    Vec3::make(-1.f,1.f,0),
-    Vec3::make(0.f,-1.f,0));
-
-  PrimitiveStream ps(PrimitiveType::TriangleList,3);
-  f32 red[3]={1,0,0};
-  f32 green[3]={0,1,0};
-  f32 blue[3]={0,0,1};
-  ps.addVertex(Vec4::make(1.f,1.f,0,1),std::valarray<f32>(red,3));
-  ps.addVertex(Vec4::make(-1.f,1.f,0,1),std::valarray<f32>(green,3));
-  ps.addVertex(Vec4::make(0.f,-1.f,0,1),std::valarray<f32>(blue,3));
+  PrimitiveStream ps(PrimitiveType::TriangleList,2);
+  //f32 red[3]={1,0,0};
+  //f32 green[3]={0,1,0};
+  //f32 blue[3]={0,0,1};
+  Vec2 uvQuad[4]={
+    Vec2::make(1,1),
+    Vec2::make(0,1),
+    Vec2::make(0,0),
+    Vec2::make(1,0),
+  };
+  Vec4 xyzwQuad[4]={
+    Vec4::make(1,1,0,1),
+    Vec4::make(-1,1,0,1),
+    Vec4::make(-1,-1,0,1),
+    Vec4::make(1,-1,0,1),
+  };
+  ps.addVertex(xyzwQuad[0],std::valarray<f32>(uvQuad[0].m,2));
+  ps.addVertex(xyzwQuad[1],std::valarray<f32>(uvQuad[1].m,2));
+  ps.addVertex(xyzwQuad[2],std::valarray<f32>(uvQuad[2].m,2));
+  ps.addVertex(xyzwQuad[3],std::valarray<f32>(uvQuad[3].m,2));
   ps.addPrimitive(0,1,2);
+  ps.addPrimitive(0,2,3);
 
   f32 rotationStep=3.1415926f/180.f;
   f32 frames=0;
@@ -75,17 +85,13 @@ void main() {
 
   Texture tex("data/test.png");
 
-  app.setOnFrameBeginEvent([&device,&camera,&tri,&frames,&tex,&ps,rotationStep]
+  app.setOnFrameBeginEvent([&device,&camera,&frames,&tex,&ps,rotationStep]
                             (Framebuffer& fb){
     Matrix4x4 rotation=Matrix4x4::makeRotation(frames*rotationStep,Vec3::kUnitY);
     frames+=1.f;
     rotation=Matrix4x4::makeTranslation(Vec3::make(0.f,-1.5f,0))*
                rotation*
                Matrix4x4::makeTranslation(Vec3::make(0.f,1.5f,0));
-    //Dump(rotation.transformPoint(tri.p0));
-    //Dump(rotation.transformPoint(tri.p1));
-    //Dump(rotation.transformPoint(tri.p2));
-    //camera.setEye(rotation.transformPoint(camera.eye()));
     camera.setExtraMatrix(rotation);    
 
     device.setCamera(camera);
@@ -93,7 +99,8 @@ void main() {
     device.setPrimitiveStream(ps);
 
     device.clear();
-    device.blit(tex);
+    //device.blit(tex);
+    device.setTexture(tex);
     //device.draw(tri);
     device.draw();
   });

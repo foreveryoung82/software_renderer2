@@ -8,6 +8,7 @@
 #include "homogeneousclipper.h"
 #include "primitivestream.h"
 #include "rasterizer.h"
+#include "sampler.h"
 #include "texture.h"
 #include "trapezoid.h"
 #include "triangle.h"
@@ -129,7 +130,8 @@ void Device::draw() {
   homogenous_clip(inStream,outStream);
   perspective_division(outStream);
 
-  rasterizer_->draw(outStream);
+  Sampler sampler(*texture_);
+  rasterizer_->draw(outStream,sampler);
 }
 
 void Device::blit(const Texture& tex) {
@@ -166,4 +168,8 @@ void Device::setFramebuffer( Framebuffer& framebuffer ) {
 
 void Device::setPrimitiveStream(const PrimitiveStream& primitiveStream) {
   primitiveStream_=&primitiveStream;
+}
+
+void Device::setTexture(Texture& tex) {
+  texture_=&tex;
 }
