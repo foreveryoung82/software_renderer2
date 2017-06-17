@@ -13,9 +13,7 @@ Framebuffer::~Framebuffer() {
 }
 
 void Framebuffer::clear(unsigned int color) {
-  for (int h=0;h<height_;++h) {
-    std::fill_n(&pixels_[h*stride_/4], width_, color);
-  }
+  std::fill_n(pixels_, height_*stride_/4, color);
 }
 
 
