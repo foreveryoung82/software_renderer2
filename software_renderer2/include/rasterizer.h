@@ -15,10 +15,7 @@ class Rasterizer {
   int width() const;
   int height() const;
   void setPixelAt(int x, int y, int color);
-  //int getPixelAt(int x, int y) const;
-  void draw(const Triangle& tri);
   void draw(const PrimitiveStream& stream,const Sampler& sampler);
-  //void present() const;
  
  private:
   void drawTriangle(const Triangle& tri);

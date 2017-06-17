@@ -10,29 +10,29 @@ class PrimitiveStream;
 
 class HomogeneousClipper {
  public:
-   static std::vector<Vec4> clipWithInfinitesimalW(Vec4 const& v0,
-                                                   Vec4 const& v1,
-                                                   Vec4 const& v2);
-   static std::vector<Vec4> clipWithcanonicalViewVolume(Vec4 const& v0,
-                                                        Vec4 const& v1,
-                                                        Vec4 const& v2);
-   static int clipWithInfinitesimalW(
-     int idx0,
-     int idx1,
-     int idx2,
-     const std::vector<Vec4>&                inXYZW,
-     const std::vector<std::valarray<f32>*>& inUV,
-     std::vector<Vec4>&                      outXYZW,
-     std::vector<std::valarray<f32>*>&       outUV);
+   //static std::vector<Vec4> clipWithInfinitesimalW(Vec4 const& v0,
+   //                                                Vec4 const& v1,
+   //                                                Vec4 const& v2);
+   //static std::vector<Vec4> clipWithcanonicalViewVolume(Vec4 const& v0,
+   //                                                     Vec4 const& v1,
+   //                                                     Vec4 const& v2);
+   //static int clipWithInfinitesimalW(
+   //  int idx0,
+   //  int idx1,
+   //  int idx2,
+   //  const std::vector<Vec4>&                inXYZW,
+   //  const std::vector<std::valarray<f32>*>& inUV,
+   //  std::vector<Vec4>&                      outXYZW,
+   //  std::vector<std::valarray<f32>*>&       outUV);
 
-   static int clipWithcanonicalViewVolume(
-     int idx0,
-     int idx1,
-     int idx2,
-     const std::vector<Vec4>&                inXYZW,
-     const std::vector<std::valarray<f32>*>& inUV,
-     std::vector<Vec4>&                      outXYZW,
-     std::vector<std::valarray<f32>*>&       outUV);
+   //static int clipWithcanonicalViewVolume(
+   //  int idx0,
+   //  int idx1,
+   //  int idx2,
+   //  const std::vector<Vec4>&                inXYZW,
+   //  const std::vector<std::valarray<f32>*>& inUV,
+   //  std::vector<Vec4>&                      outXYZW,
+   //  std::vector<std::valarray<f32>*>&       outUV);
 
    static int clipWithInfinitesimalW(u32                    primitiveIndex,
                                      const PrimitiveStream& inStream,

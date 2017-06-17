@@ -17,7 +17,6 @@ class Device {
   virtual void setFramebuffer(Framebuffer& framebuffer);
   virtual void setPrimitiveStream(const PrimitiveStream& primitiveStream);
   virtual void setTexture(Texture& texture);
-  virtual void draw(const Triangle3D& shape);
   virtual void draw();
   virtual void blit(const Texture& tex);
   virtual void clear();

@@ -54,24 +54,6 @@ f32 get_x_by_y(const Vec4& s, const Vec4& t, f32 y) {
   return (y-t.y)*(s.x-t.x)/(s.y-t.y)+t.x;
 }
 
-void Rasterizer::drawTriangle(const Triangle& tri) {
-  Trapezoid traps[2];
-  int traps_num=divide_into_trapezoids(tri, traps);
-
-  for (int i=0;i<traps_num;++i) {
-    const Trapezoid& t=traps[i];
-    const float top=t.t;
-    const float bottom=t.b;
-    for (int y=static_cast<int>(top);y>=bottom;--y) {
-      int lx=static_cast<int>(0.5f+get_x_by_y(t.l.s, t.l.t,static_cast<f32>(y)));
-      int rx=static_cast<int>(0.5f+get_x_by_y(t.r.s, t.r.t,static_cast<f32>(y)));
-      for (int x=lx;x<=rx;++x)
-        if (x>=0 && x<width_)
-          setPixelAt(x, y, 0xff);
-    }
-  }
-}
-
 void Rasterizer::drawTriangle(u32   primitiveIndex,
                               const PrimitiveStream& stream,
                               const Sampler&         sampler) {
@@ -95,8 +77,8 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
       f32 fr=(y-vr0.y)/(vr1.y-vr0.y);
       f32 lw_inverse=lerp(vl0.w,vl1.w,fl);
       f32 rw_inverse=lerp(vr0.w,vr1.w,fr);
-      int lx=static_cast<int>(0.5f+lerp(v(t.l[0]).x,v(t.l[1]).x,fl));
-      int rx=static_cast<int>(0.5f+lerp(v(t.r[0]).x,v(t.r[1]).x,fr));
+      int lx=static_cast<int>(0.5f+lerp(vl0.x,vl1.x,fl));
+      int rx=static_cast<int>(0.5f+lerp(vr0.x,vr1.x,fr));
       uv_l_div_w=lerp(a(t.l[0]),a(t.l[1]),fl);
       uv_r_div_w=lerp(a(t.r[0]),a(t.r[1]),fr);
       for (int x=lx;x<=rx;++x) {
@@ -108,15 +90,6 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
       }
     }
   }
-}
-
-void Rasterizer::draw( const Triangle& tri ) {
-  Triangle ret;
-  for (int i=0;i<3;++i) {
-    ret.m[i].x=(tri.m[i].x+1)*0.5f*(width_-1);
-    ret.m[i].y=(tri.m[i].y+1)*0.5f*(height_-1);
-  }
-  drawTriangle(ret);
 }
 
 void Rasterizer::draw(const PrimitiveStream& stream,const Sampler& sampler) {
