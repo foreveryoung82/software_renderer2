@@ -80,18 +80,25 @@ void main() {
         "RightButtonUp",
         "Move",
       };
-    std::cout<<name[static_cast<int>(args.Type)]<<' : ';
-    std::cout<<std::setw(8)<<args.X<<std::setw(8)<<args.Y<<std::endl;
+    if (args.Type!=MouseEventArgs::Event::Move) {
+      std::cout<<name[static_cast<int>(args.Type)]<<' : ';
+      std::cout<<std::setw(8)<<args.X<<std::setw(8)<<args.Y<<std::endl;
+    }
     switch (args.Type) {
     case MouseEventArgs::Event::LeftButtonDown:
       arcball.beginDrag(args.X,args.Y);
       isDraging=true;
+      delta=arcball.rotation();
+      app.refresh();
       break;
     case MouseEventArgs::Event::LeftButtonUp:
+      arcball.onDrag(args.X,args.Y);
+      delta=arcball.rotation();
       arcball.endDrag();
       isDraging=false;
-      rotation=rotation.quaternionMultiply(delta);
+      rotation=delta.quaternionMultiply(rotation);
       delta=Vec4::kUnitW;
+      app.refresh();
       break;
     case MouseEventArgs::Event::Move:
       if (isDraging) {
@@ -103,14 +110,14 @@ void main() {
     }
   });
 
-  app.setOnFrameBeginEvent([&device,&camera,&frames,&tex,&ps,rotationStep,&rotation,&delta]
-                            (Framebuffer& fb){
+  app.setOnFrameBeginEvent([&](Framebuffer& fb){
     //Matrix4x4 rotation=Matrix4x4::makeRotation(frames*rotationStep,Vec3::kUnitY);
-    frames+=1.f;
+    //frames+=1.f;
     //rotation=Matrix4x4::makeTranslation(Vec3::make(0.f,-1.5f,0))*
     //           rotation*
     //           Matrix4x4::makeTranslation(Vec3::make(0.f,1.5f,0));
-    camera.setExtraMatrix(Matrix4x4::makeRotation(delta.quaternionMultiply(rotation)));    
+    Matrix4x4 extra=Matrix4x4::makeRotation(delta.quaternionMultiply(rotation));
+    camera.setExtraMatrix(extra);    
 
     device.setCamera(camera);
     device.setFramebuffer(fb);
