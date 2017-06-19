@@ -14,6 +14,7 @@ public:
   static const Vec4 kUnitW;
   static Vec4 make(f32 x,f32 y,f32 z, f32 w);
   static Vec4 make(Vec3 const& v, f32 w);
+  static Vec4 computeShortestRotation(const Vec3& a,const Vec3& b);
   union {
     struct {
       f32 x;

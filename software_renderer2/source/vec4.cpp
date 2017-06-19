@@ -26,6 +26,13 @@ Vec4 Vec4::make(Vec3 const& v, f32 w) {
   return ret;    
 }
 
+Vec4 Vec4::computeShortestRotation(const Vec3& unitA,const Vec3& unitB) {
+  Vec4 ret = Vec4::make(unitA.cross(unitB),unitA.dot(unitB));
+  ret.w+=1;
+  // [cos(a)+1, sin(a)v] = 2cos(a/2)[cos(a/2), sin(a/2)]
+  return ret.normalized(); 
+}
+
 const f32* Vec4::begin() const {
   return &m[0];
 }
