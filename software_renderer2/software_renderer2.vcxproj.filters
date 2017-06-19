@@ -83,6 +83,9 @@
     <ClCompile Include="source\arcball.cpp">
       <Filter>include</Filter>
     </ClCompile>
+    <ClCompile Include="source\depthbuffer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\line2.h">
@@ -167,6 +170,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\mouseeventargs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\depthbuffer.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
