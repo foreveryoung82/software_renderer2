@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\application.cpp" />
+    <ClCompile Include="source\arcball.cpp" />
     <ClCompile Include="source\camera.cpp" />
     <ClCompile Include="source\device.cpp" />
     <ClCompile Include="source\framebuffer.cpp" />
@@ -38,6 +39,7 @@
   <ItemGroup>
     <ClInclude Include="include\application.h" />
     <ClInclude Include="include\applicationimpl.h" />
+    <ClInclude Include="include\arcball.h" />
     <ClInclude Include="include\base.h" />
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\color.h" />
@@ -48,6 +50,7 @@
     <ClInclude Include="include\line2.h" />
     <ClInclude Include="include\matrix3x3.h" />
     <ClInclude Include="include\matrix4x4.h" />
+    <ClInclude Include="include\mouseeventargs.h" />
     <ClInclude Include="include\primitivestream.h" />
     <ClInclude Include="include\primitivetype.h" />
     <ClInclude Include="include\quaternion.h" />

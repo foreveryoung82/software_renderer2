@@ -5,7 +5,7 @@
 #include "base.h"
 #include "vec3.h"
 #include "vec4.h"
-class Quaternion;
+#include "quaternion.h"
 
 // column major
 class Matrix4x4 {

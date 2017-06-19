@@ -18,15 +18,16 @@ ArcBall::~ArcBall() {
 void ArcBall::beginDrag(int x,int y) {
   start_    = projectScreenToVirtualBall(x,y);
   current_  = start_;
-  rotation_ = Vec4::kUnitW;
+  //rotation_ = Vec4::kUnitW;
 }
 
 void ArcBall::onDrag(int x,int y) {
   current_  = projectScreenToVirtualBall(x,y);
-  rotation_ = Quaternion::computeShortestRotation(start_,current_);
+  rotation_ = Quaternion::computeShortestRotation(start_, current_);
 }
 
 void ArcBall::endDrag() {
+  rotation_=Vec4::kUnitW;
 }
 
 const Quaternion& ArcBall::rotation() const {

@@ -40,12 +40,15 @@ public:
   Vec4& operator*=(f32 factor);
   f32& operator[](u8 idx) {return m[idx];}
   const f32& operator[](u8 idx) const {return m[idx];};
+  const Vec3& v() const;
+  Vec3& v();
   f32 length() const;
   f32 lengthSquare() const;
   Vec4 normalized() const;
   // quaternion methods
   Vec4 conjugate() const;
   Vec4 inverse() const;
+  Vec4 quaternionMultiply(const Vec4& q) const;
 };
 
 Vec4 operator*(f32 f, Vec4 const& lhs);

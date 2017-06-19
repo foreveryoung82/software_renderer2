@@ -80,6 +80,9 @@
     <ClCompile Include="source\quaternion.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\arcball.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\line2.h">
@@ -158,6 +161,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\quaternion.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\arcball.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mouseeventargs.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

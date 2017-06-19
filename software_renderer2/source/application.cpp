@@ -1,12 +1,22 @@
 #include "application.h"
 #include <cassert>
 #include <memory.h>
+#include <windowsx.h>
 #include "applicationimpl.h"
 #include "framebuffer.h"
+#include "mouseeventargs.h"
 
 #include <iostream>
 
 static Application* s_application_instance=nullptr;
+
+void fire_mouse_event(LPARAM lParam, MouseEventArgs::Event type) {
+  MouseEventArgs args;
+  args.Type=type;
+  args.X=GET_X_LPARAM(lParam);
+  args.Y=GET_Y_LPARAM(lParam);
+  s_application_instance->fireOnMouseEvent(args);
+}
 
 LRESULT CALLBACK WndProc(HWND hwnd,
                          UINT message,
@@ -15,8 +25,20 @@ LRESULT CALLBACK WndProc(HWND hwnd,
   switch(message) {
     case WM_CREATE:
       return 0;
+    case WM_LBUTTONDOWN:
+      ::SetCapture(hwnd);
+      fire_mouse_event(lParam,MouseEventArgs::Event::LeftButtonDown);
+      return 0;
+    case WM_LBUTTONUP:
+      ::ReleaseCapture();
+      fire_mouse_event(lParam,MouseEventArgs::Event::LeftButtonUp);
+      return 0;
+    case WM_MOUSEMOVE:
+      fire_mouse_event(lParam,MouseEventArgs::Event::Move);
+      //InvalidateRect(hwnd,0,0);
+      return 0;
     case WM_KEYDOWN:
-      InvalidateRect(hwnd,0,0);
+      //InvalidateRect(hwnd,0,0);
       return 0;
     case WM_PAINT:
       PAINTSTRUCT ps;
@@ -117,7 +139,8 @@ Application::Application()
  , height_(0)
  , impl_(nullptr)
  , framebuffer_(nullptr)
- , onFrameBeginEvent_() {
+ , onFrameBeginEvent_()
+ , onMouseEvent_() {
   assert(!s_application_instance);
   s_application_instance=this;
 }
@@ -157,6 +180,10 @@ void Application::teardown() {
   impl_=nullptr;
 }
 
+void Application::refresh() {
+  ::InvalidateRect(impl_->mainWindow,0,0);
+}
+
 void Application::run() {
   ShowWindow(impl_->mainWindow,SW_NORMAL);
   UpdateWindow(impl_->mainWindow);
@@ -174,6 +201,10 @@ void Application::setOnFrameBeginEvent( onFrameBeginEvent_t onFrameBeginEvent ) 
   onFrameBeginEvent_=onFrameBeginEvent;
 }
 
+void Application::setOnMouseEvent(onMouseEvent_t onMouseEvent) {
+  onMouseEvent_=onMouseEvent;
+}
+
 void Application::fireOnFrameBeginEvent() {
   HDC hdc=GetDC(impl_->mainWindow);
   if (onFrameBeginEvent_)
@@ -182,3 +213,8 @@ void Application::fireOnFrameBeginEvent() {
   ReleaseDC(impl_->mainWindow,hdc);
 }
 
+void Application::fireOnMouseEvent(MouseEventArgs& args) {
+  //args.X = width_  - args.X;
+  args.Y = height_ - args.Y;
+  onMouseEvent_(args);
+}

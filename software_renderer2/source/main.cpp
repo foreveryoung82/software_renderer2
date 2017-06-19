@@ -1,13 +1,16 @@
 #include <iostream>
 #include <iomanip>
 #include "application.h"
+#include "arcball.h"
 #include "camera.h"
 #include "color.h"
 #include "device.h"
 #include "framebuffer.h"
 #include "matrix3x3.h"
 #include "matrix4x4.h"
+#include "mouseeventargs.h"
 #include "primitivestream.h"
+#include "quaternion.h"
 #include "texture.h"
 #include "triangle.h"
 #include "triangle3d.h"
@@ -61,14 +64,53 @@ void main() {
   f32 frames=0;
   Texture tex("data/test.png");
 
-  app.setOnFrameBeginEvent([&device,&camera,&frames,&tex,&ps,rotationStep]
+  const u32 windowWidth=640;
+  const u32 windowHeight=480;
+  ArcBall arcball(windowWidth,windowHeight);
+  //Vec4 rotation=Vec4::kUnitW;
+  Vec4 rotation = Vec4::kUnitW;
+  Vec4 delta    = Vec4::kUnitW;
+  bool isDraging=false;
+
+  app.setOnMouseEvent([&arcball,&isDraging,&rotation,&app,&delta](MouseEventArgs& args){
+    char* name[5] = {
+        "LeftButtonDown",
+        "LeftButtonUp",
+        "RightButtonDown",
+        "RightButtonUp",
+        "Move",
+      };
+    std::cout<<name[static_cast<int>(args.Type)]<<' : ';
+    std::cout<<std::setw(8)<<args.X<<std::setw(8)<<args.Y<<std::endl;
+    switch (args.Type) {
+    case MouseEventArgs::Event::LeftButtonDown:
+      arcball.beginDrag(args.X,args.Y);
+      isDraging=true;
+      break;
+    case MouseEventArgs::Event::LeftButtonUp:
+      arcball.endDrag();
+      isDraging=false;
+      rotation=rotation.quaternionMultiply(delta);
+      delta=Vec4::kUnitW;
+      break;
+    case MouseEventArgs::Event::Move:
+      if (isDraging) {
+        arcball.onDrag(args.X,args.Y);
+        delta=arcball.rotation();
+        app.refresh();
+      }
+      break;
+    }
+  });
+
+  app.setOnFrameBeginEvent([&device,&camera,&frames,&tex,&ps,rotationStep,&rotation,&delta]
                             (Framebuffer& fb){
-    Matrix4x4 rotation=Matrix4x4::makeRotation(frames*rotationStep,Vec3::kUnitY);
+    //Matrix4x4 rotation=Matrix4x4::makeRotation(frames*rotationStep,Vec3::kUnitY);
     frames+=1.f;
     //rotation=Matrix4x4::makeTranslation(Vec3::make(0.f,-1.5f,0))*
     //           rotation*
     //           Matrix4x4::makeTranslation(Vec3::make(0.f,1.5f,0));
-    camera.setExtraMatrix(rotation);    
+    camera.setExtraMatrix(Matrix4x4::makeRotation(delta.quaternionMultiply(rotation)));    
 
     device.setCamera(camera);
     device.setFramebuffer(fb);

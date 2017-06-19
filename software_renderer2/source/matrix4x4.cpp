@@ -88,7 +88,7 @@ Matrix4x4 Matrix4x4::makeRotation(f32 radian,Vec3 const& unitAxis) {
   return matrix;   
 }
 
-Matrix4x4 Matrix4x4makeRotation(const Quaternion& q) {
+Matrix4x4 Matrix4x4::makeRotation(const Quaternion& q) {
   // R_q(p)=(2w*w-1)p+2(v*p)p+2w(vxp), * means dot, x means cross
   Matrix4x4 ret;
   const f32 x=q.x;

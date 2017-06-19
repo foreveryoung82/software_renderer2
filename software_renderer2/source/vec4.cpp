@@ -101,6 +101,14 @@ Vec4& Vec4::operator*=(f32 factor) {
   return *this;
 }
 
+const Vec3& Vec4:: v() const {
+  return *reinterpret_cast<const Vec3*>(this);
+}
+
+Vec3& Vec4::v() {
+  return *reinterpret_cast<Vec3*>(this);
+}
+
 f32 Vec4::length() const {
   return std::sqrt(dot(*this));
 }
@@ -119,6 +127,12 @@ Vec4 Vec4::conjugate() const {
 
 Vec4 Vec4::inverse() const {
   return conjugate()*(1.f/length());
+}
+
+Vec4 Vec4::quaternionMultiply(const Vec4& q) const {
+  const f32  rw = w*q.w-v().dot(q.v());
+  const Vec3 rv = w*q.v()+v()*q.w+v().cross(q.v());
+  return Vec4::make(rv, rw);
 }
 
 Vec4 operator*(f32 f, Vec4 const& lhs) {
