@@ -106,6 +106,14 @@ Vec4 Vec4::normalized() const {
   return (1.f/length()) * *this;
 }
 
+Vec4 Vec4::conjugate() const {
+  return Vec4::make(-x,-y,-z,w);
+}
+
+Vec4 Vec4::inverse() const {
+  return conjugate()*(1.f/length());
+}
+
 Vec4 operator*(f32 f, Vec4 const& lhs) {
   return lhs*f;
 }

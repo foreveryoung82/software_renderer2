@@ -42,6 +42,9 @@ public:
   f32 length() const;
   f32 lengthSquare() const;
   Vec4 normalized() const;
+  // quaternion methods
+  Vec4 conjugate() const;
+  Vec4 inverse() const;
 };
 
 Vec4 operator*(f32 f, Vec4 const& lhs);

@@ -22,6 +22,7 @@
     <ClCompile Include="source\matrix3x3.cpp" />
     <ClCompile Include="source\matrix4x4.cpp" />
     <ClCompile Include="source\primitivestream.cpp" />
+    <ClCompile Include="source\quaternion.cpp" />
     <ClCompile Include="source\rasterizer.cpp" />
     <ClCompile Include="source\rect.cpp" />
     <ClCompile Include="source\sampler.cpp" />
@@ -49,6 +50,7 @@
     <ClInclude Include="include\matrix4x4.h" />
     <ClInclude Include="include\primitivestream.h" />
     <ClInclude Include="include\primitivetype.h" />
+    <ClInclude Include="include\quaternion.h" />
     <ClInclude Include="include\rasterizer.h" />
     <ClInclude Include="include\rect.h" />
     <ClInclude Include="include\sampler.h" />

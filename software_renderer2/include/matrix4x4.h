@@ -5,6 +5,7 @@
 #include "base.h"
 #include "vec3.h"
 #include "vec4.h"
+class Quaternion;
 
 // column major
 class Matrix4x4 {
@@ -21,6 +22,7 @@ public:
   static Matrix4x4 makeTranslation(Vec3 const& t);
   static Matrix4x4 makeScale(Vec3 const& s);
   static Matrix4x4 makeRotation(f32 radian,Vec3 const& unitAxis);
+  static Matrix4x4 makeRotation(const Quaternion& q);
   //static Matrix4x4 makeXShear(f32 factor);
   //static Matrix4x4 makeYShear(f32 factor);
   //static Matrix4x4 makeZShear(f32 factor);
