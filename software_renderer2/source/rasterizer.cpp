@@ -76,6 +76,8 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
     const Vec4& vr0=v(t.r[0]);
     const Vec4& vr1=v(t.r[1]);
     for (int y=top;y>=bottom;--y) {
+      // remark(yangjie82@gmail.com): in some case, fl, fr may be negative,
+      // use max to make program more robust
       f32 fl=std::max(0.f,(y-vl0.y)/(vl1.y-vl0.y));
       f32 fr=std::max(0.f,(y-vr0.y)/(vr1.y-vr0.y));
       f32 lw_inverse=lerp(vl0.w,vl1.w,fl);
