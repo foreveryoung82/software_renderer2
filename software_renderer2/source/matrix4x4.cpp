@@ -103,7 +103,7 @@ Matrix4x4 Matrix4x4::makeRotation(const Quaternion& q) {
   ret.m[1][1]=2*w*w-1+2*y*y;
   ret.m[1][2]=2*y*z+2*w*x;
   ret.m[1][3]=0;
-  ret.m[2][0]=2*x*z-2*w*y;
+  ret.m[2][0]=2*x*z+2*w*y;
   ret.m[2][1]=2*y*z-2*w*x;
   ret.m[2][2]=2*w*w-1+2*z*z;
   ret.m[2][3]=0;
