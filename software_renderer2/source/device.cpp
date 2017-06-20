@@ -111,6 +111,7 @@ void Device::blit(const Texture& tex) {
 void Device::clear() {
   assert(framebuffer_);
   framebuffer_->clear(0);
+  depthbuffer_->clear(1.f);
 }
 
 void Device::present() {

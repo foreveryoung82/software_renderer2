@@ -86,6 +86,10 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
       f32 rw_inverse=lerp(vr0.w,vr1.w,fr);
       int lx=static_cast<int>(0.5f+lerp(vl0.x,vl1.x,fl));
       int rx=static_cast<int>(0.5f+lerp(vr0.x,vr1.x,fr));
+
+      f32 lz=lerp(vl0.z,vl1.z,fl);
+      f32 rz=lerp(vr0.z,vr1.z,fr);
+
       lerp(a(t.l[0]),a(t.l[1]),fl,uv_l_div_w);
       lerp(a(t.r[0]),a(t.r[1]),fr,uv_r_div_w);
       // finite difference of uv_div_w
@@ -97,14 +101,22 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
       // finite difference of w_inverse
       f32 w_inverse=lw_inverse;
       f32 w_inverse_step=(rw_inverse-lw_inverse)*(1.f/steps);
+
+      f32 z_step=(rz-lz)/steps;
+      f32 z=lz;
       // fill scan line
       for (int x=lx;x<=rx;++x) {
         assert(0<=x && x<width_);
-        const u32 c=sampler(uv_div_w[0]/w_inverse,
-                            uv_div_w[1]/w_inverse).Value();
-        setPixelAt(x,y,c);
+        if (z<depthbuffer_->readAt(x,y)) {
+          depthbuffer_->writeAt(x,y,z);
+          const u32 c=sampler(uv_div_w[0]/w_inverse,
+            uv_div_w[1]/w_inverse).Value();
+
+          setPixelAt(x,y,c);
+        }
         uv_div_w  += uv_div_w_step;
         w_inverse += w_inverse_step;
+        z+=z_step;
       }
     }
   }

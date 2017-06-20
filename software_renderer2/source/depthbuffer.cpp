@@ -18,6 +18,7 @@ void DepthBuffer::writeAt(u32 x,u32 y,f32 z) {
   buffer_[x+y*width_]=z;
 }
 
-void DepthBuffer::clear() {
-  std::fill(buffer_.begin(),buffer_.end(),0.f);
+void DepthBuffer::clear( f32 z )
+{
+  std::fill(buffer_.begin(),buffer_.end(),z);
 }

@@ -37,38 +37,45 @@ DemoDepthBuffer::~DemoDepthBuffer() {
 void DemoDepthBuffer::setup() {
   // setup camera
   Camera::ViewParameters vp;
-  vp.Eye    = Vec3::make(0.f,1.f,1.f);
+  vp.Eye    = Vec3::make(0.f,0.f,2.f);
   vp.Target = Vec3::make(0,0,-1);
   vp.Up     = Vec3::kUnitY;
   Camera::ProjectionParameters pp;
   pp.Aspect = 1.f;
-  pp.Far    = 2.f;
+  pp.Far    = 10.f;
   pp.Fov    = 3.1415926f/2.f;
   pp.Near   = 1.f;
   camera_.reset(new Camera(vp,pp));
   // setup primitive stream
   stream_.reset(new PrimitiveStream(PrimitiveType::TriangleList,2));
-  Vec2 uvQuad[4]={
+  Vec2 uvQuad[5]={
     Vec2::make(1,1),
     Vec2::make(0,1),
     Vec2::make(0,0),
     Vec2::make(1,0),
+    Vec2::make(0.5f,0.5f),
   };
-  Vec4 xyzwQuad[4]={
+  Vec4 xyzwQuad[5]={
     Vec4::make(1,1,0,1),
     Vec4::make(-1,1,0,1),
     Vec4::make(-1,-1,0,1),
     Vec4::make(1,-1,0,1),
+    Vec4::make(0,0,-1,1),
   };
   stream_->addVertex(xyzwQuad[0],std::valarray<f32>(uvQuad[0].m,2));
   stream_->addVertex(xyzwQuad[1],std::valarray<f32>(uvQuad[1].m,2));
   stream_->addVertex(xyzwQuad[2],std::valarray<f32>(uvQuad[2].m,2));
   stream_->addVertex(xyzwQuad[3],std::valarray<f32>(uvQuad[3].m,2));
+  stream_->addVertex(xyzwQuad[4],std::valarray<f32>(uvQuad[4].m,2));
   stream_->addPrimitive(0,1,2);
   stream_->addPrimitive(0,2,3);
+  stream_->addPrimitive(1,0,4);
+  stream_->addPrimitive(2,1,4);
+  stream_->addPrimitive(3,2,4);
+  stream_->addPrimitive(0,3,4);
   // setup arcball
-  const u32 width=640;
-  const u32 height=480;
+  const u32 width=512;
+  const u32 height=512;
   arcball_.reset(new ArcBall(width,height));
   // load texture
   texture_.reset(new Texture("data/test.png"));
@@ -106,8 +113,8 @@ void DemoDepthBuffer::onMouseEvent(MouseEventArgs& args) {
   case MouseEventArgs::Event::LeftButtonDown:
     arcball_->beginDrag(args.X,args.Y);
     isDragging_=true;
-    deltaRotation_=arcball_->rotation();
-    app_.refresh();
+    //deltaRotation_=arcball_->rotation();
+    //app_.refresh();
     break;
   case MouseEventArgs::Event::LeftButtonUp:
     //arcball_->onDrag(args.X,args.Y);
@@ -115,6 +122,7 @@ void DemoDepthBuffer::onMouseEvent(MouseEventArgs& args) {
     arcball_->endDrag();
     isDragging_=false;
     startRotation_=deltaRotation_.quaternionMultiply(startRotation_);
+    startRotation_=startRotation_.normalized();
     deltaRotation_=Vec4::kUnitW;
     app_.refresh();
     break;
@@ -132,6 +140,8 @@ void DemoDepthBuffer::onFrameBeginEvent(Device& device) {
   Matrix4x4 extra=Matrix4x4::makeRotation(
                     deltaRotation_.quaternionMultiply(startRotation_));
   camera_->setExtraMatrix(extra);    
+
+  std::cout<<extra.determinant()<<std::endl;
 
   device.setCamera(*camera_);
   //device.setFramebuffer(fb);

@@ -11,7 +11,7 @@ class DepthBuffer {
   ~DepthBuffer();
   f32 readAt(u32 x,u32 y) const;
   void writeAt(u32 x,u32 y,f32 z);
-  void clear();
+  void clear(f32 z);
 
  private:
   u32 width_;
