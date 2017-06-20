@@ -3,7 +3,9 @@
 #include <memory.h>
 #include <windowsx.h>
 #include "applicationimpl.h"
-#include "framebuffer.h"
+#include "device.h"
+//#include "depthbuffer.h"
+//#include "framebuffer.h"
 #include "mouseeventargs.h"
 
 #include <iostream>
@@ -138,7 +140,8 @@ Application::Application()
  : width_(0)
  , height_(0)
  , impl_(nullptr)
- , framebuffer_(nullptr)
+ //, framebuffer_(nullptr)
+ //, depthbuffer_(nullptr)
  , onFrameBeginEvent_()
  , onMouseEvent_() {
   assert(!s_application_instance);
@@ -169,13 +172,17 @@ void Application::setup(int width, int height) {
   HBITMAP hbmp=create_dib(impl_->memoryDC, &impl_->bytes, width, height);
   select_dib_into_memory_dc(impl_->memoryDC, hbmp);
 
-  framebuffer_=new Framebuffer(impl_->bytes,width,height,width*4);
+  //framebuffer_=new FrameBuffer(impl_->bytes,width,height,width*4);
+  //depthbuffer_=new DepthBuffer(width,height);
+  device_=new Device(impl_->bytes,width,height);
 }
 
 void Application::teardown() {
   assert(impl_);
 
-  delete framebuffer_;
+  delete device_;
+  //delete depthbuffer_;
+  //delete framebuffer_;
   delete impl_;
   impl_=nullptr;
 }
@@ -189,11 +196,9 @@ void Application::run() {
   UpdateWindow(impl_->mainWindow);
 
   MSG msg;
-  while (GetMessage(&msg,impl_->mainWindow,0,0)) {
+  while (GetMessage(&msg,0,0,0)) {
     TranslateMessage(&msg);
     DispatchMessage(&msg);
-    
-    //std::cout<<"Msg"<<std::endl;
   }
 }
 
@@ -208,7 +213,8 @@ void Application::setOnMouseEvent(onMouseEvent_t onMouseEvent) {
 void Application::fireOnFrameBeginEvent() {
   HDC hdc=GetDC(impl_->mainWindow);
   if (onFrameBeginEvent_)
-    onFrameBeginEvent_(*framebuffer_);
+      onFrameBeginEvent_(*device_);
+    //onFrameBeginEvent_(*framebuffer_);
 	BitBlt(hdc, 0, 0, width_, height_, impl_->memoryDC, 0, 0, SRCCOPY);
   ReleaseDC(impl_->mainWindow,hdc);
 }

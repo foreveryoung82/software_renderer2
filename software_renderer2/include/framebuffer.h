@@ -4,10 +4,10 @@
 #pragma once
 #include "base.h"
 
-class Framebuffer {
+class FrameBuffer {
  public:
-  Framebuffer(void* bytes,int width,int height,int stride);
-  virtual ~Framebuffer();
+  FrameBuffer(void* bytes,int width,int height,int stride);
+  virtual ~FrameBuffer();
   int width() const {return width_;}
   int height() const {return height_;}
   inline void setPixel(int x,int y,u32 color);

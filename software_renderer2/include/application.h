@@ -3,13 +3,17 @@
 //@brief:platform specific application base class
 #pragma once
 #include <functional>
+class Device;
 struct ApplicationImpl;
-class Framebuffer;
+//class DepthBuffer;
+//class FrameBuffer;
 struct MouseEventArgs;
 
 class Application {
  public:
-  typedef std::function<void(Framebuffer& framebuffer)> onFrameBeginEvent_t;
+  //typedef std::function<void(FrameBuffer& framebuffer,
+  //                           DepthBuffer& depthbuffer)> onFrameBeginEvent_t;
+  typedef std::function<void(Device& device)> onFrameBeginEvent_t;
   typedef std::function<void(MouseEventArgs& args)> onMouseEvent_t;
   Application();
   virtual ~Application();
@@ -29,7 +33,9 @@ private:
   int width_;
   int height_;
   ApplicationImpl*    impl_;
-  Framebuffer*        framebuffer_;
+  Device*             device_;
+  //FrameBuffer*        framebuffer_;
+  //DepthBuffer*        depthbuffer_;
   onFrameBeginEvent_t onFrameBeginEvent_;
   onMouseEvent_t      onMouseEvent_;
 };

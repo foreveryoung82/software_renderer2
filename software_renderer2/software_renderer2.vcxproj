@@ -14,6 +14,7 @@
     <ClCompile Include="source\application.cpp" />
     <ClCompile Include="source\arcball.cpp" />
     <ClCompile Include="source\camera.cpp" />
+    <ClCompile Include="source\demodepthbuffer.cpp" />
     <ClCompile Include="source\depthbuffer.cpp" />
     <ClCompile Include="source\device.cpp" />
     <ClCompile Include="source\framebuffer.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="include\base.h" />
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\color.h" />
+    <ClInclude Include="include\demodepthbuffer.h" />
     <ClInclude Include="include\depthbuffer.h" />
     <ClInclude Include="include\device.h" />
     <ClInclude Include="include\framebuffer.h" />

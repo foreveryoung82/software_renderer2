@@ -4,14 +4,15 @@
 #pragma once
 #include <vector>
 #include "base.h"
-class Framebuffer;
+class DepthBuffer;
+class FrameBuffer;
 class PrimitiveStream;
 class Triangle;
 class Sampler;
 
 class Rasterizer {
  public:
-  Rasterizer(Framebuffer& framebuffer);
+  Rasterizer(FrameBuffer& framebuffer,DepthBuffer& depthbuffer);
   ~Rasterizer();
   int width() const;
   int height() const;
@@ -26,7 +27,8 @@ class Rasterizer {
   int width_;
   int height_;
   //std::vector<int> buffer_;
-  Framebuffer* framebuffer_;
+  FrameBuffer* framebuffer_;
+  DepthBuffer* depthbuffer_;
 
   Rasterizer(const Rasterizer& rhs);
   Rasterizer& operator=(const Rasterizer& rhs);

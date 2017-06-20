@@ -3,6 +3,7 @@
 #include <cassert>
 #include <functional>
 #include <memory>
+#include "depthbuffer.h"
 #include "framebuffer.h"
 #include "interpolation.h"
 #include "primitivestream.h"
@@ -22,11 +23,12 @@ void viewport_mapping(PrimitiveStream& stream,int width,int height) {
 }
 }
 
-Rasterizer::Rasterizer(Framebuffer& framebuffer)
- :width_(framebuffer.width()),
-  height_(framebuffer.height()),
+Rasterizer::Rasterizer(FrameBuffer& framebuffer,DepthBuffer& depthbuffer)
+ : width_(framebuffer.width())
+ , height_(framebuffer.height())
   //buffer_(width*height),
-  framebuffer_(&framebuffer) {
+ , framebuffer_(&framebuffer)
+ , depthbuffer_(&depthbuffer) {
 }
 
 Rasterizer::~Rasterizer() {

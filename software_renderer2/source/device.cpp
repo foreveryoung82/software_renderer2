@@ -6,6 +6,7 @@
 #include "camera.h"
 #include "framebuffer.h"
 #include "framebuffer.inl"
+#include "depthbuffer.h"
 #include "homogeneousclipper.h"
 #include "primitivestream.h"
 #include "rasterizer.h"
@@ -57,16 +58,23 @@ void transform(const PrimitiveStream& inStream,
 }
 }
 
-Device::Device()
- : camera_(nullptr)
+Device::Device(void* bytes,u32 width,u32 height)
+ : width_(width)
+ , height_(height)
+ , camera_(nullptr)
  , framebuffer_(nullptr)
+ , depthbuffer_(nullptr)
  , primitiveStream_(nullptr)
  , rasterizer_(nullptr) {
+  framebuffer_ = new FrameBuffer(bytes,width_,height_,width_*4);
+  depthbuffer_ = new DepthBuffer(width_,height_);
+  rasterizer_  = new Rasterizer(*framebuffer_,*depthbuffer_);
 }
 
 Device::~Device() {
-  if (rasterizer_)
-    delete rasterizer_;
+  delete rasterizer_;
+  delete depthbuffer_;
+  delete framebuffer_;
 }
 
 void Device::draw() {
@@ -113,11 +121,15 @@ void Device::setCamera(Camera& camera) {
   camera_=&camera;
 }
 
-void Device::setFramebuffer( Framebuffer& framebuffer ) {
-  framebuffer_=&framebuffer;
+//void Device::setFramebuffer( FrameBuffer& framebuffer ) {
+//  framebuffer_=&framebuffer;
+//
+//  if (!rasterizer_)
+//    rasterizer_=new Rasterizer(*framebuffer_);
+//}
 
-  if (!rasterizer_)
-    rasterizer_=new Rasterizer(*framebuffer_);
+void Device::setDepthbuffer(DepthBuffer& framebuffer) {
+  
 }
 
 void Device::setPrimitiveStream(const PrimitiveStream& primitiveStream) {
