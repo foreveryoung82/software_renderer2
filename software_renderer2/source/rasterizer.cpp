@@ -115,6 +115,9 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
         f32 ddv;
         const f32 u=uv_div_w[0]/w_inverse;
         const f32 v=uv_div_w[1]/w_inverse;
+        // remark(yangjie82@gmail.com):since some pixel cannot compute ddu,ddv
+        // as others do. Because there is no pixel on top/left of them. We just
+        // make them mip-map level 0.
         const bool is_sentry=((x==lx)||(!has_uv[x]));
         if (is_sentry) {
           if (z<=depthbuffer_->readAt(x,y)) {
