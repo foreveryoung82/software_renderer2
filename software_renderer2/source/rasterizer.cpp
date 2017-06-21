@@ -2,6 +2,7 @@
 #include "rasterizer.inl"
 #include <cassert>
 #include <functional>
+#include <cmath>
 #include <memory>
 #include "depthbuffer.h"
 #include "framebuffer.h"
@@ -70,8 +71,9 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
   PrimitiveStream::UV_t uv_div_w(stream.uvDimension());
   PrimitiveStream::UV_t uv(stream.uvDimension());
 
-  std::vector<f32> t_u(width_,0.f);
-  std::vector<f32> t_v(width_,0.f);
+  std::vector<f32> t_u(width_);
+  std::vector<f32> t_v(width_);
+  std::vector<bool> has_uv(width_,false);
   f32 l_u=0.f;
   f32 l_v=0.f;
 
@@ -88,14 +90,10 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
       // use max to make program more robust
       f32 fl=std::max(0.f,(y-vl0.y)/(vl1.y-vl0.y));
       f32 fr=std::max(0.f,(y-vr0.y)/(vr1.y-vr0.y));
-      f32 lw_inverse=lerp(vl0.w,vl1.w,fl);
-      f32 rw_inverse=lerp(vr0.w,vr1.w,fr);
-      int lx=static_cast<int>(0.5f+lerp(vl0.x,vl1.x,fl));
-      int rx=static_cast<int>(0.5f+lerp(vr0.x,vr1.x,fr));
-
-      f32 lz=lerp(vl0.z,vl1.z,fl);
-      f32 rz=lerp(vr0.z,vr1.z,fr);
-
+      Vec4 lv=lerp<Vec4>(vl0,vl1,fl);
+      Vec4 rv=lerp<Vec4>(vr0,vr1,fr);
+      const int lx=static_cast<int>(0.5f+lv.x);
+      const int rx=static_cast<int>(0.5f+rv.x);
       lerp(a(t.l[0]),a(t.l[1]),fl,uv_l_div_w);
       lerp(a(t.r[0]),a(t.r[1]),fr,uv_r_div_w);
       // finite difference of uv_div_w
@@ -105,39 +103,45 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
       const f32 steps=static_cast<float>(rx-lx);
       uv_div_w_step*=1.f/steps;
       // finite difference of w_inverse
-      f32 w_inverse=lw_inverse;
-      f32 w_inverse_step=(rw_inverse-lw_inverse)*(1.f/steps);
+      f32 w_inverse=lv.w;
+      f32 w_inverse_step=(rv.w-lv.w)*(1.f/steps);
+      // finite difference of depth
+      f32 z_step=(rv.z-lv.z)/steps;
+      f32 z=lv.z;
 
-      f32 z_step=(rz-lz)/steps;
-      f32 z=lz;
-
-      l_u=0.f;
-      l_v=0.f;
       // fill scan line
       for (int x=lx;x<=rx;++x) {
-        assert(0<=x && x<width_);
+        f32 ddu;
+        f32 ddv;
         const f32 u=uv_div_w[0]/w_inverse;
         const f32 v=uv_div_w[1]/w_inverse;
-        const f32 t_ddu=(t_u[x]==0.f)?0.f:u-t_u[x];
-        const f32 t_ddv=(t_v[x]==0.f)?0.f:v-t_v[x];
-        const f32 l_ddu=(l_u==0.f)?0.f:u-l_u;
-        const f32 l_ddv=(l_v==0.f)?0.f:v-l_v;
-        l_u=u;
-        l_v=v;
-        t_u[x]=u;
-        t_v[x]=v;
-        const f32 ddu=std::max(std::abs(t_ddu),std::abs(l_ddu));
-        const f32 ddv=std::max(std::abs(t_ddv),std::abs(l_ddv));
-        if (z<depthbuffer_->readAt(x,y)) {
-          depthbuffer_->writeAt(x,y,z);
-
-          const u32 c=sampler(u,v,ddu,ddv).Value();
-
-          setPixelAt(x,y,c);
+        const bool is_sentry=((x==lx)||(!has_uv[x]));
+        if (is_sentry) {
+          if (z<=depthbuffer_->readAt(x,y)) {
+            depthbuffer_->writeAt(x,y,z);
+            const u32 c=sampler(u,v).Value();
+            setPixelAt(x,y,c);
+          }
+        } else {
+          const f32 t_ddu=std::abs(u-t_u[x]);
+          const f32 t_ddv=std::abs(v-t_v[x]);
+          const f32 l_ddu=std::abs(u-l_u);
+          const f32 l_ddv=std::abs(v-l_v);
+          ddu=std::max(t_ddu,l_ddu);
+          ddv=std::max(t_ddv,l_ddv);
+          if (z<=depthbuffer_->readAt(x,y)) {
+            depthbuffer_->writeAt(x,y,z);
+            const u32 c=sampler(u,v,ddu,ddv).Value();
+            setPixelAt(x,y,c);
+          }
         }
+
+        t_u[x]=l_u=u;
+        t_v[x]=l_v=v;
+        has_uv[x]=true;
         uv_div_w  += uv_div_w_step;
         w_inverse += w_inverse_step;
-        z+=z_step;
+        z         += z_step;
       }
     }
   }
