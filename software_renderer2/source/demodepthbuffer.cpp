@@ -79,6 +79,7 @@ void DemoDepthBuffer::setup() {
   arcball_.reset(new ArcBall(width,height));
   // load texture
   texture_.reset(new Texture("data/test.png"));
+  texture_->generateMipmapChain();
   // setup app
   app_.setup(width,height);
   app_.setOnMouseEvent([this](MouseEventArgs& args) {

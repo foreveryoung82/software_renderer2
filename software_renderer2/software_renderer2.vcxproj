@@ -43,6 +43,7 @@
     <ClInclude Include="include\applicationimpl.h" />
     <ClInclude Include="include\arcball.h" />
     <ClInclude Include="include\base.h" />
+    <ClInclude Include="include\bithack.h" />
     <ClInclude Include="include\camera.h" />
     <ClInclude Include="include\color.h" />
     <ClInclude Include="include\demodepthbuffer.h" />
@@ -71,6 +72,7 @@
     <ClInclude Include="include\viewportclipper.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="include\bithack.inl" />
     <None Include="include\framebuffer.inl" />
     <None Include="include\rasterizer.inl" />
     <None Include="include\texture.inl" />

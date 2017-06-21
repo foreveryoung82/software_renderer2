@@ -10,6 +10,7 @@ class Sampler {
  public:
   explicit Sampler(const Texture& tex);
   Color operator()(f32 u,f32 v) const;
+  Color operator()(f32 u,f32 v,u32 mipmap_level) const;
 
  private:
   const Texture* texture_;

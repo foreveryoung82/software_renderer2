@@ -181,6 +181,9 @@
     <ClInclude Include="include\demodepthbuffer.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\bithack.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="include\rasterizer.inl">
@@ -190,6 +193,9 @@
       <Filter>include</Filter>
     </None>
     <None Include="include\texture.inl">
+      <Filter>include</Filter>
+    </None>
+    <None Include="include\bithack.inl">
       <Filter>include</Filter>
     </None>
   </ItemGroup>

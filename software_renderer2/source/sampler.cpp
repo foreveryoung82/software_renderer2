@@ -17,3 +17,9 @@ Color Sampler::operator()(f32 u,f32 v) const {
   const int y=static_cast<int>(saturate(v)*(texture_->height()-1)+0.5f);
   return texture_->colorAt(x,y);
 }
+
+Color Sampler::operator()(f32 u,f32 v,u32 mipmap_level) const {
+  const int x=static_cast<int>(saturate(u)*(texture_->width(mipmap_level)-1)+0.5f);
+  const int y=static_cast<int>(saturate(v)*(texture_->height(mipmap_level)-1)+0.5f);
+  return texture_->colorAt(x,y,mipmap_level);
+}
