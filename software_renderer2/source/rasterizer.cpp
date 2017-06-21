@@ -69,6 +69,12 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
   PrimitiveStream::UV_t uv_div_w_step(stream.uvDimension());
   PrimitiveStream::UV_t uv_div_w(stream.uvDimension());
   PrimitiveStream::UV_t uv(stream.uvDimension());
+
+  std::vector<f32> t_u(width_,0.f);
+  std::vector<f32> t_v(width_,0.f);
+  f32 l_u=0.f;
+  f32 l_v=0.f;
+
   for (int i=0;i<traps_num;++i) {
     const IndexedTrapezoid& t=traps[i];
     const int top      = static_cast<int>(t.t);
@@ -104,13 +110,28 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
 
       f32 z_step=(rz-lz)/steps;
       f32 z=lz;
+
+      l_u=0.f;
+      l_v=0.f;
       // fill scan line
       for (int x=lx;x<=rx;++x) {
         assert(0<=x && x<width_);
+        const f32 u=uv_div_w[0]/w_inverse;
+        const f32 v=uv_div_w[1]/w_inverse;
+        const f32 t_ddu=(t_u[x]==0.f)?0.f:u-t_u[x];
+        const f32 t_ddv=(t_v[x]==0.f)?0.f:v-t_v[x];
+        const f32 l_ddu=(l_u==0.f)?0.f:u-l_u;
+        const f32 l_ddv=(l_v==0.f)?0.f:v-l_v;
+        l_u=u;
+        l_v=v;
+        t_u[x]=u;
+        t_v[x]=v;
+        const f32 ddu=std::max(std::abs(t_ddu),std::abs(l_ddu));
+        const f32 ddv=std::max(std::abs(t_ddv),std::abs(l_ddv));
         if (z<depthbuffer_->readAt(x,y)) {
           depthbuffer_->writeAt(x,y,z);
-          const u32 c=sampler(uv_div_w[0]/w_inverse,
-            uv_div_w[1]/w_inverse).Value();
+
+          const u32 c=sampler(u,v,ddu,ddv).Value();
 
           setPixelAt(x,y,c);
         }
