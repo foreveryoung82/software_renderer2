@@ -151,32 +151,32 @@ bool Matrix4x4::operator==(Matrix4x4 const& rhs) const {
 Matrix4x4 Matrix4x4::operator+(Matrix4x4 const& rhs) const {
   Matrix4x4 ret;
   std::transform(begin(),end(),rhs.begin(),ret.begin(),
-    [](u8 a,u8 b)->u8{return a+b;});
+    [](f32 a, f32 b)->f32 {return a+b;});
   return ret;
 }
 
 Matrix4x4& Matrix4x4::operator+=(Matrix4x4 const& rhs) {
   std::transform(begin(),end(),rhs.begin(),begin(),
-    [](u8 a,u8 b)->u8{return a+b;});
+    [](f32 a, f32 b)->f32 {return a+b;});
   return *this;
 }
 
 Matrix4x4 Matrix4x4::operator-(Matrix4x4 const& rhs) const {
   Matrix4x4 ret;
   std::transform(begin(),end(),rhs.begin(),ret.begin(),
-    [](u8 a,u8 b)->u8{return a-b;});
+    [](f32 a, f32 b)->f32 {return a-b;});
   return ret;
 }
 
 Matrix4x4& Matrix4x4::operator-=(Matrix4x4 const& rhs) {
   std::transform(begin(),end(),rhs.begin(),begin(),
-    [](u8 a,u8 b)->u8{return a-b;});
+    [](f32 a,f32 b)->f32{return a-b;});
   return *this;
 }
 
 Matrix4x4 Matrix4x4::operator-() const {
   Matrix4x4 ret;
-  std::transform(begin(),end(),ret.begin(),[](u8 a)->u8{return -a;});
+  std::transform(begin(),end(),ret.begin(),[](f32 a)->f32{return -a;});
   return ret;
 }
 

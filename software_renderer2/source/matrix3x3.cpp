@@ -106,32 +106,32 @@ bool Matrix3x3::operator==(Matrix3x3 const& rhs) const {
 Matrix3x3 Matrix3x3::operator+(Matrix3x3 const& rhs) const {
   Matrix3x3 ret;
   std::transform(begin(),end(),rhs.begin(),ret.begin(),
-    [](u8 a,u8 b)->u8{return a+b;});
+    [](f32 a,f32 b)->f32{return a+b;});
   return ret;
 }
 
 Matrix3x3& Matrix3x3::operator+=(Matrix3x3 const& rhs) {
   std::transform(begin(),end(),rhs.begin(),begin(),
-    [](u8 a,u8 b)->u8{return a+b;});
+    [](f32 a,f32 b)->f32{return a+b;});
   return *this;
 }
 
 Matrix3x3 Matrix3x3::operator-(Matrix3x3 const& rhs) const {
   Matrix3x3 ret;
   std::transform(begin(),end(),rhs.begin(),ret.begin(),
-    [](u8 a,u8 b)->u8{return a-b;});
+    [](f32 a,f32 b)->f32{return a-b;});
   return ret;
 }
 
 Matrix3x3& Matrix3x3::operator-=(Matrix3x3 const& rhs) {
   std::transform(begin(),end(),rhs.begin(),begin(),
-    [](u8 a,u8 b)->u8{return a-b;});
+    [](f32 a,f32 b)->f32{return a-b;});
   return *this;
 }
 
 Matrix3x3 Matrix3x3::operator-() const {
   Matrix3x3 ret;
-  std::transform(begin(),end(),ret.begin(),[](u8 a)->u8{return -a;});
+  std::transform(begin(),end(),ret.begin(),[](f32 a)->f32{return -a;});
   return ret;
 }
 
