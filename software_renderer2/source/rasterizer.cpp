@@ -1,5 +1,6 @@
 #include "rasterizer.h"
 #include "rasterizer.inl"
+#include <algorithm>
 #include <cassert>
 #include <functional>
 #include <cmath>
@@ -88,8 +89,10 @@ void Rasterizer::drawTriangle(u32   primitiveIndex,
     for (int y=top;y>=bottom;--y) {
       // remark(yangjie82@gmail.com): in some case, fl, fr may be negative,
       // use max to make program more robust
-      f32 fl=std::max(0.f,(y-vl0.y)/(vl1.y-vl0.y));
-      f32 fr=std::max(0.f,(y-vr0.y)/(vr1.y-vr0.y));
+      //f32 fl=std::max(0.f,(y-vl0.y)/(vl1.y-vl0.y));
+      //f32 fr=std::max(0.f,(y-vr0.y)/(vr1.y-vr0.y));
+      f32 fl=(y-vl0.y)/(vl1.y-vl0.y);
+      f32 fr=(y-vr0.y)/(vr1.y-vr0.y);
       Vec4 lv=lerp<Vec4>(vl0,vl1,fl);
       Vec4 rv=lerp<Vec4>(vr0,vr1,fr);
       const int lx=static_cast<int>(0.5f+lv.x);

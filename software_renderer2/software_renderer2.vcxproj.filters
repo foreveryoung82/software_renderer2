@@ -11,192 +11,67 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\line2.cpp">
+    <ClCompile Include="source\srend\main.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\main.cpp">
+    <ClCompile Include="source\windy\core\windowfactory.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\rect.cpp">
+    <ClCompile Include="source\cod\demo.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\triangle.cpp">
+    <ClCompile Include="source\windy\core\iclient.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\vec2.cpp">
+    <ClCompile Include="source\windy\core\iframework.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\trapezoid.cpp">
+    <ClCompile Include="source\windy\service\servicetime.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\device.cpp">
+    <ClCompile Include="source\windy\core\applicationwin32.cpp">
       <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="source\application.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\framebuffer.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\matrix3x3.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\vec3.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\camera.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\vec4.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\rasterizer.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\matrix4x4.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\triangle3d.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\texture.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\sampler.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\viewportclipper.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\homogeneousclipper.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\primitivestream.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\interpolation.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\quaternion.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\arcball.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
-    <ClCompile Include="source\depthbuffer.cpp">
-      <Filter>source</Filter>
-    </ClCompile>
-    <ClCompile Include="source\demodepthbuffer.cpp">
+    <ClCompile Include="source\windy\core\mainwindowwin32.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\line2.h">
+    <ClInclude Include="source\cod\demo.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\rect.h">
+    <ClInclude Include="source\windy\core\iclient.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\triangle.h">
+    <ClInclude Include="source\windy\core\iframework.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\vec2.h">
+    <ClInclude Include="source\windy\base\basetype.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\trapezoid.h">
+    <ClInclude Include="source\windy\core\windowfactory.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\rasterizer.h">
+    <ClInclude Include="source\windy\core\frameworkconfig.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\device.h">
+    <ClInclude Include="source\windy\service\servicetime.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\application.h">
+    <ClInclude Include="source\windy\service\iservice.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\applicationimpl.h">
+    <ClInclude Include="source\windy\base\singleton.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\framebuffer.h">
+    <ClInclude Include="source\windy\core\applicationwin32.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\matrix3x3.h">
+    <ClInclude Include="source\windy\core\imainwindow.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\vec3.h">
+    <ClInclude Include="source\windy\core\mainwindowwin32.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\base.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\camera.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\vec4.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\matrix4x4.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\triangle3d.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\texture.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\color.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\sampler.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\viewportclipper.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\homogeneousclipper.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\primitivestream.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\primitivetype.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\interpolation.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\quaternion.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\arcball.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\mouseeventargs.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\depthbuffer.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\demodepthbuffer.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\bithack.h">
-      <Filter>include</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="include\rasterizer.inl">
-      <Filter>include</Filter>
-    </None>
-    <None Include="include\framebuffer.inl">
-      <Filter>include</Filter>
-    </None>
-    <None Include="include\texture.inl">
-      <Filter>include</Filter>
-    </None>
-    <None Include="include\bithack.inl">
-      <Filter>include</Filter>
-    </None>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -11,71 +11,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\application.cpp" />
-    <ClCompile Include="source\arcball.cpp" />
-    <ClCompile Include="source\camera.cpp" />
-    <ClCompile Include="source\demodepthbuffer.cpp" />
-    <ClCompile Include="source\depthbuffer.cpp" />
-    <ClCompile Include="source\device.cpp" />
-    <ClCompile Include="source\framebuffer.cpp" />
-    <ClCompile Include="source\homogeneousclipper.cpp" />
-    <ClCompile Include="source\interpolation.cpp" />
-    <ClCompile Include="source\line2.cpp" />
-    <ClCompile Include="source\main.cpp" />
-    <ClCompile Include="source\matrix3x3.cpp" />
-    <ClCompile Include="source\matrix4x4.cpp" />
-    <ClCompile Include="source\primitivestream.cpp" />
-    <ClCompile Include="source\quaternion.cpp" />
-    <ClCompile Include="source\rasterizer.cpp" />
-    <ClCompile Include="source\rect.cpp" />
-    <ClCompile Include="source\sampler.cpp" />
-    <ClCompile Include="source\texture.cpp" />
-    <ClCompile Include="source\trapezoid.cpp" />
-    <ClCompile Include="source\triangle.cpp" />
-    <ClCompile Include="source\triangle3d.cpp" />
-    <ClCompile Include="source\vec2.cpp" />
-    <ClCompile Include="source\vec3.cpp" />
-    <ClCompile Include="source\vec4.cpp" />
-    <ClCompile Include="source\viewportclipper.cpp" />
+    <ClCompile Include="source\cod\demo.cpp" />
+    <ClCompile Include="source\srend\main.cpp" />
+    <ClCompile Include="source\windy\core\applicationwin32.cpp" />
+    <ClCompile Include="source\windy\core\iclient.cpp" />
+    <ClCompile Include="source\windy\core\iframework.cpp" />
+    <ClCompile Include="source\windy\core\windowfactory.cpp" />
+    <ClCompile Include="source\windy\core\mainwindowwin32.cpp" />
+    <ClCompile Include="source\windy\service\servicetime.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\application.h" />
-    <ClInclude Include="include\applicationimpl.h" />
-    <ClInclude Include="include\arcball.h" />
-    <ClInclude Include="include\base.h" />
-    <ClInclude Include="include\bithack.h" />
-    <ClInclude Include="include\camera.h" />
-    <ClInclude Include="include\color.h" />
-    <ClInclude Include="include\demodepthbuffer.h" />
-    <ClInclude Include="include\depthbuffer.h" />
-    <ClInclude Include="include\device.h" />
-    <ClInclude Include="include\framebuffer.h" />
-    <ClInclude Include="include\homogeneousclipper.h" />
-    <ClInclude Include="include\interpolation.h" />
-    <ClInclude Include="include\line2.h" />
-    <ClInclude Include="include\matrix3x3.h" />
-    <ClInclude Include="include\matrix4x4.h" />
-    <ClInclude Include="include\mouseeventargs.h" />
-    <ClInclude Include="include\primitivestream.h" />
-    <ClInclude Include="include\primitivetype.h" />
-    <ClInclude Include="include\quaternion.h" />
-    <ClInclude Include="include\rasterizer.h" />
-    <ClInclude Include="include\rect.h" />
-    <ClInclude Include="include\sampler.h" />
-    <ClInclude Include="include\texture.h" />
-    <ClInclude Include="include\trapezoid.h" />
-    <ClInclude Include="include\triangle.h" />
-    <ClInclude Include="include\triangle3d.h" />
-    <ClInclude Include="include\vec2.h" />
-    <ClInclude Include="include\vec3.h" />
-    <ClInclude Include="include\vec4.h" />
-    <ClInclude Include="include\viewportclipper.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="include\bithack.inl" />
-    <None Include="include\framebuffer.inl" />
-    <None Include="include\rasterizer.inl" />
-    <None Include="include\texture.inl" />
+    <ClInclude Include="source\cod\demo.h" />
+    <ClInclude Include="source\windy\base\basetype.h" />
+    <ClInclude Include="source\windy\base\singleton.h" />
+    <ClInclude Include="source\windy\core\applicationwin32.h" />
+    <ClInclude Include="source\windy\core\frameworkconfig.h" />
+    <ClInclude Include="source\windy\core\iclient.h" />
+    <ClInclude Include="source\windy\core\iframework.h" />
+    <ClInclude Include="source\windy\core\imainwindow.h" />
+    <ClInclude Include="source\windy\core\windowfactory.h" />
+    <ClInclude Include="source\windy\core\mainwindowwin32.h" />
+    <ClInclude Include="source\windy\service\iservice.h" />
+    <ClInclude Include="source\windy\service\servicetime.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{58E09475-C1D2-43D9-B92E-D295D72AEBB1}</ProjectGuid>
@@ -86,13 +43,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -108,12 +65,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)include;$(ProjectDir)\dependent;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)source;$(ProjectDir)include;$(ProjectDir)dependent;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\dependent\freeimage;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)include;$(ProjectDir)\dependent;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)source;$(ProjectDir)include;$(ProjectDir)dependent;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)\dependent\freeimage;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
