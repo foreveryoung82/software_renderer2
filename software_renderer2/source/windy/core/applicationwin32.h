@@ -11,6 +11,7 @@
 namespace windy {
 class IClient;
 class IFramework;
+class RenderDevice;
 }
 
 namespace windy {
@@ -23,8 +24,9 @@ class ApplicationWin32:public IFramework {
   virtual void registerFinalizer(finalizer_t finalizer) override;
 
 private:
-  IMainWindow* mainWindow_;
-  IClient* client_;
+  IMainWindow*  mainWindow_;
+  RenderDevice* renderDevice_;
+  IClient*      client_;
   std::stack<finalizer_t> finalizerStack_;
 
   void startAllServices_();

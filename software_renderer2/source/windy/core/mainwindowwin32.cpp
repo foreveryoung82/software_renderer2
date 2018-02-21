@@ -53,7 +53,7 @@ MainWindowWin32::MainWindowWin32(u32 width,u32 height)
     (SWP_NOCOPYBITS | SWP_NOZORDER | SWP_SHOWWINDOW));
   nativeHandle_=hwnd;
   width_  = width;
-  height_ = height;  
+  height_ = height;
 
   s_singleton=this;
 }
@@ -71,7 +71,7 @@ LRESULT MainWindowWin32::wndProc_(HWND hwnd,
                                   UINT message,
                                   WPARAM wParam,
                                   LPARAM lParam) {
-  if (s_singleton && s_singleton->wndProcFunc_) {
+  if (s_singleton) {
     auto& func=s_singleton->wndProcFunc_;
     if (func)
         func(hwnd,message,wParam,lParam);

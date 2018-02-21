@@ -4,6 +4,7 @@
 #include "windy/core/iclient.h"
 #include "windy/core/imainwindow.h"
 #include "windy/core/mainwindowwin32.h"
+#include "windy/core/renderdevice.h"
 #include "windy/core/windowfactory.h"
 #include "windy/service/servicetime.h"
 
@@ -15,6 +16,7 @@ static ApplicationWin32* s_instance=nullptr;
 
 ApplicationWin32::ApplicationWin32() 
  : mainWindow_(nullptr)
+ , renderDevice_(nullptr)
  , client_(nullptr)
  , finalizerStack_()
 {
@@ -53,6 +55,8 @@ void ApplicationWin32::run(IClient& client) {
                LPARAM lParam){
     wndProc_(hwnd,message,wParam,lParam);
   });
+
+  renderDevice_=new RenderDevice(*mainWindow_,640,480);
   mainWindow_->show();
 
   ServiceTime& st=ServiceTime::instance();
@@ -60,15 +64,17 @@ void ApplicationWin32::run(IClient& client) {
 
   bool  shouldGoOn=true;
   MSG   msg;
-
   while (shouldGoOn) {
     while (PeekMessage(&msg,0,0,0,PM_REMOVE)) {
       TranslateMessage(&msg);
       DispatchMessage(&msg);
   
       shouldGoOn &= (WM_QUIT!=msg.message);
-    }    
+    }
   }
+
+  delete renderDevice_;
+  renderDevice_=nullptr;
 
   WindowFactory::destroyMainWindow(mainWindow_);
   mainWindow_=nullptr;
@@ -82,9 +88,9 @@ void ApplicationWin32::startAllServices_() {
 }
 
 void ApplicationWin32::wndProc_(HWND hwnd,
-                               UINT message,
-                               WPARAM wParam,
-                               LPARAM lParam) {
+                                UINT message,
+                                WPARAM wParam,
+                                LPARAM lParam) {
 
   switch(message) {
     case WM_CREATE:
@@ -93,6 +99,8 @@ void ApplicationWin32::wndProc_(HWND hwnd,
       // to avoid repeatedly receiving WM_PAINT message
       PAINTSTRUCT ps;
       BeginPaint(hwnd,&ps);
+      if (renderDevice_)
+        renderDevice_->present();
       EndPaint(hwnd,&ps);
       break;
     }

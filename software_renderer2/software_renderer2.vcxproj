@@ -16,6 +16,7 @@
     <ClCompile Include="source\windy\core\applicationwin32.cpp" />
     <ClCompile Include="source\windy\core\iclient.cpp" />
     <ClCompile Include="source\windy\core\iframework.cpp" />
+    <ClCompile Include="source\windy\core\renderdevice.cpp" />
     <ClCompile Include="source\windy\core\windowfactory.cpp" />
     <ClCompile Include="source\windy\core\mainwindowwin32.cpp" />
     <ClCompile Include="source\windy\service\servicetime.cpp" />
@@ -25,10 +26,12 @@
     <ClInclude Include="source\windy\base\basetype.h" />
     <ClInclude Include="source\windy\base\singleton.h" />
     <ClInclude Include="source\windy\core\applicationwin32.h" />
+    <ClInclude Include="source\windy\core\framebuffer.h" />
     <ClInclude Include="source\windy\core\frameworkconfig.h" />
     <ClInclude Include="source\windy\core\iclient.h" />
     <ClInclude Include="source\windy\core\iframework.h" />
     <ClInclude Include="source\windy\core\imainwindow.h" />
+    <ClInclude Include="source\windy\core\renderdevice.h" />
     <ClInclude Include="source\windy\core\windowfactory.h" />
     <ClInclude Include="source\windy\core\mainwindowwin32.h" />
     <ClInclude Include="source\windy\service\iservice.h" />

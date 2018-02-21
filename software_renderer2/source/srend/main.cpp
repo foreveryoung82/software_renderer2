@@ -1,5 +1,3 @@
-#define _CRTDBG_MAP_ALLOC
-#include <cstdlib>
 #include <crtdbg.h>
 #include <cassert>
 
@@ -7,7 +5,8 @@
 #include "cod/demo.h"
 
 void main() {
-  int flag=_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG)|_CRTDBG_LEAK_CHECK_DF;
+  int flag=_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+  flag |= _CRTDBG_LEAK_CHECK_DF;
   _CrtSetDbgFlag(flag);
   {
     windy::ApplicationWin32 app;
