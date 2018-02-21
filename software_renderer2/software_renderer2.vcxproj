@@ -14,6 +14,7 @@
     <ClCompile Include="source\cod\demo.cpp" />
     <ClCompile Include="source\srend\main.cpp" />
     <ClCompile Include="source\windy\core\applicationwin32.cpp" />
+    <ClCompile Include="source\windy\core\framebuffer.cpp" />
     <ClCompile Include="source\windy\core\iclient.cpp" />
     <ClCompile Include="source\windy\core\iframework.cpp" />
     <ClCompile Include="source\windy\core\renderdevice.cpp" />
@@ -24,6 +25,7 @@
   <ItemGroup>
     <ClInclude Include="source\cod\demo.h" />
     <ClInclude Include="source\windy\base\basetype.h" />
+    <ClInclude Include="source\windy\base\color.h" />
     <ClInclude Include="source\windy\base\singleton.h" />
     <ClInclude Include="source\windy\core\applicationwin32.h" />
     <ClInclude Include="source\windy\core\framebuffer.h" />
@@ -34,6 +36,7 @@
     <ClInclude Include="source\windy\core\renderdevice.h" />
     <ClInclude Include="source\windy\core\windowfactory.h" />
     <ClInclude Include="source\windy\core\mainwindowwin32.h" />
+    <ClInclude Include="source\windy\math\common.h" />
     <ClInclude Include="source\windy\service\iservice.h" />
     <ClInclude Include="source\windy\service\servicetime.h" />
   </ItemGroup>

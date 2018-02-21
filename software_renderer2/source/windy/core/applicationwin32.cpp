@@ -56,7 +56,8 @@ void ApplicationWin32::run(IClient& client) {
     wndProc_(hwnd,message,wParam,lParam);
   });
 
-  renderDevice_=new RenderDevice(*mainWindow_,640,480);
+  //renderDevice_=new RenderDevice(*mainWindow_,640,480);
+  renderDevice_=new RenderDevice(*mainWindow_,3,3);
   mainWindow_->show();
 
   ServiceTime& st=ServiceTime::instance();

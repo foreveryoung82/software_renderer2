@@ -38,6 +38,9 @@
     <ClCompile Include="source\windy\core\renderdevice.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\windy\core\framebuffer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\cod\demo.h">
@@ -80,6 +83,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="source\windy\core\framebuffer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\base\color.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\math\common.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

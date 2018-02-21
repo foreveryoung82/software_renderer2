@@ -67,6 +67,14 @@ void MainWindowWin32::show() {
   UpdateWindow(nativeHandle_);
 }
 
+u32 MainWindowWin32::width() const {
+  return width_;
+}
+
+u32 MainWindowWin32::height() const {
+  return height_;
+}
+
 LRESULT MainWindowWin32::wndProc_(HWND hwnd,
                                   UINT message,
                                   WPARAM wParam,

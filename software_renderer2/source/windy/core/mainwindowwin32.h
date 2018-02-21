@@ -20,6 +20,8 @@ class MainWindowWin32:public IMainWindow {
   MainWindowWin32(u32 width,u32 height);
   virtual ~MainWindowWin32();
   virtual void show() override;
+  virtual u32 width() const override;
+  virtual u32 height() const override;
 
   HWND nativeHandle() const {return nativeHandle_;}
   void setWndProc(wndProc_t wnd_proc_func) {wndProcFunc_=wnd_proc_func;}
