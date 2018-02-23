@@ -3,6 +3,7 @@
 //@brief:framebuffer
 #pragma once
 #include "windy/base/basetype.h"
+#include "windy/base/color.h"
 
 namespace windy {
 class FrameBuffer {
@@ -11,8 +12,8 @@ class FrameBuffer {
   virtual ~FrameBuffer();
   int width() const {return width_;}
   int height() const {return height_;}
-  inline void setPixel(int x,int y,u32 color) {rawPixels_[x+y*stride_/4]=color;}
-  void clear(u32 color);
+  inline void setPixel(int x,int y,Color color) {rawPixels_[x+y*stride_/4]=color.value();}
+  void clear(Color color);
 
  private:
   u32* rawPixels_;

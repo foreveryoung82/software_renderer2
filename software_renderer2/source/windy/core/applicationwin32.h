@@ -30,6 +30,7 @@ private:
   std::stack<finalizer_t> finalizerStack_;
 
   void startAllServices_();
+  void fireFrameEvent_();
   void wndProc_(HWND hwnd,
                UINT message,
                WPARAM wParam,

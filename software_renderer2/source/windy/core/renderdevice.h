@@ -8,6 +8,8 @@
 namespace windy {
 class IMainWindow;
 class FrameBuffer;
+class InputVertexStream;
+class IVertexShader;
 }
 
 namespace windy {
@@ -16,7 +18,9 @@ class RenderDevice {
   RenderDevice(IMainWindow& window,u32 frame_width,u32 frame_height);
   virtual ~RenderDevice();
 
-  //virtual void drawTriangles();
+  virtual void setVertexShader(IVertexShader& vertex_shader);
+  virtual void drawTriangles(const InputVertexStream& input_stream,
+                             u32 triangles_num);
   virtual void present();
 
  private:

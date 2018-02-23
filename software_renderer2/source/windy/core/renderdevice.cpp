@@ -1,15 +1,26 @@
+#include <cassert>
+#include <vector>
+
 #include "windy/core/renderdevice.h"
 #include "windy/core/mainwindowwin32.h"
 #include "windy/core/framebuffer.h"
+#include "windy/core/inputvertexstream.h"
+#include "windy/core/inputvertex.h"
+#include "windy/core/shadedvertex.h"
+#include "windy/core/ivertexshader.h"
+#include "windy/core/rasterizer.h"
 
 #include <wrl/client.h>
 
 namespace windy {
 struct RenderDevice::Impl {
-  HDC           mainWindowDC;
-  HDC           memoryDC;
-  IMainWindow*  mainWindow;
+  HDC            mainWindowDC;
+  HDC            memoryDC;
+  IMainWindow*   mainWindow;
+  IVertexShader* vertexShader;
+
   std::unique_ptr<FrameBuffer>  frameBuffer;
+  Rasterizer                    rasterizer;
 };
 
 RenderDevice::RenderDevice(IMainWindow& window,
@@ -61,11 +72,40 @@ RenderDevice::~RenderDevice() {
   ReleaseDC(nativeHandle,impl_->mainWindowDC);
 }
 
+void RenderDevice::setVertexShader(IVertexShader& vertex_shader) {
+  impl_->vertexShader=&vertex_shader;
+}
+
+void RenderDevice::drawTriangles(const InputVertexStream& input_stream,
+                                 u32 triangles_num) {
+  assert(impl_->vertexShader);
+
+  std::vector<ShadedVertex> shadedVertices;
+  shadedVertices.reserve(triangles_num*3);
+
+  // vertex shading
+  for (u32 triangleIndex=0;triangleIndex<triangles_num;++triangleIndex) {
+    for (u32 pointIndex=0;pointIndex<3;++pointIndex) {
+      const u32 vertexIndex=triangleIndex*3+pointIndex;
+      InputVertex inputVertex=input_stream.vertexAt(vertexIndex);
+      ShadedVertex shadedVertex=impl_->vertexShader->shade(inputVertex);
+      shadedVertices.push_back(shadedVertex);
+    }
+  }
+
+  // pixel shading
+  for (u32 triangleIndex=0;triangleIndex<triangles_num;++triangleIndex) {
+    impl_->rasterizer.drawTriangle(shadedVertices.data(),
+                                   triangles_num,
+                                   *impl_->frameBuffer);
+  }
+}
+
 void RenderDevice::present() {
   std::unique_ptr<FrameBuffer>& frameBuffer = impl_->frameBuffer;
   IMainWindow* mainWindow                   = impl_->mainWindow;
-  frameBuffer->clear(0x00000000);
-  frameBuffer->setPixel(0,0,0xFF0000FF);
+  //frameBuffer->clear(Color {0,0,0,0});
+  //frameBuffer->setPixel(0,0,Color {0,0,0xff,0xff});
   StretchBlt(impl_->mainWindowDC,
              0, 
              0,

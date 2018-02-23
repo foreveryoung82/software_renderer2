@@ -1,6 +1,7 @@
 #include "windy/core/applicationWin32.h"
 #include <cassert>
 #include "windy/core/frameworkconfig.h"
+#include "windy/core/eventframe.h"
 #include "windy/core/iclient.h"
 #include "windy/core/imainwindow.h"
 #include "windy/core/mainwindowwin32.h"
@@ -57,7 +58,7 @@ void ApplicationWin32::run(IClient& client) {
   });
 
   //renderDevice_=new RenderDevice(*mainWindow_,640,480);
-  renderDevice_=new RenderDevice(*mainWindow_,3,3);
+  renderDevice_=new RenderDevice(*mainWindow_,64,64);
   mainWindow_->show();
 
   ServiceTime& st=ServiceTime::instance();
@@ -72,6 +73,9 @@ void ApplicationWin32::run(IClient& client) {
   
       shouldGoOn &= (WM_QUIT!=msg.message);
     }
+    Sleep(30);
+    fireFrameEvent_();
+    renderDevice_->present();
   }
 
   delete renderDevice_;
@@ -88,6 +92,10 @@ void ApplicationWin32::startAllServices_() {
   startService_<ServiceTime>();
 }
 
+void ApplicationWin32::fireFrameEvent_() {
+  client_->onFrameEvent(windy::EventFrame {renderDevice_});
+}
+
 void ApplicationWin32::wndProc_(HWND hwnd,
                                 UINT message,
                                 WPARAM wParam,
@@ -100,8 +108,6 @@ void ApplicationWin32::wndProc_(HWND hwnd,
       // to avoid repeatedly receiving WM_PAINT message
       PAINTSTRUCT ps;
       BeginPaint(hwnd,&ps);
-      if (renderDevice_)
-        renderDevice_->present();
       EndPaint(hwnd,&ps);
       break;
     }

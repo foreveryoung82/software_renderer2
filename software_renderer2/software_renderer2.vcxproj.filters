@@ -41,6 +41,33 @@
     <ClCompile Include="source\windy\core\framebuffer.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="source\windy\core\inputvertexstream.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windy\math\matrix3x3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windy\math\matrix4x4.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windy\math\vec2.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windy\math\vec3.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windy\math\vec4.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windy\core\ivertexshader.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windy\core\vertexshaderbase.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="source\windy\core\rasterizer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\cod\demo.h">
@@ -89,6 +116,45 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="source\windy\math\common.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\core\inputvertexstream.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\core\inputvertex.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\math\matrix3x3.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\math\matrix4x4.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\math\quaternion.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\math\vec2.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\math\vec3.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\math\vec4.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\core\ivertexshader.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\core\shadedvertex.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\core\vertexshaderbase.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\core\rasterizer.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="source\windy\core\eventframe.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

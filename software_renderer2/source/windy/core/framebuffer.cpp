@@ -12,7 +12,7 @@ FrameBuffer::FrameBuffer(u32* raw_pixels,u32 width,u32 height,u32 stride)
 FrameBuffer::~FrameBuffer() {
 }
 
-void FrameBuffer::clear(u32 color) {
-  std::fill_n(rawPixels_, height_*stride_/4, color);
+void FrameBuffer::clear(Color color) {
+  std::fill_n(rawPixels_, height_*stride_/4, color.value());
 }
 }

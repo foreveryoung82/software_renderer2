@@ -11,7 +11,7 @@ struct Color {
   u8 Green;
   u8 Red;
   u8 Alpha;
-  u32 Value() const {return *reinterpret_cast<const u32*>(this);}
+  u32 value() const {return *reinterpret_cast<const u32*>(this);}
 };
 
 template<>

@@ -17,9 +17,18 @@
     <ClCompile Include="source\windy\core\framebuffer.cpp" />
     <ClCompile Include="source\windy\core\iclient.cpp" />
     <ClCompile Include="source\windy\core\iframework.cpp" />
+    <ClCompile Include="source\windy\core\inputvertexstream.cpp" />
+    <ClCompile Include="source\windy\core\ivertexshader.cpp" />
+    <ClCompile Include="source\windy\core\rasterizer.cpp" />
     <ClCompile Include="source\windy\core\renderdevice.cpp" />
+    <ClCompile Include="source\windy\core\vertexshaderbase.cpp" />
     <ClCompile Include="source\windy\core\windowfactory.cpp" />
     <ClCompile Include="source\windy\core\mainwindowwin32.cpp" />
+    <ClCompile Include="source\windy\math\matrix3x3.cpp" />
+    <ClCompile Include="source\windy\math\matrix4x4.cpp" />
+    <ClCompile Include="source\windy\math\vec2.cpp" />
+    <ClCompile Include="source\windy\math\vec3.cpp" />
+    <ClCompile Include="source\windy\math\vec4.cpp" />
     <ClCompile Include="source\windy\service\servicetime.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -29,14 +38,27 @@
     <ClInclude Include="source\windy\base\singleton.h" />
     <ClInclude Include="source\windy\core\applicationwin32.h" />
     <ClInclude Include="source\windy\core\framebuffer.h" />
+    <ClInclude Include="source\windy\core\eventframe.h" />
     <ClInclude Include="source\windy\core\frameworkconfig.h" />
     <ClInclude Include="source\windy\core\iclient.h" />
     <ClInclude Include="source\windy\core\iframework.h" />
     <ClInclude Include="source\windy\core\imainwindow.h" />
+    <ClInclude Include="source\windy\core\inputvertex.h" />
+    <ClInclude Include="source\windy\core\ivertexshader.h" />
+    <ClInclude Include="source\windy\core\rasterizer.h" />
     <ClInclude Include="source\windy\core\renderdevice.h" />
+    <ClInclude Include="source\windy\core\inputvertexstream.h" />
+    <ClInclude Include="source\windy\core\shadedvertex.h" />
+    <ClInclude Include="source\windy\core\vertexshaderbase.h" />
     <ClInclude Include="source\windy\core\windowfactory.h" />
     <ClInclude Include="source\windy\core\mainwindowwin32.h" />
     <ClInclude Include="source\windy\math\common.h" />
+    <ClInclude Include="source\windy\math\matrix3x3.h" />
+    <ClInclude Include="source\windy\math\matrix4x4.h" />
+    <ClInclude Include="source\windy\math\quaternion.h" />
+    <ClInclude Include="source\windy\math\vec2.h" />
+    <ClInclude Include="source\windy\math\vec3.h" />
+    <ClInclude Include="source\windy\math\vec4.h" />
     <ClInclude Include="source\windy\service\iservice.h" />
     <ClInclude Include="source\windy\service\servicetime.h" />
   </ItemGroup>
